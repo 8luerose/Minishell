@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 15:22:11 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:43:23 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_flag
 /////////////////////////////////
 
 // token
-// int		is_meta(char c1, char c2);
 int		is_meta(char c);
 void	get_token(char *input, t_list *list);
 // make_node
@@ -79,5 +78,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_strndup(const char *s1, int n);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char c);
-
+int		ft_strcmp(const char *s1, const char *s2);
+// syntax_error
+void	check_syntax_error(t_list *list);
 #endif

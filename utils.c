@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:48 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 15:37:29 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:43:07 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*ft_strndup(const char *s1, int n)
 	return (new);
 }
 
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -85,4 +84,22 @@ char	*ft_strjoin(char const *s1, char c)
 	new[i++] = c;
 	new[i] = '\0';
 	return (new);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	case1;
+	unsigned char	case2;
+
+	i = 0;
+	while ((s1[i] != '\0' || s2[i] != '\0'))
+	{
+		case1 = (unsigned char)s1[i];
+		case2 = (unsigned char)s2[i];
+		if (case1 != case2)
+			return (case1 - case2);
+		i++;
+	}
+	return (0);
 }

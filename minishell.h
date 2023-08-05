@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 16:43:23 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:12:38 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,26 @@ typedef struct s_flag
 	int	env;
 	int	env_with_quo;
 }	t_flag;
+
+typedef struct s_cmd
+{
+	char			**cmd_line;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_redir
+{
+	char			**redir;
+	char			*file_name;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_data
+{
+	struct t_cmd	*cmd;
+	struct t_redir	*redirect;
+	struct t_data	*next;
+}	t_data;
 
 /////////////////////////////////
 
@@ -81,4 +101,8 @@ char	*ft_strjoin(char const *s1, char c);
 int		ft_strcmp(const char *s1, const char *s2);
 // syntax_error
 void	check_syntax_error(t_list *list);
+// token_grouping
+void 	get_group_token(t_list *list);
+void	group_node_init(t_cmd *cmd, t_redir *redir, t_data *data);
+
 #endif

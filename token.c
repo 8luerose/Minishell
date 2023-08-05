@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/04 21:27:22 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:29:39 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,26 @@
 
 // <<, >>ㅊㅓ리. 오류문구출력하면서 노드 free, syntax error + 확장 도전
 
+// int	is_meta(char c1, char c2)
+// {
+// 	if (c1 == ' ' || c1 == '|' || c1 == '<' || c1 == '>')
+// 		return (1);
+// 	if ((c1 == '<' && c2 == '<') || (c1 == '>' && c2 == '>'))
+// 		return (1);
+// 	return (0);
+// }
+
+// int	is_meta(char c)
+// {
+// 	if (c == ' ' || c == '|'
+// 		|| c == '<' || c == '>' || c == "<<" || c == ">>")
+// 		return (1);
+// 	return (0);
+// }
+
 int	is_meta(char c)
 {
-	if (c == ' ' || c == '|'
-		|| c == '<' || c == '>') //  || c == "<<" || c == ">>")
+	if (c == ' ' || c == '|' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }
@@ -76,7 +92,15 @@ void	get_token(char *input, t_list *list)
 			}
 			if (input[i] != ' ')
 			{
-				tmp = ft_strdup("");
+				if (input[i + 1] && ((input[i] == '<' && input[i+1] == '<') || (input[i] == '>' && input[i+1] == '>'))) 
+				{
+					tmp = ft_strndup(&input[i], 2);
+					i++;
+				}
+				else
+				{
+					tmp = ft_strndup(&input[i], 1);
+				}
 				buf = ft_strjoin(tmp, input[i]);
 				free(tmp);
 				make_node(buf, flag, list);

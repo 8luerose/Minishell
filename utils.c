@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:48 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/04 10:30:08 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:22:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,27 @@ char	*ft_strdup(const char *s1)
 	}
 	return (new);
 }
+
+char	*ft_strndup(const char *s1, int n)
+{
+	int		size;
+	char	*new;
+
+	size = 0;
+	while (s1[size] && size < n)
+		size++;
+	new = (char *)malloc(sizeof(char) * (size + 1));
+	if (new == 0)
+		return (0);
+	new[size--] = '\0';
+	while (size >= 0)
+	{
+		new[size] = s1[size];
+		size--;
+	}
+	return (new);
+}
+
 
 size_t	ft_strlen(const char *s)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/04 15:15:08 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:22:11 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_flag
 /////////////////////////////////
 
 // token
+// int		is_meta(char c1, char c2);
 int		is_meta(char c);
 void	get_token(char *input, t_list *list);
 // make_node
@@ -75,6 +76,7 @@ void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
 // utils
 char	*ft_strdup(const char *s1);
+char	*ft_strndup(const char *s1, int n);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char c);
 

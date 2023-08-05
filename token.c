@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 15:29:39 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:40:24 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	get_token(char *input, t_list *list)
 
 	i = 0;
 	flag.quo = 0;
+	flag.env = 0;
+	flag.env_with_quo = 0;
 	buf = ft_strdup("");
 	while (input[i])
 	{

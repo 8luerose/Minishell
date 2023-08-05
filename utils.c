@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:48 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 15:22:09 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:37:29 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strndup(const char *s1, int n)
 	char	*new;
 
 	size = 0;
-	while (s1[size] && size < n)
+	while (s1[size] && size < n-1)
 		size++;
 	new = (char *)malloc(sizeof(char) * (size + 1));
 	if (new == 0)

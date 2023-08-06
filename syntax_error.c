@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
 /*   Updated: 2023/08/06 12:41:29 by seojchoi         ###   ########.fr       */
+=======
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/05 15:51:04 by taehkwon          #+#    #+#             */
+/*   Updated: 2023/08/06 19:26:22 by taehkwon         ###   ########.fr       */
+>>>>>>> 8a1560c44087f9d5c10bd7e32421d962996889ed
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +56,17 @@ void check_syntax_error(t_list *list)
 				printf("sytax_error type_5\n");
 				exit(1);
 			}
+<<<<<<< HEAD
 		}
 		tmp = tmp->next;
 	}
 }
+=======
+
+			//1. < , > 라다이렉션 뒤에는 무조건 명령어가 와야 한다
+			//2. 
+		}
+		tmp = tmp->next;
+	}
+}
+>>>>>>> 8a1560c44087f9d5c10bd7e32421d962996889ed

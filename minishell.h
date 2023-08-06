@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 18:12:38 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:40:11 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 
 # define DOUBLE_Q 1
 # define SINGLE_Q 2
+
+// # define WORD 0
+// # define  0
+
+// typedef enum e_type
+// {
+// 	word,
+// }
+// enum 작성할 것
 
 typedef struct s_node
 {
@@ -103,6 +112,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	check_syntax_error(t_list *list);
 // token_grouping
 void 	get_group_token(t_list *list);
-void	group_node_init(t_cmd *cmd, t_redir *redir, t_data *data);
+// void	group_node_init(t_cmd *cmd, t_redir *redir, t_data *data);
 
 #endif

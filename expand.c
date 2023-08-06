@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:09 by seojchoi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/08/06 16:33:20 by seojchoi         ###   ########.fr       */
-=======
-/*   Updated: 2023/08/04 10:29:25 by seojchoi         ###   ########.fr       */
->>>>>>> 8a1560c44087f9d5c10bd7e32421d962996889ed
+/*   Updated: 2023/08/06 20:28:34 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-<<<<<<< HEAD
 int	have_space(char	*content)
 {
 	int	i;
@@ -131,10 +126,4 @@ void	expand(t_list	*envp, t_list *list)
 			expand_with_quo(envp, iter);
 		iter = iter->next;
 	}
-=======
-void	expand()
-{
-	// is_env = 1인 경우
-	// is_env = 2인 경우 -> 빈칸 나오면 토큰으로 쪼개주기
->>>>>>> 8a1560c44087f9d5c10bd7e32421d962996889ed
 }

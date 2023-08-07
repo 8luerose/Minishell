@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/06 19:52:36 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 02:50:12 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ typedef struct s_flag
 	int	env;
 	int	env_with_quo;
 }	t_flag;
+
+typedef enum	s_type
+{
+	WORD,
+	REDIRECTION,
+	QUOTING,
+	PIPE,
+	HEREDOC
+}	t_type;
 
 /////////////////////////////////
 

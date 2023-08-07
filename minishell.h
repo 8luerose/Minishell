@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 02:50:12 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/08 02:51:49 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ typedef struct s_flag
 	int	env;
 	int	env_with_quo;
 }	t_flag;
+
+typedef struct s_cmd
+{
+	char			**cmd_line;
+	// struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_redir
+{
+	char			**redir;
+	char			*file_name;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_data
+{
+	struct t_cmd	*cmd;
+	struct t_redir	*redirect;
+	struct t_data	*next;
+}	t_data;
 
 typedef enum	s_type
 {

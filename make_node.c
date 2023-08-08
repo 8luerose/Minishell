@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 21:01:53 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:24:10 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,25 @@ void	make_node(char *content, t_flag flag, t_list *list)
 		join_node(content, flag, list);
 }
 
-void	new_pipeline(t_data	*list)
+t_data	*init_data(void)
 {
-	t_data	*result;
+	t_data	*new_data;
 
-	result = (t_data *)malloc(sizeof(t_data));
-	
+	new_data = (t_data *)malloc(sizeof(t_data));
+	new_data->cmd_line = NULL;
+	new_data->redir = NULL;
+	new_data->next = NULL;
+	return (new_data);
 }
+
+t_redir	*init_redir(t_node *current)
+{
+	t_redir *new_redir;
+
+	new_redir = (t_redir *)malloc(sizeof(t_redir));
+	new_redir->redir = ft_strdup(current->content);
+    new_redir->file_name = ft_strdup(current->next->content);
+    new_redir->next = NULL;
+}
+
+    

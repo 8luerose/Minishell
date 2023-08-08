@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 20:44:59 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:55:44 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ t_node	*ft_lstnew(char *content, t_flag flag);
 void	make_head_node(char *content, t_flag flag, t_list *list);
 void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
+t_data	*init_data(void);
+t_redir	*init_redir(t_node *current);
 // expand.c
 void	expand_with_quo(t_list	*envp, t_node	*node);
 void	expand(t_list	*envp, t_list *list);
@@ -106,5 +108,7 @@ void	ft_export(t_list *my_envp, char	**cmd_line);
 void	ft_env(t_list	*my_envp);
 //get_list(second parsing)
 void	get_list(t_list *list, t_data *pipeline_list);
+void 	append_cmd(t_data *data, char *word);
+void 	append_redir(t_data *data, t_node *current);
 
 #endif

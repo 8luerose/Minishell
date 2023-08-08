@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/06 16:29:46 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:23:53 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ void	get_token(char *input, t_list *list)
 			}
 			if (input[i] != ' ')
 			{
-				if (input[i + 1] && ((input[i] == '<' && input[i+1] == '<') || (input[i] == '>' && input[i+1] == '>'))) 
+				if (input[i + 1]
+					&& ((input[i] == '<' && input[i + 1] == '<')
+						|| (input[i] == '>' && input[i + 1] == '>')))
 				{
 					tmp = ft_strndup(&input[i], 2);
 					i++;

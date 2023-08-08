@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 02:51:49 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:49:26 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,22 @@
 # define DOUBLE_Q 1
 # define SINGLE_Q 2
 
+enum	e_type
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC_IN,
+	HEREDOC_OUT
+};
+
 typedef struct s_node
 {
 	char			*content;
 	int				env;
 	int				env_with_quo;
+	enum e_type		type;
 	struct s_node	*next;
 	struct s_node	*prev;
 }	t_node;
@@ -41,35 +52,6 @@ typedef struct s_flag
 	int	env;
 	int	env_with_quo;
 }	t_flag;
-
-typedef struct s_cmd
-{
-	char			**cmd_line;
-	// struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_redir
-{
-	char			**redir;
-	char			*file_name;
-	struct s_redir	*next;
-}	t_redir;
-
-typedef struct s_data
-{
-	struct t_cmd	*cmd;
-	struct t_redir	*redirect;
-	struct t_data	*next;
-}	t_data;
-
-typedef enum	s_type
-{
-	WORD,
-	REDIRECTION,
-	QUOTING,
-	PIPE,
-	HEREDOC
-}	t_type;
 
 /////////////////////////////////
 
@@ -118,5 +100,10 @@ char	*ft_strndup(const char *s1, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 // syntax_error
 void	check_syntax_error(t_list *list);
+// ft_export
+char	*get_key(char	*str);
+void	ft_export(t_list *my_envp, char	**cmd_line);
+// ft_env
+void	ft_env(t_list	*my_envp);
 
 #endif

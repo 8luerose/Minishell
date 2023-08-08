@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:09 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/06 16:33:20 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:39:43 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,7 @@ void	expand_with_quo(t_list	*envp, t_node	*node)
 		{
 			size = check_envp(&content[i]);
 			if (size > 0)
-			{
 				content = change_to_envp(i, size, content, envp);
-				i--;
-			}
 		}
 		i++;
 	}
@@ -118,6 +115,7 @@ void	expand(t_list	*envp, t_list *list)
 	{
 		if (iter->env == 1)
 		{
+			// 리다이렉션 뒤에 확장 제한 있음. 코드 추가해주기
 			expand_just_envp(envp, iter);
 			if (have_space(iter->content))
 				split_node(iter);

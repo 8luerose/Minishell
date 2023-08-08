@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:30:51 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/06 16:46:43 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:23:45 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_envp(char	*content)
 	char	*new;
 
 	i = 0;
-	if ((content[i + 1] >= 'a' && content[i + 1] <= 'z')
+	if ((content[i + 1] >= 'a' && content[i + 1] <= 'z')   // 언더바 들어올 수 있음
 		|| (content[i + 1] >= 'A' && content[i + 1] <= 'Z')
 		|| (content[i + 1] >= '0' && content[i + 1] <= '9'))
 		i++;

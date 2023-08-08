@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/06 20:01:34 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:50:18 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,19 @@ void	minishell(char *input, t_list	*my_envp)
 	list->head = NULL;
 	list->tail = NULL;
 	get_token(input, list);
-	expand(my_envp, list);
-	// type
+	// get_type(list);
 	// check_syntax_error(list);  // syntax 에러
+	// expand(my_envp, list);
 	// get_list();
-	
-	t_node *s;
-	s = list->head;
-	while (s)
-	{
-		printf("%s\n", s->content);
-		s = s->next;
-	}
+
+
+	// t_node *s;
+	// s = list->head;
+	// while (s)
+	// {
+	// 	printf("%s\n", s->content);
+	// 	s = s->next;
+	// }
 }
 
 int	main(int ac, char **av, char **ev)

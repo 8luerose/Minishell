@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/05 15:12:30 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:01:53 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,12 @@ void	make_node(char *content, t_flag flag, t_list *list)
 		make_head_node(content, flag, list);
 	else
 		join_node(content, flag, list);
+}
+
+void	new_pipeline(t_data	*list)
+{
+	t_data	*result;
+
+	result = (t_data *)malloc(sizeof(t_data));
+	
 }

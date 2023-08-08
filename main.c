@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 19:43:07 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/08 20:42:25 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	copy_envp(char	**ev, t_list	*my_envp)
 void	minishell(char *input, t_list	*my_envp)
 {
 	t_list	*list;
+	t_data	*pipeline_list;
 
 	list = (t_list *)malloc(sizeof(t_list));
 	list->head = NULL;
@@ -95,7 +96,7 @@ void	minishell(char *input, t_list	*my_envp)
 	// check_syntax_error(list);  // syntax 에러
 	// expand(my_envp, list);
 	
-	get_list(list);
+	get_list(list, pipeline_list);
 
 
 	// t_node *s;

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 20:17:06 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/08 20:44:59 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	ft_export(t_list *my_envp, char	**cmd_line);
 // ft_env
 void	ft_env(t_list	*my_envp);
 //get_list(second parsing)
-void 	get_list(t_list *list);
+void	get_list(t_list *list, t_data *pipeline_list);
 
 #endif

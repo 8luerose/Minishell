@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 16:50:18 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:43:07 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	minishell(char *input, t_list	*my_envp)
 	// get_type(list);
 	// check_syntax_error(list);  // syntax 에러
 	// expand(my_envp, list);
-	// get_list();
+	
+	get_list(list);
 
 
 	// t_node *s;

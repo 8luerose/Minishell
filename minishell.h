@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 16:49:26 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/08 20:17:06 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,21 @@ typedef struct s_flag
 // typedef struct s_cmd
 // {
 // 	char	**cmd_line;
-// 	t_cmd	*next;
 // }	t_cmd;
 
-// typedef struct s_redir
-// {
-// 	char	*redir;
-// 	char	*file_name;
-// 	t_redir	*next;
-// }	t_redir;
+typedef struct s_redir
+{
+	char	*redir;
+	char	*file_name;
+	t_redir	*next;
+}	t_redir;
 
-// typedef struct s_data
-// {
-// 	t_cmd	*cmd;
-// 	t_redir	*redir;
-// 	t_data	*next;
-// }	t_data;
+typedef struct s_data
+{
+	char	**cmd_line;
+	t_redir	*redir;
+	t_data	*next;
+}	t_data;
 
 /////////////////////////////////
 
@@ -105,5 +104,7 @@ char	*get_key(char	*str);
 void	ft_export(t_list *my_envp, char	**cmd_line);
 // ft_env
 void	ft_env(t_list	*my_envp);
+//get_list(second parsing)
+void 	get_list(t_list *list);
 
 #endif

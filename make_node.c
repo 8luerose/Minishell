@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 03:24:10 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:39:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ t_data	*init_data(void)
 	return (new_data);
 }
 
-t_redir	*init_redir(t_node *current)
+t_redir	*init_redir(t_node *p)
 {
 	t_redir *new_redir;
 
 	new_redir = (t_redir *)malloc(sizeof(t_redir));
-	new_redir->redir = ft_strdup(current->content);
-    new_redir->file_name = ft_strdup(current->next->content);
+	new_redir->redir = ft_strdup(p->content);
+    new_redir->file_name = ft_strdup(p->next->content);
     new_redir->next = NULL;
 }
 

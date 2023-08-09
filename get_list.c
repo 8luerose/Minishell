@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 19:43:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/09 03:59:29 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:49:08 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void get_list(t_list *list, t_data *pipeline_list)
         else if (p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT)
         {
             append_redir(data, p);
-            p = p->next;  // 파일 이름으로 이동, <t_redir->*file_name; 넣을것!>
+            p = p->next;  // 파일 이름으로 이동
             if (p)
                 p = p->next; //파일 이름에서 한 번 더 건너뛰어준다!
         }
@@ -88,12 +88,12 @@ void append_cmd(t_data *data, char *word)
     data->cmd_line = new_cmd_line;		//백업본으로 새로 갈아끼우기
 }
 
-void append_redir(t_data *data, t_node *current)
+void append_redir(t_data *data, t_node *p)
 {
     t_redir *new_redir;
 	t_redir	*tmp;
 
-	new_redir = init_redir(current);
+	new_redir = init_redir(p);
     if (!data->redir)
         data->redir = new_redir;
     else

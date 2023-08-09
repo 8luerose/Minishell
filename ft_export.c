@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 16:59:51 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:34:08 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,23 +109,23 @@ void	ft_export(t_list *my_envp, char	**cmd_line)
 	}
 }
 
-int main(int ac, char **av, char **ev)
-{
-	t_list	*my_envp;
-	char	*arr[3];
+// int main(int ac, char **av, char **ev)
+// {
+// 	t_list	*my_envp;
+// 	char	*arr[3];
 	
-	(void)ac;
-	(void)av;
-	my_envp = (t_list *)malloc(sizeof(t_list));
-	my_envp->head = NULL;
-	my_envp->tail = NULL;
-	copy_envp(ev, my_envp);
-	arr[0] = ft_strdup("export");
-	arr[1] = ft_strdup("$USER = ");
-	arr[2] = NULL;
+// 	(void)ac;
+// 	(void)av;
+// 	my_envp = (t_list *)malloc(sizeof(t_list));
+// 	my_envp->head = NULL;
+// 	my_envp->tail = NULL;
+// 	copy_envp(ev, my_envp);
+// 	arr[0] = ft_strdup("export");
+// 	arr[1] = ft_strdup("$USER = ");
+// 	arr[2] = NULL;
 	
-	ft_export(my_envp, arr);
-	ft_env(my_envp);
+// 	ft_export(my_envp, arr);
+// 	ft_env(my_envp);
 	
 
-}
+// }

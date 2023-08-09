@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 03:55:44 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:39:29 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	make_head_node(char *content, t_flag flag, t_list *list);
 void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
 t_data	*init_data(void);
-t_redir	*init_redir(t_node *current);
+t_redir	*init_redir(t_node *p);
 // expand.c
 void	expand_with_quo(t_list	*envp, t_node	*node);
 void	expand(t_list	*envp, t_list *list);

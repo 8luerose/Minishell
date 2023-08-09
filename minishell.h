@@ -6,13 +6,14 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 16:39:29 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:23:10 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <readline/readline.h>   // readline을 위한 헤더
 # include <readline/history.h>    // add_history를 위한 헤더
 # include "libft/libft.h"
@@ -62,16 +63,16 @@ typedef struct s_flag
 
 typedef struct s_redir
 {
-	char	*redir;
-	char	*file_name;
-	t_redir	*next;
+	char			*redir;
+	char			*file_name;
+	struct s_redir	*next;
 }	t_redir;
 
 typedef struct s_data
 {
-	char	**cmd_line;
-	t_redir	*redir;
-	t_data	*next;
+	char		**cmd_line;
+	t_redir			*redir;
+	struct s_data	*next;
 }	t_data;
 
 /////////////////////////////////
@@ -107,8 +108,10 @@ void	ft_export(t_list *my_envp, char	**cmd_line);
 // ft_env
 void	ft_env(t_list	*my_envp);
 //get_list(second parsing)
-void	get_list(t_list *list, t_data *pipeline_list);
+void	get_list(t_list *list, t_data **pipeline_list);
 void 	append_cmd(t_data *data, char *word);
 void 	append_redir(t_data *data, t_node *current);
+
+void	get_type(t_list	*list);
 
 #endif

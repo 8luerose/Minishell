@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:48 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/06 16:30:13 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:07:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*ft_strndup(const char *s1, int n)
 	}
 	return (new);
 }
+
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

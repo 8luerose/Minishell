@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 16:39:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:01:58 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_redir	*init_redir(t_node *p)
 	new_redir->redir = ft_strdup(p->content);
     new_redir->file_name = ft_strdup(p->next->content);
     new_redir->next = NULL;
+	return (new_redir);
 }
 
     

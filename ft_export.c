@@ -6,49 +6,49 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 16:34:08 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:11:57 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*make_content(char	*line)
-{
-	int		i;
-	int		size;
-	char	*content;
+// char	*make_content(char	*line)
+// {
+// 	int		i;
+// 	int		size;
+// 	char	*content;
 
-	size = 0;
-	while (line[size])
-		size++;
-	content = (char *)malloc(sizeof(char) * size + 1);
-	if (!content)
-		exit(1);
-	i = 0;
-	while (line[i])
-	{
-		content[i] = line[i];
-		i++;
-	}
-	return (content);
-}
+// 	size = 0;
+// 	while (line[size])
+// 		size++;
+// 	content = (char *)malloc(sizeof(char) * size + 1);
+// 	if (!content)
+// 		exit(1);
+// 	i = 0;
+// 	while (line[i])
+// 	{
+// 		content[i] = line[i];
+// 		i++;
+// 	}
+// 	return (content);
+// }
 
-void	copy_envp(char	**ev, t_list	*my_envp)
-{
-	int		i;
-	t_flag	flag;
-	char	*content;
+// void	copy_envp(char	**ev, t_list	*my_envp)
+// {
+// 	int		i;
+// 	t_flag	flag;
+// 	char	*content;
 
-	i = 0;
-	while (ev[i])
-	{
-		flag.env = 0;
-		flag.env_with_quo = 0;
-		content = make_content(ev[i]);
-		make_node(content, flag, my_envp);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (ev[i])
+// 	{
+// 		flag.env = 0;
+// 		flag.env_with_quo = 0;
+// 		content = make_content(ev[i]);
+// 		make_node(content, flag, my_envp);
+// 		i++;
+// 	}
+// }
 
 char	*get_key(char	*str)
 {

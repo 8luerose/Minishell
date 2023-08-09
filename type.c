@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:07:46 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 14:12:31 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:35:31 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ enum e_type	token_type(char	*content)
 		return (REDIR_OUT);
 	else if (strcmp(content, "<<") == 0)
 		return (HEREDOC_IN);
-	else if (strcmp(content, "<<") == 0)
+	else if (strcmp(content, ">>") == 0)
 		return (HEREDOC_OUT);
 	else
 		return (WORD);

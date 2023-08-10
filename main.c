@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 21:07:11 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 03:26:33 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	minishell(char *input)
 	list->tail = NULL;
 	get_token(input, list);
 	get_type(list);
-	// check_syntax_error(list);  // syntax 에러
+	check_syntax_error(list);  // syntax 에러
 	// expand(my_envp, list);
 	pipeline_list = NULL;
 	get_list(list, &pipeline_list);
@@ -108,53 +108,11 @@ void	minishell(char *input)
 		s = s->next;
 	}
 
-	t_data	*p_data;
-	t_redir	*p_redir;
-	// char	*p_file_name;
-	char	**p_cmd_line;
-	int		i;
-
-	p_data = pipeline_list;
-	while (p_data)
-	{
-		p_cmd_line = p_data->cmd_line;
-		i = 0;
-		while (p_cmd_line)
-		{
-			printf("cmd_line[%i] = %s\n", i, p_cmd_line[i]);
-			i++;
-		}
-
-		p_redir = p_data->redir;
-		while (p_redir)
-		{
-			printf("reidr: %s  file_name: %s\n", p_redir->redir, p_redir->file_name);
-			p_redir = p_redir->next;
-		}
-		p_data = p_data->next;
-	}
-
+	print_data_test(pipeline_list);
+	printf("test completed!\n\n");
+	print_data(pipeline_list);
 
 	// gcc -lreadline *.c libft.a -g -fsanitize=address 이걸로 컴파일 해!
-
-
-	// printf("_____2 \n\n\n");
-	// t_data *result;
-	// char *test_cmd;
-	// result = pipeline_list;
-
-	// while (result)
-	// {
-	// 	test_cmd = result->cmd_line;
-	// 	while (test_cmd)
-	// 	{
-	// 		printf("%s\n", test_cmd);
-	// 		test_cmd++;
-	// 	}
-	// 	printf("%s\n", result->redir->redir);
-	// 	printf("%s\n", result->content);
-	// 	result = result->next;
-	// }
 }
 
 int	main(int ac, char **av, char **ev)

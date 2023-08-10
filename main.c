@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 03:26:33 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 05:19:24 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	copy_envp(char	**ev, t_list	*my_envp)
 void	minishell(char *input)
 {
 	t_list	*list;
-	t_data	*pipeline_list;
+	t_data	*pipe_parsing;
+	t_node 	*test;
 
 	list = (t_list *)malloc(sizeof(t_list));
 	list->head = NULL;
@@ -96,23 +97,13 @@ void	minishell(char *input)
 	get_type(list);
 	check_syntax_error(list);  // syntax 에러
 	// expand(my_envp, list);
-	pipeline_list = NULL;
-	get_list(list, &pipeline_list);
+	
+	pipe_parsing = NULL;
+	get_list(list, &pipe_parsing);		//1차 토큰화 -> 파이프 단위로 나눔
 
-
-	t_node *s;
-	s = list->head;
-	while (s)
-	{
-		printf("%s            type: %d\n", s->content, s->type);
-		s = s->next;
-	}
-
-	print_data_test(pipeline_list);
-	printf("test completed!\n\n");
-	print_data(pipeline_list);
-
-	// gcc -lreadline *.c libft.a -g -fsanitize=address 이걸로 컴파일 해!
+	print_type(list);					//타입만 확인
+	print_result_test(pipe_parsing);	//2차 파싱 잘 구분되었는지 테스트 출력
+	print_result(pipe_parsing);			//2차 파싱 결과물 출력
 }
 
 int	main(int ac, char **av, char **ev)
@@ -139,3 +130,4 @@ int	main(int ac, char **av, char **ev)
 	free(input);
 	return (0);
 }
+// gcc -lreadline *.c libft.a -g -fsanitize=address 이걸로 컴파일 해!

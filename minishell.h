@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 03:10:53 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 04:56:48 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ t_node	*ft_lstnew(char *content, t_flag flag);
 void	make_head_node(char *content, t_flag flag, t_list *list);
 void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
-t_data	*init_data(void);
-t_redir	*init_redir(t_node *p);
+t_data	*init_new_data(void);
+t_redir	*init_new_redir(t_node *p);
 // expand.c
 void	expand_with_quo(t_list	*envp, t_node	*node);
 void	expand(t_list	*envp, t_list *list);
@@ -113,10 +113,13 @@ void	get_type(t_list	*list);
 void	get_list(t_list *list, t_data **pipeline_list);
 void 	append_cmd(t_data *data, char *word);
 void 	append_redir(t_data *data, t_node *current);
+//free
+void	free_pipeline(t_data *pipeline);
+void	free_redirs(t_redir *redir);
+void	free_cmd_line(char **cmd_line);
 //print
-void	print_redir(t_redir *redir);
-void	print_data(t_data *data);
-void	print_redir_test(t_redir *redir);
-void	print_data_test(t_data *data);
+void	print_result(t_data *data);
+void	print_result_test(t_data *data);
+void	print_type(t_list *list);
 
 #endif

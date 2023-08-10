@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 02:58:28 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 04:10:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	get_token(char *input, t_list *list)
 	}
 	if (flag.quo)
 		exit(1);
-	if (buf[0] != 0)  // 마지막에 정상적으로 버퍼 만들어져 있을때만 추가한다. ""같은 NULL 버퍼면 추가하지 않는다.
+	if (buf[0] != 0)  // 마지막에 정상적으로 버퍼 만들어져 있을때만 추가한다. ""같은 '\0' 버퍼면 추가하지 않는다.
 		make_node(buf, flag, list);
 	free(buf);
 }

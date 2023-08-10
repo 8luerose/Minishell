@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/09 17:01:58 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 04:56:29 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	make_node(char *content, t_flag flag, t_list *list)
 		join_node(content, flag, list);
 }
 
-t_data	*init_data(void)
+t_data	*init_new_data(void)
 {
 	t_data	*new_data;
 
@@ -63,7 +63,7 @@ t_data	*init_data(void)
 	return (new_data);
 }
 
-t_redir	*init_redir(t_node *p)
+t_redir	*init_new_redir(t_node *p)
 {
 	t_redir *new_redir;
 

@@ -6,163 +6,125 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 19:43:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/11 03:41:46 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 05:07:41 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_cmd_line(char **cmd_line)
-{
-	int i = 0;
-	if (cmd_line)
-	{
-		while (cmd_line[i])
-		{
-			free(cmd_line[i]);  // 개별 문자열 해제
-			i++;
-		}
-		free(cmd_line);  // 문자열 배열 자체를 해제
-	}
-}
-
-void free_redirs(t_redir *redir)
-{
-	t_redir *tmp;
-	while (redir)
-	{
-		tmp = redir;
-		redir = redir->next;
-		free(tmp->file_name);
-		free(tmp);
-	}
-}
-
-void free_pipeline(t_data *pipeline)
-{
-	t_data *tmp;
-	while (pipeline)
-	{
-		tmp = pipeline;
-		pipeline = pipeline->next;
-		free_cmd_line(tmp->cmd_line);
-		free_redirs(tmp->redir);
-		free(tmp);
-	}
-}
-
-void get_list(t_list *list, t_data **pipeline_list)
+void get_list(t_list *list, t_data **pipe_data)
 {
     t_node	*p;
-    t_data	*data;
+    t_data	*new_data;
 	t_data	*tmp;
 
-	data = init_data();
+	new_data = init_new_data();
 	p = list->head;
     while (p)
     {
         if (p->type == WORD)
         {
-            append_cmd(data, p->content);
+            append_cmd(new_data, p->content);
             p = p->next;
         }
-        else if (p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT)
+        else if (p->type == REDIR_IN || p->type == REDIR_OUT \
+			|| p->type == HEREDOC_IN || p->type == HEREDOC_OUT)
         {
-            append_redir(data, p);
+            append_redir(new_data, p);
             p = p->next;
 			if (!p || (p->type != WORD))
 			{
-				printf("Error: Expected word after redirection\n");
-				free_pipeline(data);  // 메모리 누수를 막기 위해 추가
-				return;  
+				printf("ERROR: NO WORD after redirection\n");
+				free_pipeline(new_data);
+				exit(1);
 			}
             p = p->next;
         }
         else if (p->type == PIPE)
         {
-			if (!*pipeline_list)
+			if (!*pipe_data)
             {
-				*pipeline_list = data;
+				*pipe_data = new_data;		//새로 만든 data 연결
             }
             else
             {
-                tmp = (*pipeline_list);
+                tmp = (*pipe_data);
                 while (tmp && tmp->next)
 				{
                     tmp = tmp->next;
 				}
-                tmp->next = data;
+                tmp->next = new_data;		//기존꺼 맨 뒤에 새로 만든 data 연결
             }
-            data = init_data();
+            new_data = init_new_data();
 			p = p->next;
         }
-		else
+		else	//이거 빼면 무한루프 생길 수 있음, 불필요한 타입이 리스트에 존재하더라도 우선 패스하고 끝은 나야함
         	p = p->next;
     }
 
-	if (data->cmd_line || data->redir)
+	if (new_data->cmd_line || new_data->redir)		// ~ | ls 즉, 맨 마지막 파이프 뒤에꺼
 	{
-		if (!*pipeline_list)
+		if (!*pipe_data)
 		{
-			*pipeline_list = data;
+			*pipe_data = new_data;
 		}
 		else
 		{
-			tmp = (*pipeline_list);
+			tmp = (*pipe_data);
 			while (tmp && tmp->next)
 			{
 				tmp = tmp->next;
 			}
-			tmp->next = data;
+			tmp->next = new_data;
 		}
 	}
-	else
+	else											//| ' ' 즉, 마지막 데이터 없으면 만들어진 data 그냥 free 
 	{
-		free_pipeline(data);
+		free_pipeline(new_data);
 	}
 }
 
-void append_cmd(t_data *data, char *word)
+void append_cmd(t_data *new_data, char *word)
 {
     char	**new_cmd_line;
     int 	len;
 	int		i;
 
 	len = 0;
-    while (data->cmd_line && data->cmd_line[len])
+    while (new_data->cmd_line && new_data->cmd_line[len])
         len++;
     new_cmd_line = (char **)malloc(sizeof(char *) * (len + 2));
     i = 0;
     while (i < len)
     {
-        new_cmd_line[i] = data->cmd_line[i];
+        new_cmd_line[i] = new_data->cmd_line[i];
         i++;
     }
     new_cmd_line[i] = ft_strdup(word);
     new_cmd_line[i + 1] = NULL;
 
-	if (data->cmd_line)  // 메모리 누수를 막기 위해 추가
-		free(data->cmd_line);
+	if (new_data->cmd_line)
+		free(new_data->cmd_line);
 
-    data->cmd_line = new_cmd_line;
+    new_data->cmd_line = new_cmd_line;
 }
 
-void append_redir(t_data *data, t_node *p)
+void append_redir(t_data *new_data, t_node *p)
 {
-    t_redir *new_redir;
+    t_redir	*new_redir;
 	t_redir	*tmp;
 
 	if (!p->next)
 	{
-		printf("None file_name after redir\n");
-		return ;
+		printf("None 'file_name' after redir\n");
+		exit(1);
 	}
-	new_redir = init_redir(p);
-    if (!data->redir)
-        data->redir = new_redir;
+	new_redir = init_new_redir(p);
+    if (!new_data->redir)
+        new_data->redir = new_redir;
     else
     {
-    	tmp = data->redir;
+    	tmp = new_data->redir;
         while (tmp && tmp->next)
         {
             tmp = tmp->next;

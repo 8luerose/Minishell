@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 04:56:48 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:13:59 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <termios.h>
 # include <readline/readline.h>   // readline을 위한 헤더
 # include <readline/history.h>    // add_history를 위한 헤더
 # include "libft/libft.h"
@@ -121,5 +122,10 @@ void	free_cmd_line(char **cmd_line);
 void	print_result(t_data *data);
 void	print_result_test(t_data *data);
 void	print_type(t_list *list);
+//signal
+void	set_terminal_print_off(void);
+void	set_terminal_print_on(void);
+void	handler_sigint(int key);
+void	handler_sigquit(int key);
 
 #endif

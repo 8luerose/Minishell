@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/12 06:22:11 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:15:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,6 @@ void	minishell(char *input)
 	print_result(pipe_parsing);			//2차 파싱 결과물 출력
 }
 
-void	handler_sigint(int key)
-{
-    (void)key;
-    write(1, "\n💭 : ", 7);
-}
-
-void	handler_sigquit(int key)
-{
-    (void)key;  // 아무것도 하지 않음
-}
-
 int	main(int ac, char **av, char **ev)
 {
     char	*input;
@@ -135,6 +124,7 @@ int	main(int ac, char **av, char **ev)
 
     ac = 0;
     av = 0;
+	set_terminal_print_off();
     my_envp = (t_list *)malloc(sizeof(t_list));
     my_envp->head = NULL;
     my_envp->tail = NULL;
@@ -158,6 +148,7 @@ int	main(int ac, char **av, char **ev)
 		
         free(input);
     }
+	set_terminal_print_on();
     return 0;
 }
 

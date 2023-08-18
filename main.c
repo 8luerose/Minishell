@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/18 20:22:00 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/19 02:08:32 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,6 @@ int	main(int ac, char **av, char **ev)
 	char	*input;
 	t_envp	*my_envp;
 
-	signal(SIGINT, handler_sigint);		// Ctrl + C
-	signal(SIGQUIT, SIG_IGN);
 	set_terminal_print_off();			// ^C 출력 방지
 	ac = 0;
 	av = 0;
@@ -143,6 +141,8 @@ int	main(int ac, char **av, char **ev)
 	copy_envp(ev, my_envp);
 	while (1)
 	{
+		signal(SIGINT, handler_sigint);		// Ctrl + C
+		signal(SIGQUIT, SIG_IGN);
 		stat = 0;
 		input = readline("bash: ");
 		if (input)						// 입력(문자열)이 있으면 명령 처리
@@ -151,14 +151,19 @@ int	main(int ac, char **av, char **ev)
 			add_history(input);
 		}
 		else 							// ctrl + d (EOF) 입력하면 NULL들어온다
-        {
-            write(1, "\n", 1);
-            exit(0);  					// 정상적 종료
-        }
+           handler_sigterm();
 		free(input);
 	}
 	set_terminal_print_on();			// ^C 출력 방지끔
 	return (0);
 }
+//맥 클러스터
 //gcc -L/Users/taehkwon/.brew/opt/readline/lib -lreadline -I/Users/taehkwon/.brew/opt/readline/include *.c libft.a -g -fsanitize=address
 
+//맥 개인 맥북
+//gcc -L/opt/homebrew/opt/readline/lib -l readline -I/opt/homebrew/opt/readline/include *.c libft.a -g -fsanitize=address
+
+//시그널 보내면 부모일때는 무시하고 자식 프로세스일때 시그널 처리
+
+//부모일 때(pid ==0 전일때) signal(SIGINT,SIG_IGN),
+//if (pid == 0) 뜨는 순간 signal 처리를 해준다

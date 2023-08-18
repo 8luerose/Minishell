@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/18 16:59:55 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/18 20:22:00 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,3 +160,5 @@ int	main(int ac, char **av, char **ev)
 	set_terminal_print_on();			// ^C 출력 방지끔
 	return (0);
 }
+//gcc -L/Users/taehkwon/.brew/opt/readline/lib -lreadline -I/Users/taehkwon/.brew/opt/readline/include *.c libft.a -g -fsanitize=address
+

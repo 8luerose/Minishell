@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 04:40:29 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/11 04:47:02 by taehkwon         ###   ########.fr       */
+/*   Created: 2023/08/11 12:21:43 by seojchoi          #+#    #+#             */
+/*   Updated: 2023/08/12 11:26:47 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_pipeline(t_data *data)
 
 void	free_cmd_line(char **cmd_line)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	if (cmd_line)

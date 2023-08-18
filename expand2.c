@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:30:51 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 15:23:45 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/15 21:56:02 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ int	check_envp(char	*content)
 	char	*new;
 
 	i = 0;
-	if ((content[i + 1] >= 'a' && content[i + 1] <= 'z')   // 언더바 들어올 수 있음
+	if ((content[i + 1] >= 'a' && content[i + 1] <= 'z')
 		|| (content[i + 1] >= 'A' && content[i + 1] <= 'Z')
-		|| (content[i + 1] >= '0' && content[i + 1] <= '9'))
+		|| (content[i + 1] >= '0' && content[i + 1] <= '9')
+		|| content[i + 1] == '_')
 		i++;
 	else
 		return (-1);
@@ -28,7 +29,8 @@ int	check_envp(char	*content)
 	{
 		if (!((content[i] >= 'a' && content[i] <= 'z')
 				|| (content[i] >= 'A' && content[i] <= 'Z')
-				|| (content[i] >= '0' && content[i] <= '9')))
+				|| (content[i] >= '0' && content[i] <= '9')
+				|| content[i] == '_'))
 			break ;
 		i++;
 	}
@@ -99,7 +101,31 @@ char	*cut_back(int start, int size, char *content)
 	return (tmp2);
 }
 
-char	*change_to_envp(int start, int size, char *content, t_list *envp)
+char	*make_check(char *front, char *back, char *change, char *new)
+{
+	int		i;
+	int		j;
+	char	*check;
+
+	i = 0;
+	while (new[i])
+		i++;
+	check = (char *)malloc(sizeof(char) * (i + 1));
+	i = 0;
+	j = 0;
+	while (front[j++])
+		check[i++] = 'T';
+	j = 0;
+	while (change[j++])
+		check[i++] = 'F';
+	j = 0;
+	while (back[j++])
+		check[i++] = 'T';
+	check[i] = '\0';
+	return (check);
+}
+
+char	*change_to_envp(int start, int size, char *content, t_list *envp, char **check)
 {
 	char	*front;
 	char	*back;
@@ -113,6 +139,7 @@ char	*change_to_envp(int start, int size, char *content, t_list *envp)
 	{
 		new = ft_strjoin(front, change);
 		new = ft_strjoin(new, back);
+		*check = make_check(front, back, change, new);
 	}
 	else
 		new = ft_strjoin(front, back);

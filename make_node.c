@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 04:56:29 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/16 13:30:04 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_node	*ft_lstnew(char *content, t_flag flag)
 
 	new = (t_node *)malloc(sizeof(t_node));
 	new->content = ft_strdup(content);
+	new->check = NULL;
 	new->env = flag.env;
 	new->env_with_quo = flag.env_with_quo;
 	new->next = NULL;
@@ -74,4 +75,24 @@ t_redir	*init_new_redir(t_node *p)
 	return (new_redir);
 }
 
-    
+t_envp	*init_new_envp(void)
+{
+	t_envp	*new_envp;
+
+	new_envp = (t_envp *)malloc(sizeof(t_envp));
+	new_envp->ev = NULL;
+	new_envp->envp = (t_list *)malloc(sizeof(t_list));
+	new_envp->envp->head = NULL;
+	new_envp->envp->tail = NULL;
+	return (new_envp);
+}
+
+t_list	*init_new_list(void)
+{
+	t_list	*new_list;
+
+	new_list = (t_list *)malloc(sizeof(t_list));
+	new_list->head = NULL;
+	new_list->tail = NULL;
+	return (new_list);
+}

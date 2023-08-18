@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/12 20:13:59 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:15:58 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
 # include <termios.h>
 # include <readline/readline.h>   // readline을 위한 헤더
 # include <readline/history.h>    // add_history를 위한 헤더
@@ -22,6 +23,8 @@
 # define DOUBLE_Q 1
 # define SINGLE_Q 2
 
+int	stat;
+
 enum	e_type
 {
 	WORD,
@@ -29,12 +32,21 @@ enum	e_type
 	REDIR_IN,
 	REDIR_OUT,
 	HEREDOC_IN,
-	HEREDOC_OUT
+	HEREDOC_OUT,
+	ECHOO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT,
+	NOT_BUILTIN,
 };
 
 typedef struct s_node
 {
 	char			*content;
+	char			*check;
 	int				env;
 	int				env_with_quo;
 	enum e_type		type;
@@ -55,13 +67,6 @@ typedef struct s_flag
 	int	env_with_quo;
 }	t_flag;
 
-/////////////////////////////////
-
-// typedef struct s_cmd
-// {
-// 	char	**cmd_line;
-// }	t_cmd;
-
 typedef struct s_redir
 {
 	char			*redir;
@@ -71,12 +76,25 @@ typedef struct s_redir
 
 typedef struct s_data
 {
-	char		**cmd_line;
+	char			**cmd_line;
+	int				i_fd;
+	int				o_fd;
 	t_redir			*redir;
 	struct s_data	*next;
 }	t_data;
 
-/////////////////////////////////
+typedef struct s_pipe
+{
+	int	size;
+	int	prev_fd[2];
+	int	cur_fd[2];
+}	t_pipe;
+
+typedef struct s_envp
+{
+	char	**ev;
+	t_list	*envp;
+}	t_envp;
 
 // token
 int		is_meta(char c);
@@ -88,6 +106,8 @@ void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
 t_data	*init_new_data(void);
 t_redir	*init_new_redir(t_node *p);
+t_envp	*init_new_envp(void);
+t_list	*init_new_list(void);
 // expand.c
 void	expand_with_quo(t_list	*envp, t_node	*node);
 void	expand(t_list	*envp, t_list *list);
@@ -96,18 +116,13 @@ int		check_envp(char	*content);
 char	*get_env(char *key, t_list *envp);
 char	*cut_front(int start, char *content);
 char	*cut_back(int start, int size, char *content);
-char	*change_to_envp(int start, int size, char *content, t_list *envp);
+char	*change_to_envp(int start, int size, char *content, t_list *envp, char **check);
 // utils
 char	*ft_strjoin_c(char const *s1, char c);
 char	*ft_strndup(const char *s1, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 // syntax_error
 void	check_syntax_error(t_list *list);
-// ft_export
-char	*get_key(char	*str);
-void	ft_export(t_list *my_envp, char	**cmd_line);
-// ft_env
-void	ft_env(t_list	*my_envp);
 //get_type
 void	get_type(t_list	*list);
 //get_list(second parsing)
@@ -122,6 +137,52 @@ void	free_cmd_line(char **cmd_line);
 void	print_result(t_data *data);
 void	print_result_test(t_data *data);
 void	print_type(t_list *list);
+// execute
+int		set_io_fd(t_data *cmd);
+int		execute(t_data	*cmd, t_envp	*my_envp);
+// is_builtin
+void	run_builtin(int check, t_data *cmd, t_list *my_envp);
+int		is_builtin(t_data *cmd);
+// built_in
+// ft_echo
+void	ft_echo(int fd, char **cmd_line);
+int		find_n(char *str);
+// ft_cd
+void	ft_cd(t_list *my_envp, char **cmd_line);
+void	change_pwd_in_env(t_list *my_envp);
+void	cd_error(char	**cmd_line);
+// ft_pwd
+void	ft_pwd(int fd);
+// ft_export
+void	ft_export(t_list *my_envp, char	**cmd_line, int fd);
+char	*get_key(char	*str);
+// ft_unset
+void	ft_unset(t_list *my_envp, char **cmd_line);
+// ft_env
+void	ft_env(int fd, t_list	*my_envp);
+// ft_exit
+int		ft_exit(char **cmd_line);
+// heredoc
+char	*set_file_name(void);
+int		is_limiter(char *str, char *limiter);
+void	read_heredoc(char	*limiter, int file_fd);
+void	heredoc_open(t_data	*cmd);
+// pipe
+int		check_is_access(char **access_path, char **path, char *cmd);
+// void	do_cmd(t_data	*cmd, t_envp *my_envp, char **path);
+int		do_cmd(t_data	*cmd, t_envp *my_envp, char **path);
+void	first_pipe(t_data *cmd, t_pipe *exec, t_envp *my_envp, char **path);
+void	mid_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
+void	last_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
+// close
+void	close_prev(t_pipe *fd);
+void	close_cur(t_pipe *fd);
+void	close_n_wait(t_pipe *fd, int size);
+// error
+int		cnt_str(char *str);
+void	command_error(char *cmd);
+int		file_error(char *file_name);
+int		system_error(void);
 //signal
 void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);

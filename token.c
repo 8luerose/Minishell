@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 04:10:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:59:00 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ void	get_token(char *input, t_list *list)
 					i++;
 				}
 				else
-				{
 					tmp = ft_strndup(&input[i], 1);
-				}
 				buf = ft_strjoin_c(tmp, input[i]);
 				free(tmp);
 				make_node(buf, flag, list);
@@ -97,7 +95,7 @@ void	get_token(char *input, t_list *list)
 	}
 	if (flag.quo)
 		exit(1);
-	if (buf[0] != 0)  // 마지막에 정상적으로 버퍼 만들어져 있을때만 추가한다. ""같은 '\0' 버퍼면 추가하지 않는다.
+	if (buf[0] != 0)
 		make_node(buf, flag, list);
 	free(buf);
 }

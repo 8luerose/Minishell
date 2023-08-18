@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 20:11:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/12 20:14:15 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:04:20 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,17 @@ void	set_terminal_print_on(void)		// 터미널에 ^C, ^\등의 시그널표식�
 
 void	handler_sigint(int key)
 {
-    (void)key;
-    write(1, "\n💭 : ", 7);
+    // (void)key;
 	// exit(1);
-}
-
-void	handler_sigquit(int key)
-{
-    (void)key;  // 아무것도 하지 않음
+	if (key == SIGINT)					//지금까지 입력된 프롬프트를 유지한 채 개행한 후 텅 빈 프롬프트를 받는다
+	{
+		// write(1, "\n💭 : ", 7);
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		// rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (key == SIGQUIT)
+		(void)key;
 }

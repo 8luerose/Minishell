@@ -5,18 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 15:42:30 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/08 15:48:59 by seojchoi         ###   ########.fr       */
+/*   Created: 2023/08/09 14:03:08 by seojchoi          #+#    #+#             */
+/*   Updated: 2023/08/11 17:04:40 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	ft_pwd(void)
-// {
-// 	char	*pwd;
+void	ft_pwd(int fd)
+{
+	char	*pwd;
 
-// 	pwd = getcwd(NULL, 0);
-// 	printf("%s\n", pwd);
-// 	free(pwd);
-// }
+	pwd = getcwd(NULL, 0);
+	ft_putendl_fd(pwd, fd);
+}

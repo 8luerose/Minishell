@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 19:43:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/11 05:07:41 by taehkwon         ###   ########.fr       */
+/*   Created: 2023/08/11 12:21:20 by seojchoi          #+#    #+#             */
+/*   Updated: 2023/08/12 13:39:19 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void get_list(t_list *list, t_data **pipe_data)
+void	get_list(t_list *list, t_data **pipe_data)
 {
-    t_node	*p;
-    t_data	*new_data;
+	t_node	*p;
+	t_data	*new_data;
 	t_data	*tmp;
 
 	new_data = init_new_data();

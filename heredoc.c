@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 02:10:07 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/19 05:19:15 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	read_heredoc(char	*limiter, int file_fd)
 	pid_t	pid;
 	char	*input;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);									//fork 전 추가
 	pid = fork();
 	if (pid == 0)
 	{

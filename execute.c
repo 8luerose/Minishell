@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/17 17:23:30 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/19 05:19:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,11 +163,15 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 		backup(&exec, i);
 		if (pipe(exec.cur_fd) < 0)
 			exit(1);
+		signal(SIGINT, SIG_IGN);								//fork 전 추가
 		pid = fork();
 		if (pid < 0)
 			exit(1);
 		if (pid == 0)
 		{
+			signal(SIGINT, handler_sig_heredoc);
+			signal(SIGTERM, handler_sig_heredoc);
+			signal(SIGQUIT, SIG_IGN);
 			if (i == 0)
 				first_pipe(iter, &exec, my_envp, path);
 			else if (iter->next == NULL)

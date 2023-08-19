@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 02:08:29 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:25:06 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int		system_error(void);
 void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
 void	handler_sigint(int key);
-void	handler_sig_heredoc(int key);
+void	handler_sig_child(int key);
 void	handler_sigterm(void);
 
 #endif

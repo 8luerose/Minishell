@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 05:19:15 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:25:08 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	read_heredoc(char	*limiter, int file_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, handler_sig_heredoc);
-		signal(SIGTERM, handler_sig_heredoc);
+		signal(SIGINT, handler_sig_child);
+		signal(SIGTERM, handler_sig_child);
 		signal(SIGQUIT, SIG_IGN);
 		while (1)
 		{

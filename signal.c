@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 20:11:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/19 02:10:11 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:26:27 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,20 @@ void	handler_sigint(int key)
 	}
 }
 
-void	handler_sig_heredoc(int key)
+void	handler_sigterm(void)
+{
+	// write (1, "exit\n", 5);
+	// exit(0);
+    // printf("\033[1A");
+	// printf("\033[10C");
+    // printf(" exit\n");
+	write(STDOUT_FILENO, "\033[1A", 4);     // ANSI escape code를 사용하여 커서를 위로 1줄 움직이는 것 (\033['1'A)
+    write(STDOUT_FILENO, "\033[5C", 5);   	// 커서를 n만큼 앞으로 전진시킨다. (\033['N'C) 에서 N
+    write(STDOUT_FILENO, " exit\n", 6); 
+    exit(0);
+}
+
+void	handler_sig_child(int key)
 {
 	if (key == SIGINT)
 	{
@@ -50,10 +63,4 @@ void	handler_sig_heredoc(int key)
 	}
 	else if (key == SIGTERM)
 		exit(0);
-}
-
-void	handler_sigterm(void)
-{
-	write (1, "exit\n", 5);
-	exit(0);
 }

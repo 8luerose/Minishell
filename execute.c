@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 05:19:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:25:07 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 			exit(1);
 		if (pid == 0)
 		{
-			signal(SIGINT, handler_sig_heredoc);
-			signal(SIGTERM, handler_sig_heredoc);
+			signal(SIGINT, handler_sig_child);
+			signal(SIGTERM, handler_sig_child);
 			signal(SIGQUIT, SIG_IGN);
 			if (i == 0)
 				first_pipe(iter, &exec, my_envp, path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 20:11:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/22 17:35:05 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:26:37 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	handler_sigint(int key)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	stat = 1;
 }
 
 void	handler_sigterm(void)
@@ -56,11 +57,11 @@ void	handler_sigterm(void)
 
 void	handler_sig_child(int key)
 {
+	if (key == SIGTERM)
+		exit(0);
 	if (key == SIGINT)
 	{
 		write(1, "\n", 1);
 		exit(1);
 	}
-	else if (key == SIGTERM)
-		exit(0);
 }

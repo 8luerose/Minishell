@@ -6,7 +6,7 @@
 #    By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:11:42 by seojchoi          #+#    #+#              #
-#    Updated: 2023/08/06 12:33:15 by seojchoi         ###   ########.fr        #
+#    Updated: 2023/08/12 13:21:14 by seojchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ SRC = \
 	ft_split.c ft_strtrim.c ft_isalpha.c  ft_strchr.c ft_substr.c \
 	ft_isascii.c ft_strdup.c ft_tolower.c ft_isdigit.c ft_memchr.c ft_striteri.c \
 	ft_toupper.c ft_isprint.c ft_memcmp.c ft_strjoin.c ft_itoa.c \
-	ft_memcpy.c ft_strlcat.c ft_memmove.c ft_strlcpy.c ft_memset.c ft_strlen.c
+	ft_memcpy.c ft_strlcat.c ft_memmove.c ft_strlcpy.c ft_memset.c ft_strlen.c \
+	get_next_line.c
 OBJ = $(SRC:.c=.o)
 NAME = libft.a
-HEADER = libft.h
 
 .PHONY: all clean fclean re
 
@@ -32,11 +32,10 @@ $(NAME): $(OBJ)
 	ar -rc $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I $(HEADER) -c $^ 
+	$(CC) $(CFLAGS) -c $^ 
 
 clean:
 	rm -rf $(OBJ)
-	rm -rf bonus
 
 fclean: clean
 	rm -rf $(NAME)

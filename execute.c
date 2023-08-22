@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 17:25:07 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:35:01 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 		backup(&exec, i);
 		if (pipe(exec.cur_fd) < 0)
 			exit(1);
-		signal(SIGINT, SIG_IGN);								//fork 전 추가
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid < 0)
 			exit(1);

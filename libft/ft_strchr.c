@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 10:48:04 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/03/16 17:49:07 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:11:57 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	char	find;
 
+	if (!s)
+		return (0);
 	find = (char)c;
 	while (*s)
 	{

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 17:25:06 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:36:27 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,15 @@ t_redir	*init_new_redir(t_node *p);
 t_envp	*init_new_envp(void);
 t_list	*init_new_list(void);
 // expand.c
-void	expand_with_quo(t_list	*envp, t_node	*node);
+void	expand_with_quo(t_list	*envp, t_node	**node, t_list *list);
 void	expand(t_list	*envp, t_list *list);
+int		have_space(char	*content);
 // expand2.c
 int		check_envp(char	*content);
 char	*get_env(char *key, t_list *envp);
 char	*cut_front(int start, char *content);
 char	*cut_back(int start, int size, char *content);
-char	*change_to_envp(int start, int size, char *content, t_list *envp, char **check);
+int		change_to_envp(int start, int size, t_list *envp, t_node **node, int flag, t_list *list);
 // utils
 char	*ft_strjoin_c(char const *s1, char c);
 char	*ft_strndup(const char *s1, int n);

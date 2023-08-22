@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:30:51 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/15 21:56:02 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:47:07 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,15 @@ char	*cut_back(int start, int size, char *content)
 	return (tmp2);
 }
 
-char	*make_check(char *front, char *back, char *change, char *new)
+char	*make_check(char *front, char *back, char *change)
 {
 	int		i;
 	int		j;
+	int		size;
 	char	*check;
 
-	i = 0;
-	while (new[i])
-		i++;
-	check = (char *)malloc(sizeof(char) * (i + 1));
+	size = ft_strlen(front) + ft_strlen(back) + ft_strlen(change);
+	check = (char *)malloc(sizeof(char) * (size + 1));
 	i = 0;
 	j = 0;
 	while (front[j++])
@@ -125,23 +124,96 @@ char	*make_check(char *front, char *back, char *change, char *new)
 	return (check);
 }
 
-char	*change_to_envp(int start, int size, char *content, t_list *envp, char **check)
+void	split_change(char	*front, char *change, char *back, t_node **node, t_list	*list)
+{
+	int		i;
+	char	**new;
+	t_list	*new_list;
+	t_node	*iter;
+
+	iter = *node;
+	new_list = init_new_list();
+	// change의 맨 첫글자와 마지막 글자가 스페이스면 front, back이랑 합치지 말고 바로 노드
+	new = ft_split(change, ' ');
+	i = 0;
+	//
+	t_flag flag;
+	flag.quo = 0;
+	flag.env = (*node)->env;
+	flag.env_with_quo = (*node)->env_with_quo;
+	//
+	while (new[i])
+	{
+		if (i == 0)
+		{
+			make_head_node(ft_strjoin(front, new[i]), flag, new_list);
+			new_list->tail->check = make_check(front, "\0", new[i]);
+		}
+		else if (!new[i + 1])  // 마지막 노드
+		{
+			join_node(ft_strjoin(new[i], back), flag, new_list);
+			new_list->tail->check = make_check("\0", back, new[i]);
+		}
+		else
+		{
+			join_node(new[i], flag, new_list);
+			new_list->tail->check = make_check("\0", "\0", new[i]);
+		}
+		new_list->tail->type = 0;
+		i++;
+	}
+////////////////////////////////////////////
+	if (iter->prev != NULL)
+	{
+		iter->prev->next = new_list->head;
+		new_list->head->prev = iter->prev;
+	}
+	else
+	{
+		new_list->tail->next = iter->next;
+		list->head = new_list->head;
+	}
+	if (iter->next != NULL)
+	{
+		new_list->tail->next = iter->next;
+		iter->next->prev = new_list->tail;
+	}
+	*node = new_list->head;
+////////////////////////////////////////////
+}
+
+int	change_to_envp(int start, int size, t_list *envp, t_node **node, int flag, t_list *list)
 {
 	char	*front;
 	char	*back;
 	char	*change;
 	char	*new;
 
-	front = cut_front(start, content);
-	back = cut_back(start, size, content);
-	change = get_env(ft_substr(content, start + 1, size - 1), envp);
-	if (change)
+	front = cut_front(start, (*node)->content);
+	back = cut_back(start, size, (*node)->content);
+	change = get_env(ft_substr((*node)->content, start + 1, size - 1), envp);
+	if (change && flag == 1 && have_space(change))
+	{
+		if ((*node)->prev != NULL
+			&& ((*node)->prev->type == REDIR_IN
+				|| (*node)->prev->type == REDIR_OUT
+				|| (*node)->prev->type == HEREDOC_OUT))
+		{
+			// printf("bash: %s: ambiguous redirect\n", tmp);
+			stat = 1;
+			exit(1);
+		}
+		split_change(front, change, back, node, list);
+		return (1);
+	}
+	else if (change)  // 빈칸 없으면 그냥 하나로 합쳐서 한 노드에 넣어주기
 	{
 		new = ft_strjoin(front, change);
 		new = ft_strjoin(new, back);
-		*check = make_check(front, back, change, new);
 	}
 	else
 		new = ft_strjoin(front, back);
-	return (new);
+	(*node)->content = new;
+	(*node)->check = make_check(front, back, change);
+	return (0);
 }

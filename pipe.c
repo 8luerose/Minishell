@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:11:54 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 02:39:35 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:50:13 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ void	mid_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path)
 	if (do_cmd(cmd, my_envp, path))
 		exit(0);
 }
+
+
+
 
 void	last_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path)
 {

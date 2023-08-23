@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 02:19:58 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:50:20 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ int	set_io_fd(t_data *cmd)
 	return (0);
 }
 
+
+
+
 void	run(t_data *cmd, int size, t_envp *my_envp)
 {
 	int		i;
@@ -99,6 +102,9 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 	}
 	close_n_wait(&exec, i);
 }
+
+
+
 
 int	execute(t_data	*cmd, t_envp	*my_envp)
 {

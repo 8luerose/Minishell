@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:09 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:38 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/24 05:03:28 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	have_space(char *content)
 // 	check = NULL;
 // }
 
-void	expand_just_envp(t_list	*envp, t_node	**node, t_list *list)
+void	expand_just_envp(t_list	*envp, t_node **node, t_list *list)
 {
 	int		i;
 	int		quo;
@@ -148,7 +148,7 @@ void	expand_just_envp(t_list	*envp, t_node	**node, t_list *list)
 	}
 }
 
-void	expand_with_quo(t_list	*envp, t_node	**node, t_list *list)
+void	expand_with_quo(t_list *envp, t_node **node, t_list *list)
 {
 	int		i;
 	int		quo;

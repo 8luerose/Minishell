@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 02:39:24 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 05:17:58 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	make_head_node(char *content, t_flag flag, t_list *list);
 void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
 // expand.c
-void	expand_with_quo(t_list	*envp, t_node	**node, t_list *list);
-void	expand(t_list	*envp, t_list *list);
+void	expand_with_quo(t_list *envp, t_node **node, t_list *list);
+void	expand(t_list *envp, t_list *list);
 int		have_space(char	*content);
 // expand2.c
 int		check_envp(char	*content);
@@ -194,6 +194,9 @@ char	*make_content(char	*line);
 void	copy_envp(char	**ev, t_envp	*my_envp);
 char	*cut_quo(char *content, int size);
 void	delete_quo(t_list *list);
+//excute
+void	exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp, char **path);
+int		set_io_fd_open(t_redir *iter);
 //execute_run_utils
 char	**get_ev(t_list *my_envp);
 char	**get_envp_path(char **ev);
@@ -203,6 +206,17 @@ t_data	*init_new_data(void);
 t_redir	*init_new_redir(t_node *p);
 t_envp	*init_new_envp(void);
 t_list	*init_new_list(void);
-
-
+void	init_flag(t_flag *flag);
+//pipe
+void	mid_pipe_dup2(int cmd_fd, int fd, int *prev_fd, int *cur_fd);
+//pipe utils
+void	unlink_tmp_file(t_data	*cmd);
+//export
+void	free_replace_content(t_node *node, char *new_content);
+void	add_to_tail(t_list *my_envp, char *data, t_flag flag);
+//unset
+void	delete_node(t_list *my_envp, t_node *iter);
+void	unset_node(t_list *my_envp, char *key);
+//check sytax error
+void	syntax_errors(int prev_type, t_node *p, t_list *list);
 #endif

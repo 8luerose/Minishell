@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:55 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 12:21:59 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/24 05:11:01 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,10 @@ void print_result_test(t_data *data)
             printf("\n");
         }
         if (data->redir)
-		{
             print_redir_test(data->redir);
-        }
         data = data->next;
         if (data)
-		{
             printf("|\n"); // 각 파이프라인의 명령을 구분하기 위해 사용
-        }
     }
 	printf("\ntest completed!\n\n");
 }

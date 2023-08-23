@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:24:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/24 02:26:15 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 04:34:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ t_list	*init_new_list(void)
 	new_list->head = NULL;
 	new_list->tail = NULL;
 	return (new_list);
+}
+
+void	init_flag(t_flag *flag)
+{
+	flag->quo = 0;
+	flag->env = 0;
+	flag->env_with_quo = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:49:33 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/17 14:43:02 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/24 04:30:16 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ int	ft_exit(char **cmd_line)
 		i++;
 	printf("exit\n");
 	if (i > 2)
-	{
-		printf("bash: exit: too many arguments\n");
-		return (1);
-	}
+		return (printf("bash: exit: too many arguments\n") && 1);
 	i = 0;
 	if (!cmd_line[1])
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/22 17:36:27 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 01:10:49 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,14 @@ void	set_terminal_print_on(void);
 void	handler_sigint(int key);
 void	handler_sig_child(int key);
 void	handler_sigterm(void);
+
+//after travel
+//free
+void	cmd_exit(char *input, t_list *list);
+//main_utils
+char	*make_content(char	*line);
+void	copy_envp(char	**ev, t_envp	*my_envp);
+char	*cut_quo(char *content, int size);
+void	delete_quo(t_list *list);
 
 #endif

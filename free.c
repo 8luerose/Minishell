@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:43 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/12 11:26:47 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/24 00:57:28 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,14 @@ void	free_redirs(t_redir *redir)
 		free(redir_tmp->file_name);
 		free(redir_tmp);
 	}
+}
+
+void	cmd_exit(char *input, t_list *list)
+{
+	if (strcmp(input, "exit") == 0)		// "exit" 명령 처리
+    {
+        free(list);
+        free(input);
+        exit(0);
+    }
 }

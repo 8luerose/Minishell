@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 01:19:27 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 05:40:13 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ int	main(int ac, char **av, char **ev)
 //if (pid == 0) 뜨는 순간 signal 처리를 해준다
 
 //main 내 함수 몇가지 minishell, main_utils.c로 이동 
+//waitpid 수정, signal 수정
+//too many file moved to other file and new file
+//execute, expand, ft_(exit,export,unset), init, pipe, sytax 라인 수정
 
 
 

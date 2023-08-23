@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/23 01:14:34 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:21:56 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,8 @@ void	read_heredoc(char	*limiter, int file_fd)
 		}
 	}
 	free(limiter);
-	// 원본 코드
-	// waitpid(-1, 0, 0);
 	if (waitpid(-1, &status, 0) > 0)
-	{
 		stat = WEXITSTATUS(status);
-	}
 }
 
 void	heredoc_open(t_data	*cmd)

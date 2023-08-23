@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 13:15:00 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:32:03 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,6 @@ void	check_syntax_error(t_list *list)
 			printf("syntax_error (|) at beginning or end\n");
 			exit(1);
 		}
-		// if (prev_type == REDIR_IN && p->type == PIPE)			//<|
-		// {
-		// 	printf("syntax_error <|\n");
-		// 	exit(1);
-		// }
-		// else if (prev_type == REDIR_OUT && p->type == PIPE)		//>|
-		// {
-		// 	printf("syntax_error >|\n");
-		// 	exit(1);
-		// }
-		// else if (prev_type == HEREDOC_IN && p->type == PIPE)	//<<|
-		// {
-		// 	printf("syntax_error <<|\n");
-		// 	exit(1);
-		// }
-		// else if (prev_type == HEREDOC_OUT && p->type == PIPE)	//>>|
-		// {
-		// 	printf("syntax_error >>|\n");
-		// 	exit(1);
-		// }
 		if (prev_type == PIPE &&						//| > ' ' or | > '<'
 				(p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT) 
 				&& (p->next == NULL || p->next->type != WORD))

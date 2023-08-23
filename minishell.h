@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 01:10:49 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:39:24 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,6 @@ t_node	*ft_lstnew(char *content, t_flag flag);
 void	make_head_node(char *content, t_flag flag, t_list *list);
 void	join_node(char *content, t_flag flag, t_list *list);
 void	make_node(char *content, t_flag flag, t_list *list);
-t_data	*init_new_data(void);
-t_redir	*init_new_redir(t_node *p);
-t_envp	*init_new_envp(void);
-t_list	*init_new_list(void);
 // expand.c
 void	expand_with_quo(t_list	*envp, t_node	**node, t_list *list);
 void	expand(t_list	*envp, t_list *list);
@@ -186,7 +182,6 @@ int		file_error(char *file_name);
 int		system_error(void);
 //signal
 void	set_terminal_print_off(void);
-void	set_terminal_print_on(void);
 void	handler_sigint(int key);
 void	handler_sig_child(int key);
 void	handler_sigterm(void);
@@ -199,5 +194,15 @@ char	*make_content(char	*line);
 void	copy_envp(char	**ev, t_envp	*my_envp);
 char	*cut_quo(char *content, int size);
 void	delete_quo(t_list *list);
+//execute_run_utils
+char	**get_ev(t_list *my_envp);
+char	**get_envp_path(char **ev);
+void	exec_backup(t_pipe *fd, int i);
+//init
+t_data	*init_new_data(void);
+t_redir	*init_new_redir(t_node *p);
+t_envp	*init_new_envp(void);
+t_list	*init_new_list(void);
+
 
 #endif

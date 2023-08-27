@@ -7,6 +7,12 @@
 		"vector": "c",
 		"minishell.h": "c",
 		"libft.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"__hash_table": "c",
+		"__split_buffer": "c",
+		"bitset": "c",
+		"initializer_list": "c",
+		"unordered_map": "c",
+		"utility": "c"
 	}
 }

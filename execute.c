@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:31:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:30:28 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ void	exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp, char **path)
 {
     signal(SIGINT, handler_sig_child);
     signal(SIGTERM, handler_sig_child);
-    signal(SIGQUIT, SIG_IGN);
+    // signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_DFL);								// ****추가 사항***** 시그널 처리를 기본 동작으로 되돌림
     
     if (i == 0) 
         first_pipe(iter, exec, my_envp, path);

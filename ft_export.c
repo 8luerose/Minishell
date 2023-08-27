@@ -87,11 +87,11 @@ void	free_replace_content(t_node *node, char *new_content)
 	node->content = ft_strdup(new_content);
 }
 
-void	add_to_tail(t_list *my_envp, char *data, t_flag flag)
+void	add_to_tail(t_list *my_envp, char *data)
 {
 	t_node	*new_node;
 
-	new_node = ft_lstnew(data, flag);
+	new_node = ft_lstnew(data);
 	my_envp->tail->next = new_node;
 	new_node->prev = my_envp->tail;
 	my_envp->tail = new_node;
@@ -102,9 +102,7 @@ void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
 	int		i;
 	char	*key;
 	t_node	*iter;
-	t_flag	flag;
 
-	init_flag(&flag);
 	if (cmd_line[1] == NULL)
 		ft_env(fd, my_envp);
 	else
@@ -123,7 +121,7 @@ void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
 				if (iter)
 					free_replace_content(iter, cmd_line[i]);
 				else
-					add_to_tail(my_envp, cmd_line[i], flag);	
+					add_to_tail(my_envp, cmd_line[i]);	
 			}
 			i++;
 		}

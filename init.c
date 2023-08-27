@@ -55,10 +55,3 @@ t_list	*init_new_list(void)
 	new_list->tail = NULL;
 	return (new_list);
 }
-
-void	init_flag(t_flag *flag)
-{
-	flag->quo = 0;
-	flag->env = 0;
-	flag->env_with_quo = 0;
-}

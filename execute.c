@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/27 14:30:28 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:18:29 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,44 +57,63 @@
 // 	return (0);
 // }
 
+int	have_space (char	*file_name)
+{
+	int	i;
+
+	i = 0;
+	while (file_name[i])
+	{
+		if (file_name[i] == ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	set_io_fd_open(t_redir *iter)
 {
-    int		fd;
-    char	*file_name;
-	
+	int		fd;
+	char	*file_name;
+
 	fd = -1;
 	file_name = iter->file_name;
-
-    if (ft_strcmp(iter->redir, "<") == 0 || ft_strcmp(iter->redir, "<<") == 0)
-        fd = open(file_name, O_RDONLY);
-    else if (ft_strcmp(iter->redir, ">") == 0)
-        fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    else if (ft_strcmp(iter->redir, ">>") == 0)
-        fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-
-    if (fd < 0)
-        return file_error(file_name);
-    close(fd);
-    return fd;
+	if ((ft_strcmp(iter->redir, "<") == 0) && ( ft_strlen(file_name) == 0 || have_space(file_name)))
+	{
+		stat = 1;
+		printf("bash : ambiguous redirect\n");
+		return (fd);
+	}
+	if (ft_strcmp(iter->redir, "<") == 0 || ft_strcmp(iter->redir, "<<") == 0)
+		fd = open(file_name, O_RDONLY);
+	else if (ft_strcmp(iter->redir, ">") == 0)
+		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (ft_strcmp(iter->redir, ">>") == 0)
+		fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+		return (file_error(file_name));
+	// close(fd);
+	return (fd);
 }
 
 int	set_io_fd(t_data *cmd)
 {
-    t_redir *iter;
-	
+	t_redir	*iter;
+
 	cmd->i_fd = 0;
-    cmd->o_fd = 1;
+	cmd->o_fd = 1;
 	iter = cmd->redir;
-    while (iter)
-    {
-        if (ft_strcmp(iter->redir, "<") == 0 || ft_strcmp(iter->redir, "<<") == 0)
-            cmd->i_fd = set_io_fd_open(iter);
-        else if (ft_strcmp(iter->redir, ">") == 0 || \
-			ft_strcmp(iter->redir, ">>") == 0)
-            cmd->o_fd = set_io_fd_open(iter);
-        iter = iter->next;
-    }
-    return (0);
+	while (iter)
+	{
+		if (ft_strcmp(iter->redir, "<") == 0
+			|| ft_strcmp(iter->redir, "<<") == 0)
+			cmd->i_fd = set_io_fd_open(iter);
+		else if (ft_strcmp(iter->redir, ">") == 0
+			|| ft_strcmp(iter->redir, ">>") == 0)
+			cmd->o_fd = set_io_fd_open(iter);
+		iter = iter->next;
+	}
+	return (0);
 }
 
 // 원본 코드
@@ -144,17 +163,16 @@ int	set_io_fd(t_data *cmd)
 
 void	exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp, char **path)
 {
-    signal(SIGINT, handler_sig_child);
-    signal(SIGTERM, handler_sig_child);
-    // signal(SIGQUIT, SIG_IGN);
-	signal(SIGQUIT, SIG_DFL);								// ****추가 사항***** 시그널 처리를 기본 동작으로 되돌림
-    
-    if (i == 0) 
-        first_pipe(iter, exec, my_envp, path);
-    else if (!iter->next) 
-        last_pipe(iter, exec, my_envp, path);
-    else 
-        mid_pipe(iter, exec, my_envp, path);
+	signal(SIGINT, handler_sig_child);
+	signal(SIGTERM, handler_sig_child);
+	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_DFL);
+	if (i == 0)
+		first_pipe(iter, exec, my_envp, path);
+	else if (!iter->next)
+		last_pipe(iter, exec, my_envp, path);
+	else
+		mid_pipe(iter, exec, my_envp, path);
 }
 
 // 1차 수정 코드

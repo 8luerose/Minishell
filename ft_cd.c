@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:16:01 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/11 17:17:18 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:16:31 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,8 @@ void	ft_cd(t_list *my_envp, char **cmd_line)
 		cd_error(cmd_line);
 	change_pwd_in_env(my_envp);
 }
+
+/**
+ * 1. unset HOME -> check environment variable 'HOME', print error msg
+ * 2. rm -rf [상위 디렉토리] -> check with getcwd(), print err msg
+*/

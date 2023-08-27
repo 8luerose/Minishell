@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:40:13 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/27 17:41:23 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	minishell(char *input, t_envp *my_envp)
 	t_list	*list;
 	t_data	*pipe_parsing;
 
-	stat = 0;
+	// stat = 0;
 	if (*input)
 		add_history(input);					// main에 있던 add_history()를 minishell()로 옮김
 	list = init_new_list();
-	cmd_exit(input, list);					// "exit" 명령 처리
+	// cmd_exit(input, list);					// "exit" 명령 처리
 	get_token(input, list);
 	get_type(list);
-	check_syntax_error(list);
+	if (check_syntax_error(list))
+		return ;
 	expand(my_envp->envp, list);
-	delete_quo(list);
 	pipe_parsing = NULL;
 	get_list(list, &pipe_parsing);
 //////////////////////////////////////
@@ -35,7 +35,6 @@ void	minishell(char *input, t_envp *my_envp)
 	// print_result(pipe_parsing);
 //////////////////////////////////////
 	execute(pipe_parsing, my_envp);
-	// printf("stat: %d\n", stat);
 }
 
 int	main(int ac, char **av, char **ev)
@@ -43,6 +42,7 @@ int	main(int ac, char **av, char **ev)
 	char	*input;
 	t_envp	*my_envp;
 
+	stat = 0;
 	set_terminal_print_off();				// ^C 출력 방지
 	(void)ac;
 	(void)av;

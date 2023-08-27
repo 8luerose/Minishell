@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:43 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 00:57:28 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:47:35 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	cmd_exit(char *input, t_list *list)
     {
         free(list);
         free(input);
+		printf("exit\n");
         exit(0);
     }
 }

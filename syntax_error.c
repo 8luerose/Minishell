@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:08:25 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:42:52 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,43 @@
 // 	}
 // }
 
-void	syntax_errors(int prev_type, t_node *p, t_list *list)
+int	syntax_errors(int prev_type, t_node *p, t_list *list)
 {
+	(void)prev_type;
 	if ((p == list->head || p->next == NULL) && p->type == PIPE)
 	{
 		printf("syntax_error (|) at beginning or end\n");
-		exit(1);
+		stat = 258;
+		return (1);
 	}
-	if (prev_type == PIPE && (p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT) && 
+	if ((p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT) && 
 		(p->next == NULL || p->next->type != WORD))
 	{
 		printf("syntax_error: No WORD after redirection\n");
-		exit(1);
+		stat = 258;
+		return (1);
 	}
-	if ((prev_type == REDIR_IN && p->type == REDIR_IN) ||
-		(prev_type == REDIR_OUT && p->type == REDIR_OUT) ||
-		(prev_type == HEREDOC_IN && p->type == HEREDOC_IN) ||
-		(prev_type == HEREDOC_OUT && p->type == HEREDOC_OUT) ||
-		(prev_type == PIPE && p->type == PIPE))
-	{
-		printf("syntax_error (< <,> >), (<<<<,>>>>), (||)\n");
-		exit(1);
-	}
+	// if ((prev_type == REDIR_IN && p->type == REDIR_IN) ||
+	// 	(prev_type == REDIR_OUT && p->type == REDIR_OUT) ||
+	// 	(prev_type == HEREDOC_IN && p->type == HEREDOC_IN) ||
+	// 	(prev_type == HEREDOC_OUT && p->type == HEREDOC_OUT) ||
+	// 	(prev_type == PIPE && p->type == PIPE))
+	// if ((prev_type == ))
+	// {
+	// 	printf("syntax_error (< <,> >), (<<<<,>>>>), (||)\n");
+	// 	stat = 258;
+	// 	return (1);
+	// }
+	return (0);
 }
 
-void	check_syntax_error(t_list *list)
+/**
+ * pipe pipe
+ * redir redir
+ * redir pipe
+*/
+
+int	check_syntax_error(t_list *list)
 {
 	t_node	*p;
 	int		prev_type;
@@ -83,8 +95,10 @@ void	check_syntax_error(t_list *list)
 	p = list->head;
 	while (p)
 	{
-		syntax_errors(prev_type, p, list);
+		if (syntax_errors(prev_type, p, list))
+			return (1);
 		prev_type = p->type;
 		p = p->next;
 	}
+	return (0);
 }

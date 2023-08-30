@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/27 14:42:52 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:01:54 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,16 @@ int	syntax_errors(int prev_type, t_node *p, t_list *list)
 	// 	stat = 258;
 	// 	return (1);
 	// }
+	if ((prev_type == REDIR_IN && p->type == REDIR_IN) ||
+		(prev_type == REDIR_OUT && p->type == REDIR_OUT) ||
+		(prev_type == HEREDOC_IN && p->type == HEREDOC_IN) ||
+		(prev_type == HEREDOC_OUT && p->type == HEREDOC_OUT) ||
+		(prev_type == PIPE && p->type == PIPE))
+	{
+		printf("syntax_error: consecutive redirections or pipes\n");
+		stat = 258;
+		return (1);
+	}
 	return (0);
 }
 

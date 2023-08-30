@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/27 20:18:29 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:07:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,8 @@ int	execute(t_data	*cmd, t_envp	*my_envp)
 	iter = cmd;
 	while (iter)
 	{
-		size++;
+		if (iter->cmd_line)
+			size++;
 		heredoc_open(iter);
 		iter = iter->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/28 17:01:54 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:52:52 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,6 @@ int	syntax_errors(int prev_type, t_node *p, t_list *list)
 		stat = 258;
 		return (1);
 	}
-	// if ((prev_type == REDIR_IN && p->type == REDIR_IN) ||
-	// 	(prev_type == REDIR_OUT && p->type == REDIR_OUT) ||
-	// 	(prev_type == HEREDOC_IN && p->type == HEREDOC_IN) ||
-	// 	(prev_type == HEREDOC_OUT && p->type == HEREDOC_OUT) ||
-	// 	(prev_type == PIPE && p->type == PIPE))
-	// if ((prev_type == ))
-	// {
-	// 	printf("syntax_error (< <,> >), (<<<<,>>>>), (||)\n");
-	// 	stat = 258;
-	// 	return (1);
-	// }
 	if ((prev_type == REDIR_IN && p->type == REDIR_IN) ||
 		(prev_type == REDIR_OUT && p->type == REDIR_OUT) ||
 		(prev_type == HEREDOC_IN && p->type == HEREDOC_IN) ||

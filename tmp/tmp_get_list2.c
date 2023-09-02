@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:20 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/01 17:10:05 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:47:43 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@
 // 	}
 // }
 
-// Helper function to process WORD type.
 t_node	*process_word(t_node *p, t_data *new_data)
 {
     append_cmd(new_data, p->content);
@@ -105,7 +104,6 @@ t_node	*process_word(t_node *p, t_data *new_data)
     return (p);
 }
 
-// Helper function to process REDIR_* types.
 t_node	*process_redir(t_node *p, t_data *new_data)
 {
     append_redir(new_data, p);
@@ -120,7 +118,6 @@ t_node	*process_redir(t_node *p, t_data *new_data)
     return (p);
 }
 
-// Helper function to connect new_data to pipe_data.
 void    connect_new_data(t_data **pipe_data, t_data *new_data)
 {
     t_data  *tmp;
@@ -140,7 +137,6 @@ void    connect_new_data(t_data **pipe_data, t_data *new_data)
     }
 }
 
-// Modified get_list function.
 void	get_list(t_list *list, t_data **pipe_data)
 {
     t_node	*p;
@@ -169,7 +165,6 @@ void	get_list(t_list *list, t_data **pipe_data)
     else
         free_pipeline(new_data);
 }
-
 
 void append_cmd(t_data *new_data, char *word)
 {

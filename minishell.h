@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/28 02:12:23 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/02 18:31:47 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
+
+#define FRAME_COUNT 1
+#define FRAME_WIDTH 210
+#define FRAME_HEIGHT 210
 
 int	stat;
 
@@ -202,5 +206,14 @@ int		syntax_errors(int prev_type, t_node *p, t_list *list);
 void	add_buffer(char **buf, char c);
 void	non_meta(char **buf, char *input, int *i, char *quo);
 void	ok_meta(char **buf, char *input, int *i, t_list *list);
+
+//she with glasses
+//get_list
+t_node	*process_word(t_node *p, t_data *new_data);
+t_node	*process_redir(t_node *p, t_data *new_data);
+void    connect_new_data(t_data **pipe_data, t_data *new_data);
+
+//bitmap
+void	print_bitmap(void);
 
 #endif

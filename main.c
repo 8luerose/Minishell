@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/30 20:07:47 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/02 18:48:17 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	minishell(char *input, t_envp *my_envp)
 	pipe_parsing = NULL;
 	get_list(list, &pipe_parsing);
 //////////////////////////////////////
-	// print_type(list);
+	print_type(list);
 	// print_result_test(pipe_parsing);
 	// print_result(pipe_parsing);
 //////////////////////////////////////
@@ -46,6 +46,7 @@ int	main(int ac, char **av, char **ev)
 	set_terminal_print_off();				// ^C 출력 방지
 	(void)ac;
 	(void)av;
+	print_bitmap();
 	my_envp = init_new_envp();
 	copy_envp(ev, my_envp);
 	while (1)

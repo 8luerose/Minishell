@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/30 19:07:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:39:50 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	set_io_fd_open(t_redir *iter)
 	{
 		stat = 1;
 		printf("bash : ambiguous redirect\n");
-		return (fd);
+		// return (fd);
+		exit(stat);
 	}
 	if (ft_strcmp(iter->redir, "<") == 0 || ft_strcmp(iter->redir, "<<") == 0)
 		fd = open(file_name, O_RDONLY);
@@ -91,7 +92,10 @@ int	set_io_fd_open(t_redir *iter)
 	else if (ft_strcmp(iter->redir, ">>") == 0)
 		fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		return (file_error(file_name));
+	{
+		file_error(file_name);
+		return (fd);
+	}
 	// close(fd);
 	return (fd);
 }
@@ -112,6 +116,8 @@ int	set_io_fd(t_data *cmd)
 			|| ft_strcmp(iter->redir, ">>") == 0)
 			cmd->o_fd = set_io_fd_open(iter);
 		iter = iter->next;
+		if (cmd->o_fd == -1 || cmd->i_fd == -1)
+			return (1);
 	}
 	return (0);
 }
@@ -243,16 +249,23 @@ int	execute(t_data	*cmd, t_envp	*my_envp)
 {
 	int		check;
 	int		size;
-	t_data	*iter;
+	// t_data	*iter;
 
-	size = 0;
-	iter = cmd;
-	while (iter)
+	stat = 0;
+	// iter = cmd;
+	// // 히어독 임시파일 이름 먼저 지정
+	// while (iter)
+	// {
+	// 	size++;
+	// 	heredoc_open(iter);
+	// 	iter = iter->next;
+	// }
+	// // 파일 오픈해서 내용 저장
+	size = here_doc(cmd);
+	if (stat != 0)
 	{
-		if (iter->cmd_line)
-			size++;
-		heredoc_open(iter);
-		iter = iter->next;
+		unlink_tmp_file_all(cmd);
+		return (1);
 	}
 	if (size == 1 && cmd->cmd_line != NULL)
 	{
@@ -261,7 +274,13 @@ int	execute(t_data	*cmd, t_envp	*my_envp)
 		check = is_builtin(cmd);
 		if (check != NOT_BUILTIN)
 		{
-			run_builtin(check, cmd, my_envp->envp);
+			if (check == EXIT)
+			{
+				ft_putendl_fd("exit", 1);
+				ft_exit(cmd->cmd_line);
+			}
+			else
+				run_builtin(check, cmd, my_envp->envp);
 			return (0);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 14:11:54 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 13:52:54 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:33:32 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	mid_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path)
 	}
 	close(fd->prev_fd[1]);
 	close(fd->cur_fd[0]);
+	unlink_tmp_file(cmd);
 	if (do_cmd(cmd, my_envp, path))
 		exit(0);
 }
@@ -118,6 +119,7 @@ void	last_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path)
 		close(cmd->o_fd);
 	close(fd->prev_fd[1]);
 	close_cur(fd);
+	unlink_tmp_file(cmd);
 	if (do_cmd(cmd, my_envp, path))
 		exit(0);
 }

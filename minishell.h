@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/02 18:31:47 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:22:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_redir
 {
 	char			*redir;
 	char			*file_name;
+	char			*limiter;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -89,14 +90,14 @@ typedef struct s_envp
 
 // token
 int		is_meta(char c);
-void	get_token(char *input, t_list *list);
+int		get_token(char *input, t_list *list);
 // make_node
 t_node	*ft_lstnew(char *content);
 void	make_head_node(char *content, t_list *list);
 void	join_node(char *content, t_list *list);
 void	make_node(char *content, t_list *list);
 // // expand.c
-void	expand(t_list *envp, t_list *list);
+void	expand_and_delete_quo(t_list *envp, t_list *list);
 // utils
 char	*ft_strjoin_c(char const *s1, char c);
 char	*ft_strndup(const char *s1, int n);
@@ -145,10 +146,10 @@ int		ft_exit(char **cmd_line);
 // heredoc
 char	*set_file_name(void);
 int		is_limiter(char *str, char *limiter);
-void	read_heredoc(char	*limiter, int file_fd);
+void	read_heredoc(char	*limiter, char	*tmp_file);
 void	heredoc_open(t_data	*cmd);
 // pipe
-int		check_is_access(char **access_path, char **path, char *cmd);
+char	*check_is_access(char	*cmd, char **path);
 // void	do_cmd(t_data	*cmd, t_envp *my_envp, char **path);
 int		do_cmd(t_data	*cmd, t_envp *my_envp, char **path);
 void	first_pipe(t_data *cmd, t_pipe *exec, t_envp *my_envp, char **path);
@@ -168,8 +169,6 @@ void	set_terminal_print_off(void);
 void	handler_sigint(int key);
 void	handler_sig_child(int key);
 void	handler_sigterm(void);
-
-//after travel
 //free
 void	cmd_exit(char *input, t_list *list);
 //main_utils
@@ -202,18 +201,21 @@ void	unset_node(t_list *my_envp, char *key);
 //check sytax error
 int		syntax_errors(int prev_type, t_node *p, t_list *list);
 
-//her in blue shirt
-void	add_buffer(char **buf, char c);
-void	non_meta(char **buf, char *input, int *i, char *quo);
-void	ok_meta(char **buf, char *input, int *i, t_list *list);
-
-//she with glasses
+//merge with taehkwon
 //get_list
 t_node	*process_word(t_node *p, t_data *new_data);
 t_node	*process_redir(t_node *p, t_data *new_data);
 void    connect_new_data(t_data **pipe_data, t_data *new_data);
-
 //bitmap
 void	print_bitmap(void);
+
+//Merge with seojchoi
+//expand
+char	*get_env(char *key, t_list *envp);
+//pipe utils
+void	unlink_tmp_file_all(t_data	*cmd);
+//heredoc
+int		here_doc(t_data	*cmd);
+
 
 #endif

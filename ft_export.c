@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 04:50:33 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:26:51 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,22 @@ void	add_to_tail(t_list *my_envp, char *data)
 	my_envp->tail = new_node;
 }
 
+void	export_error(char *cmd)
+{
+	char	*str;
+	char	*str2;
+	char	*tmp;
+
+	str = "bash: export: '";
+	str2 = "': not a valid identifier";
+	tmp = str;
+	str = ft_strjoin(tmp, cmd);
+	tmp = str;
+	str = ft_strjoin(tmp, str2);
+	ft_putendl_fd(str, 2);
+	stat = 1;
+}
+
 void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
 {
 	int		i;
@@ -105,6 +121,8 @@ void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
 
 	if (cmd_line[1] == NULL)
 		ft_env(fd, my_envp);
+	else if (ft_isdigit(cmd_line[1][0]))
+		export_error(cmd_line[1]);
 	else
 	{
 		i = 1;
@@ -121,7 +139,7 @@ void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
 				if (iter)
 					free_replace_content(iter, cmd_line[i]);
 				else
-					add_to_tail(my_envp, cmd_line[i]);	
+					add_to_tail(my_envp, cmd_line[i]);
 			}
 			i++;
 		}

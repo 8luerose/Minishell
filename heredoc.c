@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/28 01:29:10 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:30:53 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	is_limiter(char *str, char *limiter)
 	int	i;
 
 	i = 0;
+	if (!limiter)
+		return (1);
 	while (str[i] && limiter[i])
 	{
 		if (str[i] != limiter[i])
@@ -50,62 +52,114 @@ int	is_limiter(char *str, char *limiter)
 	return (1);
 }
 
-void	read_heredoc(char	*limiter, int file_fd)
+void	read_heredoc(char	*limiter, char	*tmp_file)
 {
-	pid_t	pid;
 	char	*input;
-	int		status;
+	int		file_fd;
 
-	signal(SIGINT, SIG_IGN);									//fork 전 추가	
-	pid = fork();
-	if (pid == 0)
+	// signal(SIGINT, SIG_IGN);									//fork 전 추가	
+	signal(SIGINT, handler_sig_child);
+	signal(SIGTERM, handler_sig_child);
+	signal(SIGQUIT, SIG_IGN);
+	file_fd = open(tmp_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	while (1)
 	{
-		signal(SIGINT, handler_sig_child);
-		signal(SIGTERM, handler_sig_child);
-		signal(SIGQUIT, SIG_IGN);
-		// signal(SIGQUIT, handler_sig_child);
-		// signal(SIGQUIT, SIG_DFL);
-		while (1)
+		input = readline("> ");
+		if (!input)
+			break ;
+		if (is_limiter(input, limiter))
 		{
-			input = readline("> ");
-			if (!input)
-				break ;
-			if (is_limiter(input, limiter))
-				break ;
-			ft_putendl_fd(input, file_fd);
 			free(input);
+			break ;
 		}
-		exit(0);
+		ft_putendl_fd(input, file_fd);
+		free(input);
 	}
-	free(limiter);
-	if (waitpid(-1, &status, 0) > 0)
-	{
-		stat = WEXITSTATUS(status);					//limiter 일때 Ctrl + c 누르면 stat = 1
-		printf("heredoc stat: %d\n", stat);
-
-		// // if (WIFEXITED(status))				// 자식 프로세스가 정상적으로 종료되었을 경우
-		// // 	stat = WEXITSTATUS(status);		// 자식 프로세스가 반환한 값을 stat에 저장
-		// if (WTERMSIG(status) == 2)		// SIGINT(Ctrl+C)=2
-		// 	stat = 1;
-	}
+	close(file_fd);
 }
 
-void	heredoc_open(t_data	*cmd)
+// void	heredoc_open(t_data	*cmd)
+// {
+// 	int		status;
+// 	pid_t	pid;
+// 	t_redir	*iter;
+// 	char	*tmp_file;
+
+// 	signal(SIGINT, SIG_IGN);
+// 	iter = cmd->redir;
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		while (iter)
+// 		{
+// 			if (ft_strcmp(iter->redir, "<<") == 0)
+// 			{
+// 				tmp_file = set_file_name();
+// 				cmd->i_fd = open(tmp_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 				read_heredoc(iter->file_name, cmd->i_fd);
+// 				// printf("tmp: %s\n", tmp_file);
+// 				iter->file_name = tmp_file;
+// 				// printf("tmp: %s\n", iter->file_name);
+// 				close(cmd->i_fd);
+// 			}
+// 			iter = iter->next;
+// 		}
+// 		exit(0);
+// 	}
+// 	if (waitpid(-1, &status, 0) > 0)
+// 		stat = WEXITSTATUS(status);
+// }
+
+int	here_doc(t_data	*cmd)
 {
-	t_redir	*iter;
+	int		size;
+	int		status;
+	t_data	*iter;
+	t_redir	*r_iter;
+	pid_t	pid;
 	char	*tmp_file;
 
-	iter = cmd->redir;
+	// 히어독 임시파일 이름 먼저 지정
+	iter = cmd;
+	size = 0;
 	while (iter)
 	{
-		if (ft_strcmp(iter->redir, "<<") == 0)
+		size++;
+		r_iter = iter->redir;
+		while (r_iter)
 		{
-			tmp_file = set_file_name();
-			cmd->i_fd = open(tmp_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			read_heredoc(iter->file_name, cmd->i_fd);
-			iter->file_name = tmp_file;
-			close(cmd->i_fd);
+			if (ft_strcmp(r_iter->redir, "<<") == 0)
+			{
+				tmp_file = set_file_name();
+				iter->i_fd = open(tmp_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+				r_iter->limiter = ft_strdup(r_iter->file_name);  // 히어독 뒤의 파이 이름은 리미터라서 갱신시켜 줌.
+				r_iter->file_name = tmp_file;
+				close(iter->i_fd);
+			}
+			r_iter = r_iter->next;
 		}
 		iter = iter->next;
 	}
+	// fork하는 부분
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid == 0)
+	{
+		iter = cmd;
+		while (iter)
+		{
+			r_iter = iter->redir;
+			while (r_iter)
+			{
+				if (ft_strcmp(r_iter->redir, "<<") == 0)
+					read_heredoc(r_iter->limiter, r_iter->file_name);
+				r_iter = r_iter->next;
+			}
+			iter = iter->next;
+		}
+		exit(0);
+	}
+	if (waitpid(-1, &status, 0) > 0)
+		stat = WEXITSTATUS(status);
+	return (size);
 }

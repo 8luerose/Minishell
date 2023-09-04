@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/02 18:48:17 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:09:11 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,23 @@ void	minishell(char *input, t_envp *my_envp)
 {
 	t_list	*list;
 	t_data	*pipe_parsing;
-
-	// stat = 0;
+	
+	if (!(*input))
+		return ;
 	if (*input)
 		add_history(input);					// main에 있던 add_history()를 minishell()로 옮김
 	list = init_new_list();
 	// cmd_exit(input, list);					// "exit" 명령 처리
-	get_token(input, list);
+	if (get_token(input, list) == 0)
+		return ;
 	get_type(list);
 	if (check_syntax_error(list))
 		return ;
-	expand(my_envp->envp, list);
+	expand_and_delete_quo(my_envp->envp, list);
 	pipe_parsing = NULL;
 	get_list(list, &pipe_parsing);
 //////////////////////////////////////
-	print_type(list);
+	// print_type(list);
 	// print_result_test(pipe_parsing);
 	// print_result(pipe_parsing);
 //////////////////////////////////////

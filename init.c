@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:24:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/08/24 04:34:09 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:31:10 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_redir	*init_new_redir(t_node *p)
 	new_redir = (t_redir *)malloc(sizeof(t_redir));
 	new_redir->redir = ft_strdup(p->content);
     new_redir->file_name = ft_strdup(p->next->content);
+	new_redir->limiter = NULL;
     new_redir->next = NULL;
 	return (new_redir);
 }

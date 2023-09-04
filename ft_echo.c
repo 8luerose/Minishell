@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:19:15 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/17 15:02:39 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:24:25 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void	ft_echo(int fd, char **cmd_line)
 	}
 	if (flag == 0)
 		ft_putstr_fd("\n", fd);
+	stat = 0;
 }

@@ -1,4 +1,4 @@
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 READLINE = -L/Users/taehkwon/.brew/opt/readline/lib -lreadline -I/Users/taehkwon/.brew/opt/readline/include
 # READLINE = -L/Users/seojchoi/.brew/opt/readline/lib -lreadline -I/Users/seojchoi/.brew/opt/readline/include

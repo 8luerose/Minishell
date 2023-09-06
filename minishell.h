@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:22:22 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:32:50 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ void	add_to_tail(t_list *my_envp, char *key, char *value);
 void	delete_node(t_list *my_envp, t_node *iter);
 void	unset_node(t_list *my_envp, char *key);
 //check sytax error
-int		syntax_errors(int prev_type, t_node *p, t_list *list);
+// int		syntax_errors(int prev_type, t_node *p, t_list *list);
+int		syntax_errors(t_node *p, t_list *list);
 char	*get_env(char *key, t_list *envp);
 void	unlink_tmp_file_all(t_data	*cmd);
 int		here_doc(t_data	*cmd);
@@ -210,5 +211,8 @@ t_node	*process_redir(t_node *p, t_data *new_data);
 void    connect_new_data(t_data **pipe_data, t_data *new_data);
 //bitmap
 void	print_bitmap(void);
+
+//syntax_error
+int		syntax_exit(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:09:11 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:20:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ void	minishell(char *input, t_envp *my_envp)
 {
 	t_list	*list;
 	t_data	*pipe_parsing;
-	
+
 	if (!(*input))
 		return ;
-	if (*input)
-		add_history(input);					// main에 있던 add_history()를 minishell()로 옮김
 	list = init_new_list();
-	// cmd_exit(input, list);					// "exit" 명령 처리
 	if (get_token(input, list) == 0)
 		return ;
 	get_type(list);
@@ -31,11 +28,6 @@ void	minishell(char *input, t_envp *my_envp)
 	expand_and_delete_quo(my_envp->envp, list);
 	pipe_parsing = NULL;
 	get_list(list, &pipe_parsing);
-//////////////////////////////////////
-	// print_type(list);
-	// print_result_test(pipe_parsing);
-	// print_result(pipe_parsing);
-//////////////////////////////////////
 	execute(pipe_parsing, my_envp);
 }
 
@@ -44,8 +36,8 @@ int	main(int ac, char **av, char **ev)
 	char	*input;
 	t_envp	*my_envp;
 
-	stat = 0;
-	set_terminal_print_off();				// ^C 출력 방지
+	g_stat = 0;
+	set_terminal_print_off();
 	(void)ac;
 	(void)av;
 	print_bitmap();
@@ -53,17 +45,21 @@ int	main(int ac, char **av, char **ev)
 	copy_envp(ev, my_envp);
 	while (1)
 	{
-		signal(SIGINT, handler_sigint);		// Ctrl + C
+		signal(SIGINT, handler_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		input = readline("bash: ");
-		if (input)							// 입력(문자열)이 있으면 명령 처리
+		input = readline("✎: ");
+		if (input)
+		{
+			add_history(input);
 			minishell(input, my_envp);
-		else 								// ctrl + d (EOF) 입력하면 NULL들어온다
-           handler_sigterm();
+		}
+		else
+			handler_sigterm();
 		free(input);
 	}
-	return (stat);
+	return (g_stat);
 }
+
 
 //명세서
 //시그널 보내면 부모일때는 무시하고 자식 프로세스일때 시그널 처리

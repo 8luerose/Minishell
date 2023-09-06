@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:32:41 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:20:39 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_node	*ft_lstnew(char *content)
 	new->content = ft_strdup(content);
 	new->next = NULL;
 	new->prev = NULL;
-	new->type = 0;   // ㄴㅏ주ㅇ에 고고치치기
+	new->type = 0;   // 나중에 고치기
 	return (new);
 }
 
@@ -49,4 +49,21 @@ void	make_node(char *content, t_list *list)
 		make_head_node(content, list);
 	else
 		join_node(content, list);
+}
+
+void	add_mid(char *content, t_node **iter)
+{
+	t_node	*new;
+
+	new = ft_lstnew(content);
+	if ((*iter)->next != NULL)
+	{
+		new->next = (*iter)->next;
+		(*iter)->next->prev = new;
+	}
+	else
+		new->next = NULL;
+	new->prev = (*iter);
+	(*iter)->next = new;
+	(*iter) = new;
 }

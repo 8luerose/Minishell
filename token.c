@@ -6,11 +6,28 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:36:05 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:05:32 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_escape(char *input, int i, char quo)
+{
+	if (input[i] == '\\')
+	{
+		if (input[i + 1] && quo != '\'' &&  (input[i + 1] == 'n' || input[i + 1] == '\'' || input[i + 1] == '\"'))
+			return (1);
+	}
+	return (0);
+}
+
+int	is_meta(char c)
+{
+	if (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}
 
 // void	add_buffer(char **buf, char c)
 // {
@@ -23,7 +40,12 @@
 
 // void	non_meta(char **buf, char *input, int *i, char *quo)
 // {
-//     if (*(quo) == 0 && (input[*(i)] == '\'' || input[*(i)] == '\"'))
+// 	if (is_escape(input, *i, *quo))
+// 	{
+// 		add_buffer(buf, input[*(i)]);
+// 		i++;
+// 	}
+//     else if (*(quo) == 0 && (input[*(i)] == '\'' || input[*(i)] == '\"'))
 //         *(quo) = input[*(i)];
 //     else if (input[*(i)] == *quo)
 //         *(quo) = 0;
@@ -54,7 +76,7 @@
 //     *(buf) = ft_strdup("");
 // }
 
-// void	get_token(char *input, t_list *list)
+// int	get_token(char *input, t_list *list)
 // {
 //     int     i;
 //     char    quo;
@@ -74,28 +96,15 @@
 //         i++;
 //     }
 //     if (quo != 0)
-//         exit(0);
+// 	{
+// 		// quo_error(); 
+//         return (0);
+// 	}
 //     if (buf[0] != 0)
 //         make_node(buf, list);
 //     free(buf);
+// 	return (1);
 // }
-
-int	is_escape(char *input, int i, char quo)
-{
-	if (input[i] == '\\')
-	{
-		if (input[i + 1] && quo != '\'' &&  (input[i + 1] == 'n' || input[i + 1] == '\'' || input[i + 1] == '\"'))
-			return (1);
-	}
-	return (0);
-}
-
-int	is_meta(char c)
-{
-	if (c == ' ' || c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
 
 int	get_token(char *input, t_list *list)
 {
@@ -136,7 +145,7 @@ int	get_token(char *input, t_list *list)
 		{
 			if (buf[0] != 0)
 				make_node(buf, list);
-			if (input[i] != ' ')
+			if (input[i] != ' ' && input[i] != '\t')
 			{
 				if (input[i + 1]
 					&& ((input[i] == '<' && input[i + 1] == '<')
@@ -158,6 +167,7 @@ int	get_token(char *input, t_list *list)
 	}
 	if (quo != 0)
 	{
+		printf("quo_error\n");
 		// quo_error();  // 추가하기
 		return (0);
 	}

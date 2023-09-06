@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/31 20:52:52 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:04:43 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int	syntax_errors(int prev_type, t_node *p, t_list *list)
 	if ((p == list->head || p->next == NULL) && p->type == PIPE)
 	{
 		printf("syntax_error (|) at beginning or end\n");
-		stat = 258;
+		g_stat = 258;
 		return (1);
 	}
 	if ((p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT) && 
 		(p->next == NULL || p->next->type != WORD))
 	{
 		printf("syntax_error: No WORD after redirection\n");
-		stat = 258;
+		g_stat = 258;
 		return (1);
 	}
 	if ((prev_type == REDIR_IN && p->type == REDIR_IN) ||
@@ -73,7 +73,7 @@ int	syntax_errors(int prev_type, t_node *p, t_list *list)
 		(prev_type == PIPE && p->type == PIPE))
 	{
 		printf("syntax_error: consecutive redirections or pipes\n");
-		stat = 258;
+		g_stat = 258;
 		return (1);
 	}
 	return (0);

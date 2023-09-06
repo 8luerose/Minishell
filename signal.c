@@ -6,9 +6,10 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 20:11:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/04 20:34:01 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:06:18 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -30,7 +31,7 @@ void	handler_sigint(int key)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	stat = 1;
+	g_stat = 1;
 }
 
 void	handler_sigterm(void)
@@ -41,7 +42,7 @@ void	handler_sigterm(void)
 	// printf("\033[10C");
     // printf(" exit\n");
 	write(STDOUT_FILENO, "\033[1A", 4);     // ANSI escape code를 사용하여 커서를 위로 1줄 움직이는 것 (\033['1'A)
-    write(STDOUT_FILENO, "\033[5C", 5);   	// 커서를 n만큼 앞으로 전진시킨다. (\033['N'C) 에서 N
+    write(STDOUT_FILENO, "\033[1C", 5);   	// 커서를 n만큼 앞으로 전진시킨다. (\033['N'C) 에서 N
     write(STDOUT_FILENO, " exit\n", 6); 
     exit(0);
 }

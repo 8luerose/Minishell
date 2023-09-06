@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:30:53 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:19:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,6 @@ int	here_doc(t_data	*cmd)
 		exit(0);
 	}
 	if (waitpid(-1, &status, 0) > 0)
-		stat = WEXITSTATUS(status);
+		g_stat = WEXITSTATUS(status);
 	return (size);
 }

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:22:09 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:22:22 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@
 # include <string.h>
 # include <fcntl.h>
 # include <termios.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
 
-#define FRAME_COUNT 1
-#define FRAME_WIDTH 210
-#define FRAME_HEIGHT 210
-
-int	stat;
+int	g_stat;
 
 enum	e_type
 {
@@ -150,8 +147,7 @@ void	read_heredoc(char	*limiter, char	*tmp_file);
 void	heredoc_open(t_data	*cmd);
 // pipe
 char	*check_is_access(char	*cmd, char **path);
-// void	do_cmd(t_data	*cmd, t_envp *my_envp, char **path);
-int		do_cmd(t_data	*cmd, t_envp *my_envp, char **path);
+void	do_cmd(t_data *cmd, t_envp *my_envp, char **path);
 void	first_pipe(t_data *cmd, t_pipe *exec, t_envp *my_envp, char **path);
 void	mid_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
 void	last_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
@@ -161,7 +157,7 @@ void	close_cur(t_pipe *fd);
 void	close_n_wait(t_pipe *fd, int size);
 // error
 int		cnt_str(char *str);
-void	command_error(char *cmd);
+void	command_error(char	*cmd, char *access_path);
 int		file_error(char *file_name);
 int		system_error(void);
 //signal
@@ -193,13 +189,19 @@ void	mid_pipe_dup2(int cmd_fd, int fd, int *prev_fd, int *cur_fd);
 //pipe utils
 void	unlink_tmp_file(t_data	*cmd);
 //export
-void	free_replace_content(t_node *node, char *new_content);
-void	add_to_tail(t_list *my_envp, char *data);
+void	free_replace_content(t_node *node, char *key, char *value);
+void	add_to_tail(t_list *my_envp, char *key, char *value);
 //unset
 void	delete_node(t_list *my_envp, t_node *iter);
 void	unset_node(t_list *my_envp, char *key);
 //check sytax error
 int		syntax_errors(int prev_type, t_node *p, t_list *list);
+char	*get_env(char *key, t_list *envp);
+void	unlink_tmp_file_all(t_data	*cmd);
+int		here_doc(t_data	*cmd);
+void    print_bitmap(void);
+void	add_mid(char *content, t_node **iter);
+int		quo_error(void);
 
 //merge with taehkwon
 //get_list
@@ -208,14 +210,5 @@ t_node	*process_redir(t_node *p, t_data *new_data);
 void    connect_new_data(t_data **pipe_data, t_data *new_data);
 //bitmap
 void	print_bitmap(void);
-
-//Merge with seojchoi
-//expand
-char	*get_env(char *key, t_list *envp);
-//pipe utils
-void	unlink_tmp_file_all(t_data	*cmd);
-//heredoc
-int		here_doc(t_data	*cmd);
-
 
 #endif

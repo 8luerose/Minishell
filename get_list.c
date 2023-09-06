@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:20 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:27:57 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:18:54 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@
 
 t_node	*process_word(t_node *p, t_data *new_data)
 {
-    append_cmd(new_data, p->content);
+    if (ft_strlen(p->content) > 0)
+        append_cmd(new_data, p->content);
 	p = p->next;
     return (p);
 }

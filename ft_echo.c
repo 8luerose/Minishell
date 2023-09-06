@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:19:15 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:24:25 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:16:21 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ void	ft_echo(int fd, char **cmd_line)
 	}
 	if (flag == 0)
 		ft_putstr_fd("\n", fd);
-	stat = 0;
+	g_stat = 0;
 }

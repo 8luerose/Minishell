@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:49:33 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:24:52 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:16:50 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,28 @@
 
 int	check_ll_range(long long num, int minus, char *c)
 {
-	// max
 	if ((num * minus) == 922337203685477580 && (*c > '7' || ft_isdigit(*(c + 1))))
 		return (1);
 	if ((num * minus) > 922337203685477580 && ft_isdigit(*c))
 		return (1);
-	// min
 	if ((num * minus) == -922337203685477580 && (*c > '8' || ft_isdigit(*(c + 1))))
 		return (1);
 	if ((num * minus) < -922337203685477580 && ft_isdigit(*c))
 		return (1);
 	return (0);
+}
+
+void	numeric_error(char	*str)
+{
+	char	*tmp;
+	char	*error;
+
+	error = "exit: ";
+	tmp = error;
+	error = ft_strjoin(tmp, str);
+	tmp = error;
+	error = ft_strjoin(tmp, ": numeric argument required");
+	ft_putendl_fd(error, 2);
 }
 
 int	ft_atouc(char	*str)
@@ -36,26 +47,27 @@ int	ft_atouc(char	*str)
 	i = 0;
 	minus = 1;
 	num = 0;
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 	{
-		minus *= -1;
+		if (str[i] == '-')
+			minus *= -1;
 		i++;
 	}
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		if (check_ll_range(num, minus, &str[i]))
 		{
-			printf("bash: exit: %s: numeric argument required\n", str);
-			stat = 255;
-			return (stat);
+			numeric_error(str);
+			g_stat = 255;
+			return (g_stat);
 		}
 		num *= 10;
 		num += (str[i] - '0');
 		i++;
 	}
 	num *= minus;
-	stat = (unsigned char)num;
-	return (stat);
+	g_stat = (unsigned char)num;
+	return (g_stat);
 }
 
 int	ft_exit(char **cmd_line)
@@ -67,8 +79,8 @@ int	ft_exit(char **cmd_line)
 		i++;
 	if (i > 2)
 	{
-		printf("bash: exit: too many arguments\n");
-		stat = 1;
+		ft_putendl_fd("exit: too many arguments", 2);
+		g_stat = 1;
 		return (0);
 	}
 	i = 0;
@@ -82,7 +94,7 @@ int	ft_exit(char **cmd_line)
 			i++;
 		if (!(cmd_line[1][i] >= '0' && cmd_line[1][i] <= '9'))
 		{
-			printf("bash: exit: %s: numeric argument required\n", cmd_line[1]);
+			numeric_error(cmd_line[1]);
 			exit(255);
 		}
 		i++;

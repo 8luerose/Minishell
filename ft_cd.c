@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:16:01 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:24:12 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:16:02 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 void	cd_error(char	**cmd_line)
 {
+	char	*tmp;
 	char	*error;
 
-	error = "bash: ";
-	error = ft_strjoin(error, cmd_line[0]);
-	error = ft_strjoin(error, ": ");
-	error = ft_strjoin(error, cmd_line[1]);
+	error = "cd: ";
+	tmp = error;
+	error = ft_strjoin(tmp, cmd_line[1]);
 	perror(error);
+	g_stat = 1;
 }
 
 void	cd_home_error(void)
 {
-	write(2, "bash: cd: HOME not set\n", 23);
+	ft_putendl_fd("cd: HOME not set", 2);
+	g_stat = 1;
 }
 
 void	parent_dir_error(void)
 {
-	ft_putendl_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", 2);
+	ft_putendl_fd("cd: error retrieving current directory: getcwd: \
+	cannot access parent directories: No such file or directory", 2);
+	g_stat = 0;
 }
 
-int		check_parent_dir(void)
+int	check_parent_dir(void)
 {
 	char	*pwd;
 
@@ -92,8 +96,3 @@ void	ft_cd(t_list *my_envp, char **cmd_line)
 	}
 	change_pwd_in_env(my_envp);
 }
-
-/**
- * 1. unset HOME -> check environment variable 'HOME', print error msg
- * 2. rm -rf [상위 디렉토리] -> check with getcwd(), print err msg
-*/

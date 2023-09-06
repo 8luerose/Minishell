@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:20:34 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/04 20:10:52 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:11:38 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,46 +22,51 @@ int	cnt_str(char *str)
 	return (i);
 }
 
-// void	command_error(char *cmd)
-// {
-// 	int	size;
-
-// 	write(2, "bash: ", 6);
-// 	size = cnt_str(cmd);
-// 	write(2, cmd, size);
-// 	write(2, ": command not found\n", 20);
-// 	stat = 127;
-// 	exit(127);
-// }
+int	quo_error(void)
+{
+	ft_putendl_fd("syntax error: quotation marks don't match", 2);
+	g_stat = 258;
+	return (0);
+}
 
 int	file_error(char *file_name)
 {
-	write(2, "bash: ", 6);
 	perror(file_name);
-	stat = 1;
-	return (stat);
+	g_stat = 1;
+	return (g_stat);
 }
 
-int	system_error(void)
-{
-	char	*error;
+// int	system_error(void)
+// {
+// 	perror(0);
+// 	g_stat = 1;
+// 	return (g_stat);
+// }
 
-	error = "bash";
-	perror(error);
-	stat = 1;
-	return (stat);
-}
-
-void	command_error(char	*cmd)
+void	command_error(char	*cmd, char *access_path)
 {
-	if (access(cmd, F_OK) < 0)
+	char		*tmp;
+	char		*error;
+	struct stat	statbuf;
+
+	stat(cmd, &statbuf);
+	if (S_ISDIR(statbuf.st_mode))
 	{
-		stat = 127;
-		ft_putendl_fd("No such file or directory", 2);  // 수정
+		error = ": is a directory";
+		tmp = error;
+		error = ft_strjoin(cmd, tmp);
+		ft_putendl_fd(error, 2);
+		free(error);
+		g_stat = 126;
+		exit(126);
 	}
-	else if (access(cmd, X_OK) < 0)
+	else
 	{
-		stat = 126;
-		ft_putendl_fd("Permission denied", 2);  // 수정
+		if (access(access_path, F_OK))  // no such directory
+			g_stat = 127;
+		else if (access(access_path, X_OK))  // permisson denied
+			g_stat = 126;
+		perror(cmd);
+		exit(g_stat);
 	}
 }

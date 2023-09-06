@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 19:32:50 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 21:24:22 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,11 @@ int		find_n(char *str);
 // ft_cd
 void	ft_cd(t_list *my_envp, char **cmd_line);
 void	change_pwd_in_env(t_list *my_envp);
+int		check_parent_dir(void);
 void	cd_error(char	**cmd_line);
+void	go_to_home_dir(t_list *my_envp);
+void	cd_home_error(void);
+void	parent_dir_error(void);
 // ft_pwd
 void	ft_pwd(int fd);
 // ft_export
@@ -179,6 +183,7 @@ int		set_io_fd_open(t_redir *iter);
 char	**get_ev(t_list *my_envp);
 char	**get_envp_path(char **ev);
 void	exec_backup(t_pipe *fd, int i);
+int		have_space(char *file_name);
 //init
 t_data	*init_new_data(void);
 t_redir	*init_new_redir(t_node *p);

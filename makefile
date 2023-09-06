@@ -9,10 +9,12 @@ NAME = minishell
 SRCS =	close.c \
 		error.c \
 		execute_run_utils.c \
-		execute.c \
+		execute_run.c \
+		execute_main.c \
 		expand.c \
 		free.c \
 		ft_cd.c \
+		ft_cd_utils.c \
 		ft_echo.c \
 		ft_env.c \
 		ft_exit.c \

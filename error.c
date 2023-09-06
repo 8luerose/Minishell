@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:20:34 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:11:38 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/06 20:10:18 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ int	file_error(char *file_name)
 	g_stat = 1;
 	return (g_stat);
 }
-
-// int	system_error(void)
-// {
-// 	perror(0);
-// 	g_stat = 1;
-// 	return (g_stat);
-// }
 
 void	command_error(char	*cmd, char *access_path)
 {

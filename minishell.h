@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 21:24:22 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:45:50 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ typedef struct s_envp
 // token
 int		is_meta(char c);
 int		get_token(char *input, t_list *list);
+int		is_escape(char *input, int i, char quo);
+void	get_escape(char *input, int *i, char **buf);
+void	get_quote(char *input, int *i, char **buf, char *quo);
+void	get_meta(char *input, int *i, char **buf, t_list *list);
+int		quo_error_check(char *buf, char quo, t_list *list);
+int		get_token(char *input, t_list *list);
 // make_node
 t_node	*ft_lstnew(char *content);
 void	make_head_node(char *content, t_list *list);
@@ -138,17 +144,27 @@ void	ft_pwd(int fd);
 // ft_export
 void	ft_export(t_list *my_envp, char	**cmd_line, int fd);
 char	*get_key(char	*str);
+char	*get_value(char	*str);
+void	free_replace_content(t_node *node, char *key, char *value);
+void	add_to_tail(t_list *my_envp, char *key, char *value);
 // ft_unset
 void	ft_unset(t_list *my_envp, char **cmd_line);
 // ft_env
 void	ft_env(int fd, t_list	*my_envp);
 // ft_exit
 int		ft_exit(char **cmd_line);
+int		check_ll_range(long long num, int minus, char *c);
+void	numeric_error(char	*str);
+long long	parse_num(char *str, int *minus, long long *i);
+int		ft_atouc(char *str);
+int		is_valid_exit_arg(char *arg);
 // heredoc
 char	*set_file_name(void);
 int		is_limiter(char *str, char *limiter);
 void	read_heredoc(char	*limiter, char	*tmp_file);
-void	heredoc_open(t_data	*cmd);
+void	set_heredoc_tmp_file(t_data *cmd);
+void	fork_and_read_heredoc(t_data *cmd, int *status);
+int		here_doc(t_data *cmd);
 // pipe
 char	*check_is_access(char	*cmd, char **path);
 void	do_cmd(t_data *cmd, t_envp *my_envp, char **path);
@@ -190,9 +206,20 @@ t_redir	*init_new_redir(t_node *p);
 t_envp	*init_new_envp(void);
 t_list	*init_new_list(void);
 //pipe
-void	mid_pipe_dup2(int cmd_fd, int fd, int *prev_fd, int *cur_fd);
+void	first_pipe(t_data *cmd, t_pipe *exec, t_envp *my_envp, char **path);
+void	execute_and_cleanup(t_data *cmd, t_envp *my_envp, char **path);
+void	mid_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
+void	last_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
 //pipe utils
+void	set_ev(t_envp	*my_envp);
+int		make_path(char **access_path, char **path, char *cmd);
+char	*check_is_access(char	*cmd, char **path);
 void	unlink_tmp_file(t_data	*cmd);
+void	unlink_tmp_file_all(t_data	*cmd);
+void	do_cmd_error(t_data *cmd, char **path);
+void	do_cmd_builtin(t_data *cmd, t_envp *my_envp);
+void	do_cmd_exec(t_data *cmd, t_envp *my_envp, char *access_path);
+void	do_cmd(t_data *cmd, t_envp *my_envp, char **path);
 //export
 void	free_replace_content(t_node *node, char *key, char *value);
 void	add_to_tail(t_list *my_envp, char *key, char *value);

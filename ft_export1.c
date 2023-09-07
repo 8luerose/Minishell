@@ -1,58 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:17:09 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/07 03:15:42 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_key(char	*str)
-{
-	int		i;
-	char	*key;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-		{
-			if (str[i - 1] == '-')
-				return (0);
-			break ;
-		}
-		i++;
-	}
-	i++;
-	if (i == 1)
-		exit(1);
-	// key = (char *)malloc(sizeof(char) * (i + 1));
-	key = ft_strndup(str, i);
-	key = ft_strjoin(key, "=");
-	return (key);
-}
-
-char	*get_value(char	*str)
-{
-	int		i;
-	char	*value;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			break ;
-		i++;
-	}
-	i++;
-	value = ft_strdup(&str[i]);
-	return (value);
-}
 
 // 원본 코드
 // void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
@@ -102,44 +60,6 @@ char	*get_value(char	*str)
 // 	}
 // }
 
-int	only_space(char *value)
-{
-	int	i;
-
-	i = 0;
-	while (value[i])
-	{
-		if (value[i] != ' ' && value[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	free_replace_content(t_node *node, char *key, char *value)
-{
-	free(node->content);
-	if (only_space(value))
-		node->content = ft_strdup(key);
-	else
-		node->content = ft_strjoin(key, value);
-}
-
-void	add_to_tail(t_list *my_envp, char *key, char *value)
-{
-	char	*new_content;
-	t_node	*new_node;
-
-	if (only_space(value))
-		new_content = ft_strdup(key);
-	else
-		new_content = ft_strjoin(key, value);
-	new_node = ft_lstnew(new_content);
-	my_envp->tail->next = new_node;
-	new_node->prev = my_envp->tail;
-	my_envp->tail = new_node;
-}
-
 void	export_error(char *cmd)
 {
 	char	*str;
@@ -168,12 +88,88 @@ int	check(char	*cmd)
 	return (0);
 }
 
-void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
+//원본 코드
+// void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
+// {
+// 	int		i;
+// 	char	*key;
+// 	char	*value;
+// 	t_node	*iter;
+
+// 	if (cmd_line[1] == NULL)
+// 		ft_env(fd, my_envp);
+// 	else if (ft_isdigit(cmd_line[1][0]))
+// 		export_error(cmd_line[1]);
+// 	else
+// 	{
+// 		i = 1;
+// 		while (cmd_line[i])
+// 		{
+// 			if (cmd_line[i][0] == '=')
+// 				export_error(cmd_line[i]);
+// 			else if (ft_strchr(cmd_line[i], '='))
+// 			{
+// 				key = get_key(cmd_line[i]);
+// 				value = get_value(cmd_line[i]);
+// 				if (key == 0)
+// 				{
+// 					export_error(cmd_line[i]);
+// 					return ;
+// 				}
+// 				iter = my_envp->head;
+// 				while (iter && ft_strncmp(key, iter->content, ft_strlen(key)))
+// 					iter = iter->next;
+// 				if (iter)
+// 					free_replace_content(iter, key, value);
+// 				else
+// 					add_to_tail(my_envp, key, value);
+// 			}
+// 			else  // =이 없음
+// 			{
+// 				if (check(cmd_line[i]))
+// 					export_error(cmd_line[i]);
+// 			}
+// 			i++;
+// 		}
+// 	}
+// }
+
+void	export_with_equal(t_list *my_envp, char *cmd_line)
 {
-	int		i;
 	char	*key;
 	char	*value;
 	t_node	*iter;
+
+	if (cmd_line[0] == '=')
+		export_error(cmd_line);
+	else if (ft_strchr(cmd_line, '='))
+	{
+		key = get_key(cmd_line);
+		value = get_value(cmd_line);
+		if (!key)
+		{
+			export_error(cmd_line);
+			return ;
+		}
+		iter = my_envp->head;
+		while (iter && ft_strncmp(key, iter->content, ft_strlen(key)))
+			iter = iter->next;
+		if (iter)
+			free_replace_content(iter, key, value);
+		else
+			add_to_tail(my_envp, key, value);
+	}
+}
+
+void	export_without_equal(char *cmd_line)
+{
+	if (check(cmd_line))
+		export_error(cmd_line);
+}
+
+void	ft_export(t_list *my_envp, char **cmd_line, int fd)
+{
+	int i;
 
 	if (cmd_line[1] == NULL)
 		ft_env(fd, my_envp);
@@ -184,30 +180,10 @@ void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
 		i = 1;
 		while (cmd_line[i])
 		{
-			if (cmd_line[i][0] == '=')
-				export_error(cmd_line[i]);
-			else if (ft_strchr(cmd_line[i], '='))
-			{
-				key = get_key(cmd_line[i]);
-				value = get_value(cmd_line[i]);
-				if (key == 0)
-				{
-					export_error(cmd_line[i]);
-					return ;
-				}
-				iter = my_envp->head;
-				while (iter && ft_strncmp(key, iter->content, ft_strlen(key)))
-					iter = iter->next;
-				if (iter)
-					free_replace_content(iter, key, value);
-				else
-					add_to_tail(my_envp, key, value);
-			}
-			else  // =이 없음
-			{
-				if (check(cmd_line[i]))
-					export_error(cmd_line[i]);
-			}
+			if (ft_strchr(cmd_line[i], '='))
+				export_with_equal(my_envp, cmd_line[i]);
+			else
+				export_without_equal(cmd_line[i]);
 			i++;
 		}
 	}

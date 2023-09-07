@@ -1,6 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-READLINE = -L/Users/taehkwon/.brew/opt/readline/lib -lreadline -I/Users/taehkwon/.brew/opt/readline/include
+# READLINE = -L/Users/taehkwon/.brew/opt/readline/lib -lreadline -I/Users/taehkwon/.brew/opt/readline/include
+READLINE = -L/opt/homebrew/opt/readline/lib -lreadline -I/opt/homebrew/opt/readline/include
 # READLINE = -L/Users/seojchoi/.brew/opt/readline/lib -lreadline -I/Users/seojchoi/.brew/opt/readline/include
 LIBFT = ./libft/libft.a
 RM = rm -f
@@ -18,36 +19,44 @@ SRCS =	close.c \
 		ft_echo.c \
 		ft_env.c \
 		ft_exit.c \
-		ft_export.c \
+		ft_exit_utils.c \
+		ft_export1.c \
+		ft_export2.c \
 		ft_pwd.c \
 		ft_unset.c \
 		get_list.c \
 		heredoc.c \
+		heredoc_utils.c \
 		init.c \
 		is_builtin.c \
 		libft_plus.c \
 		main_utils.c \
 		main.c \
 		make_node.c \
-		pipe_utils.c \
+		pipe_utils1.c \
+		pipe_utils2.c \
 		pipe.c \
 		print.c \
 		signal.c \
 		syntax_error.c \
 		token.c \
+		token_utils.c \
 		type.c	\
 		bitmap.c
 
 OBJS = $(SRCS:.c=.o)
+
+%.o : %.c
+	$(CC) $(CFLAGS) -I/opt/homebrew/opt/readline/include -c $< -o $@
+
+# %.o : %.c
+# 	$(CC) $(CFLAGS) -c $< -o $@
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 	make -C libft
 	$(CC) $(CFLAGS) $(OBJS) $(READLINE) $(LIBFT) -o $(NAME) 
-
-%.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	make -C libft clean

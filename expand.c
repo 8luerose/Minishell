@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:53:16 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:15:37 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/07 21:18:32 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char	*split_expand(char *expand, char **front, t_node **node)
 		if (i == 0)
 		{
 			free((*node)->content);
-			// 확장하는 부분이 빈칸으로 시작하는 경우
 			if (ft_strlen((*front)) != 0 && expand[0] == ' ')
 			{
 				(*node)->content = ft_strdup(*front);
@@ -115,17 +114,17 @@ void	free_expand(char *expand)
 		free(expand);
 }
 
-void	expand_end_with_space(char	tmp_content, t_node	**iter, char	**new_content, char	*expand)
+void	end_with_space(char	cont, t_node **iter, char **new_con, char *expand)
 {
 	int		j;
 
 	j = 0;
 	while (expand[j])
 		j++;
-	if (expand[j - 1] == ' ' && tmp_content)
+	if (expand[j - 1] == ' ' && cont)
 	{
 		add_mid("", iter);
-		(*new_content) = ft_strdup("");
+		(*new_con) = ft_strdup("");
 	}
 	free_expand(expand);
 }
@@ -133,7 +132,7 @@ void	expand_end_with_space(char	tmp_content, t_node	**iter, char	**new_content, 
 int	start_quo(char	*quo, char tmp_content)
 {
 	if ((*quo) == 0
-			&& (tmp_content == '\'' || tmp_content == '\"' ))
+		&& (tmp_content == '\'' || tmp_content == '\"' ))
 	{
 		(*quo) = tmp_content;
 		return (1);
@@ -141,7 +140,7 @@ int	start_quo(char	*quo, char tmp_content)
 	return (0);
 }
 
-int	end_quo(char	*quo, char	tmp_content)
+int	end_quo(char *quo, char	tmp_content)
 {
 	if (tmp_content == (*quo))
 	{
@@ -166,34 +165,72 @@ int	can_expand(int *size, t_node *iter, char quo, char *tmp_content)
 	return (0);
 }
 
-void	join_with_new_content(char	**new_content, char	*tmp_content, int *i, char quo)
+void	join_new_content(char **new_content, char *content, int *i, char quo)
 {
-	if (tmp_content[*i] == '\\')
+	if (content[*i] == '\\')
 	{
-		if (quo == 0)  // 이스케이프 문자 제거
+		if (quo == 0)
 		{
-			if (tmp_content[(*i) + 1] && (tmp_content[(*i) + 1] == 'n' || tmp_content[(*i) + 1] == '\'' || tmp_content[(*i) + 1] == '\"'))
+			if (content[(*i) + 1] && (content[(*i) + 1] == 'n' \
+				|| content[(*i) + 1] == '\'' || content[(*i) + 1] == '\"'))
 				(*i)++;
 		}
 		else if (quo == '\"')
 		{
-			if (tmp_content[(*i) + 1] && tmp_content[(*i) + 1] == '\"')
+			if (content[(*i) + 1] && content[(*i) + 1] == '\"')
 				(*i)++;
 			else
 			{
-				(*new_content) = ft_strjoin_c((*new_content), tmp_content[*i]);
+				(*new_content) = ft_strjoin_c((*new_content), content[*i]);
 				(*i)++;
 			}
 		}
 		else if (quo == '\'')
 		{
-			(*new_content) = ft_strjoin_c((*new_content), tmp_content[*i]);
+			(*new_content) = ft_strjoin_c((*new_content), content[*i]);
 			(*i)++;
 		}
 	}
-	(*new_content) = ft_strjoin_c((*new_content), tmp_content[*i]);
+	(*new_content) = ft_strjoin_c((*new_content), content[*i]);
 	(*i)++;
 }
+
+// void	process_escape_sequence(char ***new_content, char *content, int *i, char quo)
+// {
+// 	if (quo == 0)
+// 	{
+// 		if (content[(*i) + 1] && (content[(*i) + 1] == 'n' ||
+// 			content[(*i) + 1] == '\'' || content[(*i) + 1] == '\"'))
+// 			(*i)++;
+// 	}
+// 	else if (quo == '\"')
+// 	{
+// 		if (content[(*i) + 1] && content[(*i) + 1] == '\"')
+// 			(*i)++;
+// 		else
+// 		{
+// 			**new_content = ft_strjoin_c(**new_content, content[*i]);
+// 			(*i)++;
+// 		}
+// 	}
+// 	else if (quo == '\'')
+// 	{
+// 		**new_content = ft_strjoin_c(**new_content, content[*i]);
+// 		(*i)++;
+// 	}
+// }
+
+// void	join_new_content(char **new_content, char *content, int *i, char quo)
+// {
+// 	if (content[*i] == '\\')
+// 		process_escape_sequence(&new_content, content, i, quo);
+// 	else
+// 	{
+// 		*new_content = ft_strjoin_c(*new_content, content[*i]);
+// 		(*i)++;
+// 	}
+// }
+
 
 char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
 {
@@ -206,11 +243,11 @@ char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
 	return (expand);
 }
 
-int unsplitable(char quo, t_node	**iter)
+int unsplitable(char quo, t_node **iter)
 {
-	if (quo == '\"' || (quo == 0 && (*iter)->prev 
-	&& (((*iter)->prev->type == REDIR_IN)
-	|| ((*iter)->prev->type == REDIR_OUT)
+	if (quo == '\"' || (quo == 0 && (*iter)->prev \
+	&& (((*iter)->prev->type == REDIR_IN) \
+	|| ((*iter)->prev->type == REDIR_OUT) \
 	|| ((*iter)->prev->type == HEREDOC_OUT))))
 		return (1);
 	return (0);
@@ -227,13 +264,13 @@ int	splitable(char quo, char *expand, int *i, int size)
 	return (0);
 }
 
-void	join_with_expand(char	**new_content, char	*expand, int *i, int size)
+void	join_with_expand(char **new_content, char *expand, int *i, int size)
 {
 	(*new_content) = ft_strjoin((*new_content), expand);
 	(*i) += size;
 }
 
-void	check_iter_content(char	**new_content, char	*tmp_content, t_node **iter, t_list *envp)
+void	check_iter_(char **new, char *tmp_content, t_node **iter, t_list *envp)
 {
 	int		i;
 	int		size;
@@ -250,19 +287,19 @@ void	check_iter_content(char	**new_content, char	*tmp_content, t_node **iter, t_
 		{
 			expand = get_expand(i, size, tmp_content, envp);
 			if (unsplitable(quo, iter))
-				join_with_expand(new_content, expand, &i, size);
+				join_with_expand(new, expand, &i, size);
 			else if (splitable(quo, expand, &i, size))
 			{
-				(*new_content) = split_expand(expand, new_content, iter);
-				expand_end_with_space(tmp_content[i], iter, new_content, expand);
+				(*new) = split_expand(expand, new, iter);
+				end_with_space(tmp_content[i], iter, new, expand);
 			}
 		}
 		else
-			join_with_new_content(new_content, tmp_content, &i, quo);
+			join_new_conten(new, tmp_content, &i, quo);
 	}
 }
 
-void	expand_and_delete_quo(t_list	*envp, t_list	*list)
+void	expand_and_delete_quo(t_list *envp, t_list *list)
 {
 	t_node		*iter;
 	char		*new_content;
@@ -273,9 +310,9 @@ void	expand_and_delete_quo(t_list	*envp, t_list	*list)
 	{
 		new_content = ft_strdup("");
 		tmp_content = ft_strdup(iter->content);
-		check_iter_content(&new_content, tmp_content, &iter, envp);
+		check_iter_(&new_content, tmp_content, &iter, envp);
 		free(tmp_content);
-		iter->content = new_content;   //따옴표가 제거된 content로 갱신
+		iter->content = new_content;
 		iter = iter->next;
 	}
 }

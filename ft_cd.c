@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:16:01 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 21:23:08 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/07 20:00:36 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	change_pwd_in_env(t_list *my_envp)
 
 void	go_to_home_dir(t_list *my_envp)
 {
-    parent_dir_error();
-    chdir(get_env("HOME", my_envp));
+	parent_dir_error();
+	chdir(get_env("HOME", my_envp));
 }
 
 void	ft_cd(t_list *my_envp, char **cmd_line)

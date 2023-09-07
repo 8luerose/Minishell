@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:20:34 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 20:10:18 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/07 19:10:23 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	command_error(char	*cmd, char *access_path)
 	}
 	else
 	{
-		if (access(access_path, F_OK))  // no such directory
+		if (access(access_path, F_OK))
 			g_stat = 127;
-		else if (access(access_path, X_OK))  // permisson denied
+		else if (access(access_path, X_OK))
 			g_stat = 126;
 		perror(cmd);
 		exit(g_stat);

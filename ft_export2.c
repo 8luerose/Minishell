@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 03:14:38 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/07 03:15:22 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 06:13:53 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_key(char	*str)
 	i++;
 	if (i == 1)
 		exit(1);
-	// key = (char *)malloc(sizeof(char) * (i + 1));
 	key = ft_strndup(str, i);
 	key = ft_strjoin(key, "=");
 	return (key);

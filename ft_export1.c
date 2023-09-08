@@ -6,59 +6,11 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 04:44:06 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 06:13:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// 원본 코드
-// void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
-// {
-// 	int		i;
-// 	char	*key;
-// 	t_node	*iter;
-// 	t_flag	flag;
-
-// 	flag.env = 0;
-// 	flag.env_with_quo = 0;
-// 	flag.quo = 0;  // flag 초기화 하는 함수 만들기
-// 	if (cmd_line[1] == NULL)
-// 		ft_env(fd, my_envp);
-// 	else
-// 	{
-// 		i = 1;
-// 		while (cmd_line[i])
-// 		{
-// 			if (cmd_line[i][0] == '=')
-// 				printf("bash: export: '%s': not a valid identifier\n", cmd_line[i]);
-// 			else if (ft_strchr(cmd_line[i], '='))
-// 			{
-// 				key = get_key(cmd_line[i]);
-// 				iter = my_envp->head;
-// 				while (iter)
-// 				{
-// 					if (ft_strncmp(key, iter->content, ft_strlen(key)) == 0)
-// 						break ;
-// 					iter = iter->next;
-// 				}
-// 				if (iter)
-// 				{
-// 					free(iter->content);
-// 					iter->content = ft_strdup(cmd_line[i]);
-// 				}
-// 				else
-// 				{
-// 					iter = ft_lstnew(cmd_line[i], flag);
-// 					my_envp->tail->next = iter;
-// 					iter->prev = my_envp->tail;
-// 					my_envp->tail = iter;
-// 				}	
-// 			}
-// 			i++;
-// 		}
-// 	}
-// }
 
 void	export_error(char *cmd)
 {

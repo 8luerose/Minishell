@@ -12,7 +12,10 @@ SRCS =	close.c \
 		execute_run_utils.c \
 		execute_run.c \
 		execute_main.c \
-		expand.c \
+		expand_1.c \
+		expand_2.c \
+		expand_3.c \
+		expand_4.c \
 		free.c \
 		ft_cd.c \
 		ft_cd_utils.c \
@@ -25,6 +28,7 @@ SRCS =	close.c \
 		ft_pwd.c \
 		ft_unset.c \
 		get_list.c \
+		get_list_utils.c \
 		heredoc.c \
 		heredoc_utils.c \
 		init.c \

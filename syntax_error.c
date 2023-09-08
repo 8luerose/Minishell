@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:41:19 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/07 12:48:54 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 05:05:10 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,17 @@ int	syntax_exit(void)
 int	syntax_errors(t_node *p, t_list *list)
 {
 	if ((p->next) && p->next->type == HEREDOC_IN && p->type == HEREDOC_IN)
-	{
-		printf("syntax error near unexpected token '<'\n");
-		return(syntax_exit());
-	}
-	if ((p->next) && ((p->next->type == REDIR_IN && p->type == REDIR_IN) ||
-		(p->next->type == REDIR_OUT && p->type == REDIR_OUT) ||
-		(p->next->type == HEREDOC_OUT && p->type == HEREDOC_OUT) ||
+		return (printf("syntax error '<'\n"), syntax_exit());
+	if ((p->next) && ((p->next->type == REDIR_IN && p->type == REDIR_IN) || \
+		(p->next->type == REDIR_OUT && p->type == REDIR_OUT) || \
+		(p->next->type == HEREDOC_OUT && p->type == HEREDOC_OUT) || \
 		(p->next->type == PIPE && p->type == PIPE)))
 	{
-		printf("syntax error near unexpected token '%s%s' \n", p->content, p->next->content);
+		printf("syntax error '%s%s' \n", p->content, p->next->content);
 		return (syntax_exit());
 	}
-	if ((p->type == REDIR_IN || p->type == REDIR_OUT || p->type == HEREDOC_IN || p->type == HEREDOC_OUT) 
+	if ((p->type == REDIR_IN || p->type == REDIR_OUT || \
+		p->type == HEREDOC_IN || p->type == HEREDOC_OUT)
 		&& (p->next == NULL || (p->next && p->next->type != WORD)))
 	{
 		printf("syntax error near unexpected token `newline'\n");
@@ -46,12 +44,6 @@ int	syntax_errors(t_node *p, t_list *list)
 	}
 	return (0);
 }
-
-/**
- * pipe pipe
- * redir redir
- * redir pipe
-*/
 
 int	check_syntax_error(t_list *list)
 {

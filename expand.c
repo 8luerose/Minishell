@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:53:16 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/07 21:18:32 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:38:21 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	free_expand(char *expand)
 		free(expand);
 }
 
-void	end_with_space(char	cont, t_node **iter, char **new_con, char *expand)
+void	end_with_space(char cont, t_node **iter, char **new_con, char *expand)
 {
 	int		j;
 
@@ -140,7 +140,7 @@ int	start_quo(char	*quo, char tmp_content)
 	return (0);
 }
 
-int	end_quo(char *quo, char	tmp_content)
+int	end_quo(char *quo, char tmp_content)
 {
 	if (tmp_content == (*quo))
 	{
@@ -165,34 +165,62 @@ int	can_expand(int *size, t_node *iter, char quo, char *tmp_content)
 	return (0);
 }
 
+//원본 코드
+// void	join_new_content(char **new_content, char *content, int *i, char quo)
+// {
+// 	if (content[*i] == '\\')
+// 	{
+// 		if (quo == 0)
+// 		{
+// 			if (content[(*i) + 1] && (content[(*i) + 1] == 'n' \
+// 				|| content[(*i) + 1] == '\'' || content[(*i) + 1] == '\"'))
+// 				(*i)++;
+// 		}
+// 		else if (quo == '\"')
+// 		{
+// 			if (content[(*i) + 1] && content[(*i) + 1] == '\"')
+// 				(*i)++;
+// 			else
+// 			{
+// 				(*new_content) = ft_strjoin_c((*new_content), content[*i]);
+// 				(*i)++;
+// 			}
+// 		}
+// 		else if (quo == '\'')
+// 		{
+// 			(*new_content) = ft_strjoin_c((*new_content), content[*i]);
+// 			(*i)++;
+// 		}
+// 	}
+// 	(*new_content) = ft_strjoin_c((*new_content), content[*i]);
+// 	(*i)++;
+// }
+
+void	append_and_increment(char **new_content, char *content, int *i)
+{
+	(*new_content) = ft_strjoin_c((*new_content), content[*i]);
+	(*i)++;
+}
+
 void	join_new_content(char **new_content, char *content, int *i, char quo)
 {
 	if (content[*i] == '\\')
 	{
-		if (quo == 0)
-		{
-			if (content[(*i) + 1] && (content[(*i) + 1] == 'n' \
-				|| content[(*i) + 1] == '\'' || content[(*i) + 1] == '\"'))
-				(*i)++;
-		}
+		if (quo == 0 && content[(*i) + 1] && (content[(*i) + 1] == 'n' \
+			|| content[(*i) + 1] == '\'' || content[(*i) + 1] == '\"'))
+			(*i)++;
 		else if (quo == '\"')
 		{
 			if (content[(*i) + 1] && content[(*i) + 1] == '\"')
 				(*i)++;
 			else
-			{
-				(*new_content) = ft_strjoin_c((*new_content), content[*i]);
-				(*i)++;
-			}
+				append_and_increment(new_content, content, i);
 		}
 		else if (quo == '\'')
-		{
-			(*new_content) = ft_strjoin_c((*new_content), content[*i]);
-			(*i)++;
-		}
+			append_and_increment(new_content, content, i);
 	}
-	(*new_content) = ft_strjoin_c((*new_content), content[*i]);
-	(*i)++;
+	else
+		append_and_increment(new_content, content, i);
 }
 
 // void	process_escape_sequence(char ***new_content, char *content, int *i, char quo)
@@ -231,7 +259,6 @@ void	join_new_content(char **new_content, char *content, int *i, char quo)
 // 	}
 // }
 
-
 char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
 {
 	char	*key;
@@ -243,7 +270,7 @@ char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
 	return (expand);
 }
 
-int unsplitable(char quo, t_node **iter)
+int	unsplitable(char quo, t_node **iter)
 {
 	if (quo == '\"' || (quo == 0 && (*iter)->prev \
 	&& (((*iter)->prev->type == REDIR_IN) \
@@ -295,7 +322,7 @@ void	check_iter_(char **new, char *tmp_content, t_node **iter, t_list *envp)
 			}
 		}
 		else
-			join_new_conten(new, tmp_content, &i, quo);
+			join_new_content(new, tmp_content, &i, quo);
 	}
 }
 

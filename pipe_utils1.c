@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 05:01:43 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/07 03:27:57 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:51:48 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*check_is_access(char	*cmd, char **path)
 	else if (make_path(&access_path, path, cmd))
 	{
 		if (access(access_path, F_OK) == 0)
-			return (access_path);	
+			return (access_path);
 	}
 	return (0);
 }

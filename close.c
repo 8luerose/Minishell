@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:05:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/07 19:08:27 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 05:14:33 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	close_n_wait(t_pipe *fd, int size)
 
 	close_prev(fd);
 	close_cur(fd);
-    i = 0;
+	i = 0;
 	while (i < size)
 	{
 		if (waitpid(-1, &status, 0) > 0)
@@ -46,6 +46,6 @@ void	close_n_wait(t_pipe *fd, int size)
 				printf("QUIT: 3\n");
 			}
 		}
-        i++;
+		i++;
 	}
 }

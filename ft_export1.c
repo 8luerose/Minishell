@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/07 03:15:42 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:44:06 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	export_without_equal(char *cmd_line)
 
 void	ft_export(t_list *my_envp, char **cmd_line, int fd)
 {
-	int i;
+	int	i;
 
 	if (cmd_line[1] == NULL)
 		ft_env(fd, my_envp);

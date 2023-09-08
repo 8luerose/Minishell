@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/07 03:43:36 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:50:54 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	read_heredoc(char	*limiter, char	*tmp_file)
 	char	*input;
 	int		file_fd;
 
-	// signal(SIGINT, SIG_IGN);									//fork 전 추가	
 	signal(SIGINT, handler_sig_child);
 	signal(SIGTERM, handler_sig_child);
 	signal(SIGQUIT, SIG_IGN);
@@ -203,13 +202,13 @@ void	fork_and_read_heredoc(t_data *cmd, int *status)
 
 int	here_doc(t_data *cmd)
 {
-	int size;
-	int status;
+	int		size;
+	int		status;
+	t_data	*iter;
 
 	set_heredoc_tmp_file(cmd);
 	fork_and_read_heredoc(cmd, &status);
-	// size 계산하는 부분
-	t_data *iter = cmd;
+	iter = cmd;
 	size = 0;
 	while (iter)
 	{

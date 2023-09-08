@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:15:15 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/07 20:12:44 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 05:45:25 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,15 @@ int	set_io_fd(t_data *cmd)
 	return (0);
 }
 
-void	exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp)
+void	exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp, char **path)
 {
 	signal(SIGINT, handler_sig_child);
 	signal(SIGTERM, handler_sig_child);
 	signal(SIGQUIT, SIG_DFL);
 	if (i == 0)
-		first_pipe(iter, exec, my_envp, my_envp->path);
+		first_pipe(iter, exec, my_envp, path);
 	else if (!iter->next)
-		last_pipe(iter, exec, my_envp, my_envp->path);
+		last_pipe(iter, exec, my_envp, path);
 	else
-		mid_pipe(iter, exec, my_envp, my_envp->path);
+		mid_pipe(iter, exec, my_envp, path);
 }

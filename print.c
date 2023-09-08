@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:55 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:11:01 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:52:14 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,36 @@ static void	print_redir(t_redir *redir)
 	t_redir	*p;
 
 	p = redir;
-    while (p)
+	while (p)
 	{
-        printf("%s %s ", p->redir, p->file_name);
-        p = p->next;
-    }
+		printf("%s %s ", p->redir, p->file_name);
+		p = p->next;
+	}
 }
 
-void print_result(t_data *data)
+void	print_result(t_data *data)
 {
 	char	**now_cmd;
 
-    while (data)
+	while (data)
 	{
-        if (data->cmd_line)
+		if (data->cmd_line)
 		{
-            now_cmd = data->cmd_line;
-            while (*now_cmd)				//cmd[0] -> cmd[1]
+			now_cmd = data->cmd_line;
+			while (*now_cmd)
 			{
-                printf("%s ", *now_cmd);
-                now_cmd++;
-            }
-        }
-        if (data->redir)
+				printf("%s ", *now_cmd);
+				now_cmd++;
+			}
+		}
+		if (data->redir)
 		{
-            print_redir(data->redir);
-        }
-        data = data->next;
-        if (data)
-            printf("| "); // 각 파이프라인 구분하기 위해 사용
-    }
+			print_redir(data->redir);
+		}
+		data = data->next;
+		if (data)
+			printf("| ");
+	}
 	printf("\n");
 }
 

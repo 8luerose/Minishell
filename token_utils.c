@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:40:29 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/07 12:48:58 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 05:07:51 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	is_escape(char *input, int i, char quo)
 {
 	if (input[i] == '\\')
 	{
-		if (input[i + 1] && quo != '\'' &&  (input[i + 1] == 'n' || input[i + 1] == '\'' || input[i + 1] == '\"'))
+		if (input[i + 1] && quo != '\'' && (input[i + 1] == 'n' \
+			|| input[i + 1] == '\'' || input[i + 1] == '\"'))
 			return (1);
 	}
 	return (0);

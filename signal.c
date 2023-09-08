@@ -6,14 +6,13 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 20:11:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/07 03:33:08 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:53:26 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-void	set_terminal_print_off(void)	// 터미널에 ^C, ^\등의 시그널표식을 출력하지않도록 설정
+void	set_terminal_print_off(void)
 {
 	struct termios	term;
 
@@ -24,7 +23,7 @@ void	set_terminal_print_off(void)	// 터미널에 ^C, ^\등의 시그널표식�
 
 void	handler_sigint(int key)
 {
-	if (key == SIGINT)					//지금까지 입력된 프롬프트를 유지한 채 개행한 후 텅 빈 프롬프트를 받는다
+	if (key == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
@@ -36,10 +35,10 @@ void	handler_sigint(int key)
 
 void	handler_sigterm(void)
 {
-	write(STDOUT_FILENO, "\033[1A", 4);     // ANSI escape code를 사용하여 커서를 위로 1줄 움직이는 것 (\033['1'A)
-    write(STDOUT_FILENO, "\033[1C", 5);   	// 커서를 n만큼 앞으로 전진시킨다. (\033['N'C) 에서 N
-    write(STDOUT_FILENO, " exit\n", 6); 
-    exit(0);
+	write(STDOUT_FILENO, "\033[1A", 4);
+	write(STDOUT_FILENO, "\033[1C", 5);
+	write(STDOUT_FILENO, " exit\n", 6);
+	exit(0);
 }
 
 void	handler_sig_child(int key)

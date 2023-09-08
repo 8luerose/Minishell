@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:51:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:20:39 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:51:10 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_node	*ft_lstnew(char *content)
 	new->content = ft_strdup(content);
 	new->next = NULL;
 	new->prev = NULL;
-	new->type = 0;   // 나중에 고치기
+	new->type = 0;
 	return (new);
 }
 

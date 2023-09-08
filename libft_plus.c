@@ -6,13 +6,13 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:29:48 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/07 12:48:10 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 04:51:03 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin_c(char const *s1, char c)    // 문자 하나 조인
+char	*ft_strjoin_c(char const *s1, char c)
 {
 	size_t	s1_s;
 	size_t	i;

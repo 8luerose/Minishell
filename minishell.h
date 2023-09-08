@@ -6,11 +6,12 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:27:54 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 06:43:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
+# define MINISHELL_H
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>

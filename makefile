@@ -40,7 +40,6 @@ SRCS =	close.c \
 		pipe_utils1.c \
 		pipe_utils2.c \
 		pipe.c \
-		print.c \
 		signal.c \
 		syntax_error.c \
 		token.c \

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 06:01:47 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 06:03:47 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 06:24:45 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	append_and_increment(char **new_content, char *content, int *i)
 	(*i)++;
 }
 
-void	join_new_content(char **new_content, char *content, int *i, char quo)
+void	join_content(char **new_content, char *content, int *i, char quo)
 {
 	if (content[*i] == '\\')
 	{

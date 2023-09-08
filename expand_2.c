@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 06:01:03 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 06:03:43 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 06:24:00 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_expand(char *expand)
 		free(expand);
 }
 
-void	end_with_space(char cont, t_node **iter, char **new_con, char *expand)
+void	end_space(char cont, t_node **iter, char **new_con, char *expand)
 {
 	int		j;
 

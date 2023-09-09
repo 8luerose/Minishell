@@ -9,7 +9,7 @@ NAME = minishell
 
 SRCS =	close.c \
 		error.c \
-		execute_run_utils.c \
+		execute_utils.c \
 		execute_run.c \
 		execute_main.c \
 		expand_1.c \

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:43:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/09 17:15:51 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,13 @@ int			quo_error(void);
 int			file_error(char *file_name);
 void		command_error(char	*cmd, char *access_path);
 //execute_main
+void		set_env_pipe(t_envp *my_envp, t_pipe *exec, char ***path, int size);
+void		exec_close_backup(int i, t_pipe *exec);
 void		run(t_data *cmd, int size, t_envp *my_envp);
-int			exec_error_check(t_data *cmd);
 int			builtins_check(t_data *cmd, t_envp *my_envp);
 int			execute(t_data *cmd, t_envp *my_envp);
-//execute_run_utils
+//execute_utils
+int			exec_error_check(t_data *cmd);
 void		exec_backup(t_pipe *fd, int i);
 int			have_space(char *file_name);
 //execute_run

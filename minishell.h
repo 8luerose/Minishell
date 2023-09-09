@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 17:15:51 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 06:50:44 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_pipe
 typedef struct s_envp
 {
 	char	**ev;
+	char	**path;
 	t_list	*envp;
 }	t_envp;
 
@@ -112,7 +113,7 @@ char		**get_ev(t_list *my_envp);
 char		**get_envp_path(char **ev);
 int			set_io_fd_open(t_redir *iter);
 int			set_io_fd(t_data *cmd);
-void		exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp, char **path);
+void		exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp);
 //expand
 int			check_envp_size(char *content);
 char		*make_key(char *content, int start, int size);

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 17:15:35 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 06:50:48 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@
 void	set_env_pipe(t_envp *my_envp, t_pipe *exec, char ***path, int size)
 {
 	*path = get_envp_path(get_ev(my_envp->envp));
+	my_envp->path = *path;
 	exec->size = size;
 	if (pipe(exec->prev_fd) < 0)
 		exit(1);
@@ -108,7 +109,7 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 		exec_close_backup(i, &exec);
 		pid = fork();
 		if (pid == 0)
-			exec_cmd(i, iter, &exec, my_envp, path);
+			exec_cmd(i, iter, &exec, my_envp);
 		i++;
 		iter = iter->next;
 	}

@@ -6,73 +6,11 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 06:50:48 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 06:54:41 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// 원본 코드
-// void	run(t_data *cmd, int size, t_envp *my_envp)
-// {
-// 	int		i;
-// 	char	**path;
-// 	pid_t	pid;
-// 	t_data	*iter;
-// 	t_pipe	exec;
-
-// 	path = get_envp_path(get_ev(my_envp->envp));
-// 	exec.size = size;
-// 	iter = cmd;
-// 	if (pipe(exec.prev_fd) < 0 || (i = 0) < 0)
-// 		exit(1);
-// 	while (iter)
-// 	{
-// 		if (i > 0)
-// 			close_prev(&exec);
-// 		exec_backup(&exec, i);
-// 		signal(SIGINT, SIG_IGN);
-// 		if (pipe(exec.cur_fd) < 0 || (pid = fork()) < 0)
-// 			exit(1);
-// 		if (pid == 0)
-// 			exec_cmd(i, iter, &exec, my_envp, path);
-// 		i++;
-// 		iter = iter->next;
-// 	}
-// 	close_n_wait(&exec, i);
-// }
-
-//2차 수정
-// void	run(t_data *cmd, int size, t_envp *my_envp)
-// {
-// 	int		i;
-// 	char	**path;
-// 	pid_t	pid;
-// 	t_data	*iter;
-// 	t_pipe	exec;
-
-// 	path = get_envp_path(get_ev(my_envp->envp));
-// 	exec.size = size;
-// 	iter = cmd;
-// 	if (pipe(exec.prev_fd) < 0)
-// 		exit(1);
-// 	i = 0;
-// 	while (iter)
-// 	{
-// 		if (i > 0)
-// 			close_prev(&exec);
-// 		exec_backup(&exec, i);
-// 		signal(SIGINT, SIG_IGN);
-// 		if (pipe(exec.cur_fd) < 0)
-// 			exit(1);
-// 		pid = fork();
-// 		if (pid == 0)
-// 			exec_cmd(i, iter, &exec, my_envp, path);
-// 		i++;
-// 		iter = iter->next;
-// 	}
-// 	close_n_wait(&exec, i);
-// }
 
 void	set_env_pipe(t_envp *my_envp, t_pipe *exec, char ***path, int size)
 {
@@ -115,49 +53,6 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 	}
 	close_n_wait(&exec, i);
 }
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-//예비용 + 메인문 다름
-// void setup_env_and_pipe(t_envp *my_envp, t_pipe *exec, char ***path, int size)
-// {
-//     *path = get_envp_path(get_ev(my_envp->envp));
-//     exec->size = size;
-//     if (pipe(exec->prev_fd) < 0)
-//         exit(1);
-// }
-
-// void iterate_cmds(t_data *cmd, t_pipe *exec, t_envp *my_envp, char **path)
-// {
-//     int i = 0;
-//     pid_t pid;
-//     t_data *iter = cmd;
-    
-//     while (iter)
-//     {
-//         if (i > 0)
-//             close_prev(exec);
-//         exec_backup(exec, i);
-//         signal(SIGINT, SIG_IGN);
-//         if (pipe(exec->cur_fd) < 0)
-//             exit(1);
-//         pid = fork();
-//         if (pid == 0)
-//             exec_cmd(i, iter, exec, my_envp, path);
-//         i++;
-//         iter = iter->next;
-//     }
-//     close_n_wait(exec, i);
-// }
-
-// void run(t_data *cmd, int size, t_envp *my_envp)
-// {
-//     char **path;
-//     t_pipe exec;
-
-//     setup_env_and_pipe(my_envp, &exec, &path, size);
-//     iterate_cmds(cmd, &exec, my_envp, path);
-// }
 
 int	builtins_check(t_data *cmd, t_envp *my_envp)
 {

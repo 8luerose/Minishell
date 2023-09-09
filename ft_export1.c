@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:13:09 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 07:05:21 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,52 +39,6 @@ int	check(char	*cmd)
 		return (1);
 	return (0);
 }
-
-//원본 코드
-// void	ft_export(t_list *my_envp, char	**cmd_line, int fd)
-// {
-// 	int		i;
-// 	char	*key;
-// 	char	*value;
-// 	t_node	*iter;
-
-// 	if (cmd_line[1] == NULL)
-// 		ft_env(fd, my_envp);
-// 	else if (ft_isdigit(cmd_line[1][0]))
-// 		export_error(cmd_line[1]);
-// 	else
-// 	{
-// 		i = 1;
-// 		while (cmd_line[i])
-// 		{
-// 			if (cmd_line[i][0] == '=')
-// 				export_error(cmd_line[i]);
-// 			else if (ft_strchr(cmd_line[i], '='))
-// 			{
-// 				key = get_key(cmd_line[i]);
-// 				value = get_value(cmd_line[i]);
-// 				if (key == 0)
-// 				{
-// 					export_error(cmd_line[i]);
-// 					return ;
-// 				}
-// 				iter = my_envp->head;
-// 				while (iter && ft_strncmp(key, iter->content, ft_strlen(key)))
-// 					iter = iter->next;
-// 				if (iter)
-// 					free_replace_content(iter, key, value);
-// 				else
-// 					add_to_tail(my_envp, key, value);
-// 			}
-// 			else  // =이 없음
-// 			{
-// 				if (check(cmd_line[i]))
-// 					export_error(cmd_line[i]);
-// 			}
-// 			i++;
-// 		}
-// 	}
-// }
 
 void	export_with_equal(t_list *my_envp, char *cmd_line)
 {

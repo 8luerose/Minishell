@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 03:14:38 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 06:13:53 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:33:18 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ char	*get_key(char	*str)
 	while (str[i])
 	{
 		if (str[i] == '=')
-		{
-			if (str[i - 1] == '-')
-				return (0);
 			break ;
-		}
 		i++;
 	}
 	i++;
-	if (i == 1)
-		exit(1);
 	key = ft_strndup(str, i);
-	key = ft_strjoin(key, "=");
+	if (key_check(key))
+	{
+		free(key);
+		return (0);
+	}
+	free(key);
+	key = ft_strndup(str, i + 1);
 	return (key);
 }
 
@@ -89,4 +89,5 @@ void	add_to_tail(t_list *my_envp, char *key, char *value)
 	my_envp->tail->next = new_node;
 	new_node->prev = my_envp->tail;
 	my_envp->tail = new_node;
+	free(new_content);
 }

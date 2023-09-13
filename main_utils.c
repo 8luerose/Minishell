@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 01:06:34 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/06 17:19:50 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 13:35:38 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	copy_envp(char	**ev, t_envp	*my_envp)
 	{
 		content = make_content(ev[i]);
 		make_node(content, my_envp->envp);
+		free(content);
 		i++;
 	}
 }

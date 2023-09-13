@@ -3,39 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   execute_run.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:15:15 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/10 06:50:47 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 14:09:13 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_ev(t_list *my_envp)
+void	get_ev(t_envp	*my_envp)
 {
 	int		size;
-	char	**ev;
 	t_node	*iter;
 
 	size = 0;
-	iter = my_envp->head;
+	iter = my_envp->envp->head;
 	while (iter)
 	{
 		size++;
 		iter = iter->next;
 	}
-	ev = (char **)malloc(sizeof(char *) * (size + 1));
+	my_envp->ev = (char **)malloc(sizeof(char *) * (size + 1));
 	size = 0;
-	iter = my_envp->head;
+	iter = my_envp->envp->head;
 	while (iter)
 	{
-		ev[size] = ft_strdup(iter->content);
+		my_envp->ev[size] = ft_strdup(iter->content);
 		size++;
 		iter = iter->next;
 	}
-	ev[size] = 0;
-	return (ev);
+	my_envp->ev[size] = 0;
 }
 
 char	**get_envp_path(char **ev)
@@ -59,6 +57,7 @@ char	**get_envp_path(char **ev)
 		}
 		i++;
 	}
+	free(key);
 	return (path);
 }
 

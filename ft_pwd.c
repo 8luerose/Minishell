@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:03:08 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:18:39 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:40:39 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,9 @@ void	ft_pwd(int fd)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	ft_putendl_fd(pwd, fd);
+	if (pwd)
+	{
+		ft_putendl_fd(pwd, fd);
+		free(pwd);
+	}
 }

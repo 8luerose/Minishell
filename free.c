@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:43 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:15:47 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 21:00:45 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,57 @@ void	free_redirs(t_redir *redir)
 		free(redir_tmp->file_name);
 		free(redir_tmp);
 	}
+}
+
+void	free_list(t_data *pipe_parsing)
+{
+	int		i;
+	t_data	*cmd_iter;
+	t_data	*cmd_next;
+	t_redir	*redir_iter;
+	t_redir *redir_next;
+
+	cmd_iter = pipe_parsing;
+	while (cmd_iter)
+	{
+		if (cmd_iter->cmd_line)
+		{
+			i = 0;
+			while (cmd_iter->cmd_line[i])
+			{
+				free(cmd_iter->cmd_line[i]);
+				i++;
+			}
+			free(cmd_iter->cmd_line);
+		}
+		redir_iter = cmd_iter->redir;
+		while (redir_iter)
+		{
+			free(redir_iter->file_name);
+			free(redir_iter->limiter);
+			free(redir_iter->redir);
+			redir_next = redir_iter->next;
+			free(redir_iter);
+			redir_iter = redir_next;
+		}
+		cmd_next = cmd_iter->next;
+		free(cmd_iter);
+		cmd_iter = cmd_next;
+	}
+}
+
+void	free_token(t_list	*list)
+{
+	t_node	*next;
+	t_node	*iter;
+
+	iter = list->head;
+	while (iter)
+	{
+		free(iter->content);
+		next = iter->next;
+		free(iter);
+		iter = next;
+	}
+	free(list);
 }

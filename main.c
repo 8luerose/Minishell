@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:46:03 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:34:03 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_ev(t_envp	*my_envp)
+{
+	int	i;
+
+	i = 0;
+	while (my_envp->ev[i])
+	{
+		free(my_envp->ev[i]);
+		i++;
+	}
+	free(my_envp->ev);
+	if (my_envp->path)
+		free_all(my_envp->path);
+}
 
 void	minishell(char *input, t_envp *my_envp)
 {
@@ -21,14 +36,22 @@ void	minishell(char *input, t_envp *my_envp)
 		return ;
 	list = init_new_list();
 	if (get_token(input, list) == 0)
+	{
+		free_token(list);
 		return ;
+	}
 	get_type(list);
 	if (check_syntax_error(list))
+	{
+		free_token(list);
 		return ;
+	}
 	expand_and_delete_quo(my_envp->envp, list);
 	pipe_parsing = NULL;
 	get_list(list, &pipe_parsing);
 	execute(pipe_parsing, my_envp);
+	free_token(list);
+	free_list(pipe_parsing);
 }
 
 int	main(int ac, char **av, char **ev)
@@ -47,7 +70,7 @@ int	main(int ac, char **av, char **ev)
 	{
 		signal(SIGINT, handler_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		input = readline("✎: ");
+		input = readline("minishell : ");
 		if (input)
 		{
 			add_history(input);

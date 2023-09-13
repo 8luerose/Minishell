@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 03:27:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/10 07:03:36 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:45:41 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	do_cmd_builtin(t_data *cmd, t_envp *my_envp)
 
 void	do_cmd_exec(t_data *cmd, t_envp *my_envp, char *access_path)
 {
-	set_ev(my_envp);
+	// set_ev(my_envp);
 	if (execve(access_path, cmd->cmd_line, my_envp->ev) < 0)
 		command_error(cmd->cmd_line[0], access_path);
 }

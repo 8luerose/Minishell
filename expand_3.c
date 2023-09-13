@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 06:01:47 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 06:24:45 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:35:38 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	append_and_increment(char **new_content, char *content, int *i)
 {
-	(*new_content) = ft_strjoin_c((*new_content), content[*i]);
+	char	*tmp;
+
+	tmp = *new_content;
+	(*new_content) = ft_strjoin_c(tmp, content[*i]);
+	free(tmp);
 	(*i)++;
 }
 
@@ -32,11 +36,8 @@ void	join_content(char **new_content, char *content, int *i, char quo)
 			else
 				append_and_increment(new_content, content, i);
 		}
-		else if (quo == '\'')
-			append_and_increment(new_content, content, i);
 	}
-	else
-		append_and_increment(new_content, content, i);
+	append_and_increment(new_content, content, i);
 }
 
 char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
@@ -46,7 +47,7 @@ char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
 
 	key = make_key(tmp_content, i + 1, size - 1);
 	expand = get_env(key, envp);
-	free(key);
+	// free(key);
 	return (expand);
 }
 

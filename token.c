@@ -3,96 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/04 10:26:05 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:09:43 by taehkwon         ###   ########.fr       */
+/*   Created: 2023/09/09 16:06:37 by seojchoi          #+#    #+#             */
+/*   Updated: 2023/09/11 21:47:35 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_escape(char *input, int *i, char **buf)
+void	check_quo(char input, char *quo)
 {
-	char	*tmp;
-
-	tmp = *buf;
-	*buf = ft_strjoin_c(tmp, input[*i]);
-	free(tmp);
-	(*i)++;
-}
-
-void	get_quote(char *input, int *i, char **buf, char *quo)
-{
-	char	*tmp;
-
-	if (*quo == 0 && (input[*i] == '\'' || input[*i] == '\"'))
-		*quo = input[*i];
-	else if (input[*i] == *quo)
+	if ((*quo) == 0 && (input == '\'' || input == '\"'))
+		*quo = input;
+	else if (input == (*quo))
 		*quo = 0;
-	tmp = *buf;
-	*buf = ft_strjoin_c(tmp, input[*i]);
-	free(tmp);
 }
 
-void	get_meta(char *input, int *i, char **buf, t_list *list)
+void	make_token(t_list *list, char *input, int start, int size)
 {
-	char	*tmp;
+	char	*content;
 
-	if ((*buf)[0] != 0)
-		make_node(*buf, list);
-	if (input[*i] != ' ' && input[*i] != '\t')
-	{
-		if (input[*i + 1]
-			&& ((input[*i] == '<' && input[*i + 1] == '<') \
-			|| (input[*i] == '>' && input[*i + 1] == '>')))
-		{
-			tmp = ft_strndup(&input[*i], 2);
-			(*i)++;
-		}
-		else
-			tmp = ft_strndup(&input[*i], 1);
-		(*buf) = ft_strjoin_c(tmp, input[*i]);
-		free(tmp);
-		make_node(*buf, list);
-	}
-	free(*buf);
-	(*buf) = ft_strdup("");
+	content = ft_substr(input, start, size);
+	make_node(content, list);
+	free(content);
 }
 
-int	quo_error_check(char *buf, char quo, t_list *list)
+void	not_meta_case(char *input, int *i, char *quo, int *size)
+{
+	if (is_escape(input, *i, *quo))
+	{
+		*size += 2;
+		*i += 2;
+	}
+	else
+	{
+		check_quo(input[*i], quo);
+		*size += 1;
+		*i += 1;
+	}
+}
+
+void	meta_quo_case(char *input, int *i, char *quo, int *size)
+{
+	check_quo(input[*i], quo);
+	*size += 1;
+	*i += 1;
+}
+
+void	check_meta_and_quo(char *input, int *i, char *quo, int *size)
+{
+	if (!is_meta(input[*i]))
+		not_meta_case(input, i, quo, size);
+	else if (is_meta(input[*i]) && *quo != 0)
+		meta_quo_case(input, i, quo, size);
+}
+
+void	handle_meta_token(t_list *list, char *input, int *i, int *size)
+{
+	if (input[*i] == ' ' || input[*i] == '\t')
+	{
+		*size = 0;
+		(*i)++;
+	}
+	else
+	{
+		if (input[*i + 1] && ((input[*i] == '<' && input[*i + 1] == '<') \
+			|| (input[*i] == '>' && input[*i + 1] == '>')))
+			*size = 2;
+		else
+			*size = 1;
+		make_token(list, input, *i, *size);
+	}
+}
+
+int	last_check_quo(char quo)
 {
 	if (quo != 0)
 		return (quo_error());
-	if (buf[0] != 0)
-		make_node(buf, list);
-	free(buf);
 	return (1);
 }
 
 int	get_token(char *input, t_list *list)
 {
 	int		i;
+	int		size;
+	int		start;
 	char	quo;
-	char	*buf;
 
 	i = 0;
+	size = 0;
 	quo = 0;
-	buf = ft_strdup("");
+	start = i;
 	while (input[i])
 	{
-		if (!is_meta(input[i]))
+		check_meta_and_quo(input, &i, &quo, &size);
+		if (is_meta(input[i]) && quo == 0)
 		{
-			if (is_escape(input, i, quo))
-				get_escape(input, &i, &buf);
-			else
-				get_quote(input, &i, &buf, &quo);
+			if (i > 1 && !is_meta(input[i - 1]))
+				make_token(list, input, start, size);
+			handle_meta_token(list, input, &i, &size);
+			start = i + size;
+			i += size;
+			size = 0;
 		}
-		else if (is_meta(input[i]) && quo != 0)
-			get_quote(input, &i, &buf, &quo);
-		else
-			get_meta(input, &i, &buf, list);
-		i++;
 	}
-	return (quo_error_check(buf, quo, list));
+	if (i > 0 && !is_meta(input[i - 1]))
+		make_token(list, input, start, size);
+	return (last_check_quo(quo));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 02:03:59 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 04:43:58 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:34:34 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,8 @@ int	check_ll_range(long long n, int minus, char *c)
 
 void	numeric_error(char	*str)
 {
-	char	*tmp;
-	char	*error;
-
-	error = "exit: ";
-	tmp = error;
-	error = ft_strjoin(tmp, str);
-	tmp = error;
-	error = ft_strjoin(tmp, ": numeric argument required");
-	ft_putendl_fd(error, 2);
+	ft_putstr_fd("exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": numeric argument required", 2);
+	free(str);
 }

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 06:54:41 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:35:15 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_env_pipe(t_envp *my_envp, t_pipe *exec, char ***path, int size)
+void	set_env_pipe(t_envp *my_envp, t_pipe *exec, int size)
 {
-	*path = get_envp_path(get_ev(my_envp->envp));
-	my_envp->path = *path;
+	get_ev(my_envp);
+	my_envp->path = get_envp_path(my_envp->ev);
 	exec->size = size;
 	if (pipe(exec->prev_fd) < 0)
 		exit(1);
@@ -34,12 +34,11 @@ void	exec_close_backup(int i, t_pipe *exec)
 void	run(t_data *cmd, int size, t_envp *my_envp)
 {
 	int		i;
-	char	**path;
 	pid_t	pid;
-	t_data	*iter;
+	t_data	*iter; 
 	t_pipe	exec;
 
-	set_env_pipe(my_envp, &exec, &path, size);
+	set_env_pipe(my_envp, &exec, size);
 	i = 0;
 	iter = cmd;
 	while (iter)
@@ -92,5 +91,6 @@ int	execute(t_data *cmd, t_envp *my_envp)
 			return (builtin_value);
 	}
 	run(cmd, size, my_envp);
+	free_ev(my_envp);
 	return (0);
 }

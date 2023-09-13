@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:53:16 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:27:51 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:21:53 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	join_expand(char **new_content, char *expand, int *i, int size)
 {
-	(*new_content) = ft_strjoin((*new_content), expand);
+	char	*tmp;
+
+	tmp = ft_strdup(*new_content);
+	free(*new_content);
+	(*new_content) = ft_strjoin(tmp, expand);
+	free(tmp);
+	free(expand);
 	(*i) += size;
 }
 
@@ -60,6 +66,7 @@ void	expand_and_delete_quo(t_list *envp, t_list *list)
 		tmp_content = ft_strdup(iter->content);
 		ch_iter(&new_content, tmp_content, &iter, envp);
 		free(tmp_content);
+		free(iter->content);
 		iter->content = new_content;
 		iter = iter->next;
 	}

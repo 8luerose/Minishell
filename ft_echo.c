@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:19:15 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/06 17:16:21 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 15:16:02 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,14 @@ int	find_n(char *str)
 void	ft_echo(int fd, char **cmd_line)
 {
 	int		i;
-	int		res;
-	int		flag;
+	int		is_n;
 
 	i = 1;
-	flag = 0;
+	is_n = 0;
 	while (cmd_line[i])
 	{
-		res = find_n(cmd_line[i]);
-		if (res == 1)
-			flag = 1;
+		if (find_n(cmd_line[i]))
+			is_n = 1;
 		else
 			break ;
 		i++;
@@ -54,7 +52,7 @@ void	ft_echo(int fd, char **cmd_line)
 			ft_putstr_fd(" ", fd);
 		i++;
 	}
-	if (flag == 0)
+	if (is_n == 0)
 		ft_putstr_fd("\n", fd);
 	g_stat = 0;
 }

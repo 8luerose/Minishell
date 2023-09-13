@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:16:01 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 07:04:24 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 21:03:48 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cd_error(char	**cmd_line)
-{
-	char	*tmp;
-	char	*error;
-
-	error = "cd: ";
-	tmp = error;
-	error = ft_strjoin(tmp, cmd_line[1]);
-	perror(error);
-	g_stat = 1;
-}
 
 int	check_parent_dir(void)
 {
@@ -31,32 +19,49 @@ int	check_parent_dir(void)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 		return (1);
+	free(pwd);
 	return (0);
 }
 
 void	change_pwd_in_env(t_list *my_envp)
 {
+	char	*cur;
 	char	*key;
 	t_node	*iter;
 
-	key = "PWD=";
+	key = ft_strdup("PWD=");
 	iter = my_envp->head;
 	while (iter)
 	{
 		if (ft_strncmp(key, iter->content, ft_strlen(key)) == 0)
 		{
-			free(iter->content);
-			iter->content = ft_strjoin(key, getcwd(NULL, 0));
+			cur = getcwd(NULL, 0);
+			if (cur)
+			{
+				free(iter->content);
+				iter->content = ft_strjoin(key, cur);
+				free(cur);
+			}
 			break ;
 		}
 		iter = iter->next;
 	}
+	free(key);
 }
 
 void	go_to_home_dir(t_list *my_envp)
 {
+	char	*path;
+
 	parent_dir_error();
-	chdir(get_env("HOME", my_envp));
+	path = get_env(ft_strdup("HOME"), my_envp);
+	if (ft_strlen(path) == 0)
+		chdir("/");
+	else
+	{
+		chdir(path);
+		free(path);
+	}
 }
 
 void	ft_cd(t_list *my_envp, char **cmd_line)
@@ -64,25 +69,28 @@ void	ft_cd(t_list *my_envp, char **cmd_line)
 	int		ret;
 	char	*path;
 
-	if (cmd_line[1])
-		path = ft_strdup(cmd_line[1]);
-	ret = chdir(path);
+	path = NULL;
 	if (!cmd_line[1])
 	{
-		if (chdir(get_env("HOME", my_envp)))
-			cd_home_error();
-	}
-	else if (ret < 0)
-	{
-		if (ft_strlen(get_env("HOME", my_envp)) == 0)
+		path = get_env(ft_strdup("HOME"), my_envp);
+		if (ft_strlen(path) == 0)
 			cd_home_error();
 		else
-			cd_error(cmd_line);
+		{
+			chdir(path);
+			free(path);
+		}
 	}
 	else
 	{
 		if (check_parent_dir())
 			go_to_home_dir(my_envp);
+		else
+		{
+			ret = chdir(cmd_line[1]);
+			if (ret < 0)
+				cd_error(cmd_line);
+		}
 	}
 	change_pwd_in_env(my_envp);
 }

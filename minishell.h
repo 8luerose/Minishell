@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 06:50:44 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:05:12 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int			quo_error(void);
 int			file_error(char *file_name);
 void		command_error(char	*cmd, char *access_path);
 //execute_main
-void		set_env_pipe(t_envp *my_envp, t_pipe *exec, char ***path, int size);
+void		set_env_pipe(t_envp *my_envp, t_pipe *exec, int size);
 void		exec_close_backup(int i, t_pipe *exec);
 void		run(t_data *cmd, int size, t_envp *my_envp);
 int			builtins_check(t_data *cmd, t_envp *my_envp);
@@ -109,8 +109,9 @@ int			exec_error_check(t_data *cmd);
 void		exec_backup(t_pipe *fd, int i);
 int			have_space(char *file_name);
 //execute_run
-char		**get_ev(t_list *my_envp);
+// char		**get_ev(t_list *my_envp);
 char		**get_envp_path(char **ev);
+void		get_ev(t_envp	*my_envp);
 int			set_io_fd_open(t_redir *iter);
 int			set_io_fd(t_data *cmd);
 void		exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp);
@@ -137,11 +138,13 @@ void		expand_and_delete_quo(t_list *envp, t_list *list);
 void		free_pipeline(t_data *data);
 void		free_cmd_line(char **cmd_line);
 void		free_redirs(t_redir *redir);
+void		free_list(t_data	*pipe_parsing);
+void		free_token(t_list	*list);
 //ft_cd_utils
 void		cd_home_error(void);
 void		parent_dir_error(void);
-//ft_cd
 void		cd_error(char	**cmd_line);
+//ft_cd
 int			check_parent_dir(void);
 void		change_pwd_in_env(t_list *my_envp);
 void		go_to_home_dir(t_list *my_envp);
@@ -161,7 +164,7 @@ int			is_valid_exit_arg(char *arg);
 int			ft_exit(char **cmd_line);
 //ft_export1
 void		export_error(char *cmd);
-int			check(char	*cmd);
+int			key_check(char	*cmd);
 void		export_with_equal(t_list *my_envp, char *cmd_line);
 void		export_without_equal(char *cmd_line);
 void		ft_export(t_list *my_envp, char **cmd_line, int fd);
@@ -245,13 +248,16 @@ int			check_syntax_error(t_list *list);
 int			is_escape(char *input, int i, char quo);
 int			is_meta(char c);
 //token
-void		get_escape(char *input, int *i, char **buf);
-void		get_quote(char *input, int *i, char **buf, char *quo);
-void		get_meta(char *input, int *i, char **buf, t_list *list);
-int			quo_error_check(char *buf, char quo, t_list *list);
+void		check_quo(char input, char *quo);
+void		make_token(t_list *list, char *input, int start, int size);
 int			get_token(char *input, t_list *list);
 //type
 enum e_type	token_type(char	*content);
 void		get_type(t_list	*list);
+
+
+void	free_all(char	**str);
+void	free_ev(t_envp	*my_envp);
+void lk();
 
 #endif

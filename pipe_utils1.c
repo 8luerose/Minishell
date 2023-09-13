@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 05:01:43 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 04:51:48 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 14:17:01 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_ev(t_envp	*my_envp)
-{
-	int		size;
-	t_node	*iter;
+// void	set_ev(t_envp	*my_envp)
+// {
+// 	int		size;
+// 	t_node	*iter;
 
-	size = 0;
-	iter = my_envp->envp->head;
-	while (iter)
-	{
-		size++;
-		iter = iter->next;
-	}
-	my_envp->ev = (char **)malloc(sizeof(char *) * (size + 1));
-	size = 0;
-	iter = my_envp->envp->head;
-	while (iter)
-	{
-		my_envp->ev[size++] = ft_strdup(iter->content);
-		iter = iter->next;
-	}
-}
+// 	size = 0;
+// 	iter = my_envp->envp->head;
+// 	while (iter)
+// 	{
+// 		size++;
+// 		iter = iter->next;
+// 	}
+// 	my_envp->ev = (char **)malloc(sizeof(char *) * (size + 1));
+// 	size = 0;
+// 	iter = my_envp->envp->head;
+// 	while (iter)
+// 	{
+// 		my_envp->ev[size++] = ft_strdup(iter->content);
+// 		iter = iter->next;
+// 	}
+// }
 
 int	make_path(char **access_path, char **path, char *cmd)
 {
@@ -44,8 +44,10 @@ int	make_path(char **access_path, char **path, char *cmd)
 	while (path && path[i])
 	{
 		tmp_path = ft_strjoin(path[i], "/");
-		tmp = tmp_path;
+		tmp = ft_strdup(tmp_path);
+		free(tmp_path);
 		tmp_path = ft_strjoin(tmp, cmd);
+		free(tmp);
 		if (!access(tmp_path, F_OK))
 		{
 			*access_path = ft_strdup(tmp_path);

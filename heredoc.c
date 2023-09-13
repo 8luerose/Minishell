@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:06:17 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:09:30 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:28:35 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	set_heredoc_tmp_file(t_data *cmd)
 				tmp = set_file_name();
 				iter->i_fd = open(tmp, O_WRONLY | O_CREAT | O_APPEND, 0644);
 				r_iter->limiter = ft_strdup(r_iter->file_name);
+				free(r_iter->file_name);
 				r_iter->file_name = tmp;
 				close(iter->i_fd);
 			}
@@ -85,6 +86,26 @@ void	set_heredoc_tmp_file(t_data *cmd)
 	}
 }
 
+int	is_heredoc_process(t_data	*cmd)
+{
+	t_data	*iter;
+	t_redir	*r_iter;
+
+	iter = cmd;
+	while (iter)
+	{
+		r_iter = iter->redir;
+		while (r_iter)
+		{
+			if (ft_strcmp(r_iter->redir, "<<") == 0)
+				return (1);
+			r_iter = r_iter->next;
+		}
+		iter = iter->next;
+	}
+	return (0);
+}
+
 void	fork_and_read_heredoc(t_data *cmd, int *status)
 {
 	pid_t	pid;
@@ -92,6 +113,8 @@ void	fork_and_read_heredoc(t_data *cmd, int *status)
 	t_redir	*r_iter;
 
 	signal(SIGINT, SIG_IGN);
+	if (!is_heredoc_process(cmd))
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:16 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 07:05:38 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:46:45 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_unset(t_list	*my_envp, char **cmd_line)
 	{
 		key = ft_strjoin(cmd_line[i], "=");
 		unset_node(my_envp, key);
+		free(key);
 		i++;
 	}
 }

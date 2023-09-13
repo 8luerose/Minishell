@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:43:40 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 07:05:21 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:06:59 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,25 @@
 
 void	export_error(char *cmd)
 {
-	char	*str;
-	char	*str2;
-	char	*tmp;
-
-	str = "export: '";
-	str2 = "': not a valid identifier";
-	tmp = str;
-	str = ft_strjoin(tmp, cmd);
-	tmp = str;
-	str = ft_strjoin(tmp, str2);
-	ft_putendl_fd(str, 2);
+	ft_putstr_fd("export: '", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
 	g_stat = 1;
 }
 
-int	check(char	*cmd)
+int	key_check(char	*cmd)
 {
-	int	size;
+	int	i;
 
-	size = 0;
-	while (cmd[size])
-		size++;
-	if (cmd[size - 1] == '-')
-		return (1);
+	i = 0;
+	while (cmd[i])
+	{
+		if (i == 0 && ft_isdigit(cmd[i]))
+			return (1);
+		if (!(ft_isalnum(cmd[i]) || cmd[i] == '_'))
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
@@ -51,12 +47,12 @@ void	export_with_equal(t_list *my_envp, char *cmd_line)
 	else if (ft_strchr(cmd_line, '='))
 	{
 		key = get_key(cmd_line);
-		value = get_value(cmd_line);
 		if (!key)
 		{
 			export_error(cmd_line);
 			return ;
 		}
+		value = get_value(cmd_line);
 		iter = my_envp->head;
 		while (iter && ft_strncmp(key, iter->content, ft_strlen(key)))
 			iter = iter->next;
@@ -64,12 +60,14 @@ void	export_with_equal(t_list *my_envp, char *cmd_line)
 			free_replace_content(iter, key, value);
 		else
 			add_to_tail(my_envp, key, value);
+		free(key);
+		free(value);
 	}
 }
 
 void	export_without_equal(char *cmd_line)
 {
-	if (check(cmd_line))
+	if (key_check(cmd_line))
 		export_error(cmd_line);
 }
 

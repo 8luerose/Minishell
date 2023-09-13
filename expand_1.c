@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 06:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 06:00:54 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:35:05 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_envp_size(char *content)
+int	check_envp_size(char *content)  // 이거 ft_isdigit, ft_isalnum으로 고칠 수 있을 듯
 {
 	int	i;
 	int	size;
@@ -58,13 +58,20 @@ int	key_is_error_stat(char	*key)
 
 char	*get_env(char *key, t_list *envp)
 {
+	char	*tmp;
 	char	*content;
 	t_node	*iter;
 
 	if (key_is_error_stat(key))
+	{
+		free(key);
 		return (ft_itoa(g_stat));
+	}
 	content = "\0";
-	key = ft_strjoin(key, "=");
+	tmp = ft_strdup(key);
+	free(key);
+	key = ft_strjoin(tmp, "=");
+	free(tmp);
 	iter = envp->head;
 	while (iter)
 	{
@@ -75,12 +82,28 @@ char	*get_env(char *key, t_list *envp)
 		}
 		iter = iter->next;
 	}
+	free(key);
 	return (content);
+}
+
+void	free_all(char	**str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }
 
 char	*split_expand(char *expand, char **front, t_node **node)
 {
 	int		i;
+	char	*new;
+	char	*tmp;
 	char	**change;
 
 	change = ft_split(expand, ' ');
@@ -96,11 +119,18 @@ char	*split_expand(char *expand, char **front, t_node **node)
 				add_mid(change[i], node);
 			}
 			else
-				(*node)->content = ft_strdup(ft_strjoin((*front), change[i]));
+			{
+				tmp = ft_strjoin(*front, change[i]);
+				(*node)->content = ft_strdup(tmp);
+				free(tmp);
+			}
+			free(*front);
 		}
 		else
 			add_mid(change[i], node);
 		i++;
 	}
-	return ((*node)->content);
+	free_all(change);
+	new = ft_strdup((*node)->content);
+	return (new);
 }

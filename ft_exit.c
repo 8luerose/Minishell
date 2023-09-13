@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:49:33 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 07:04:53 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/10 16:30:57 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_exit(char **cmd_line)
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		g_stat = 1;
-		return (0);
+		exit(g_stat);
 	}
 	if (!cmd_line[1])
 		exit(0);

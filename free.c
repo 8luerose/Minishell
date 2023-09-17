@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:43 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/10 21:00:45 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:54:13 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_redirs(t_redir *redir)
 		redir = redir->next;
 		free(redir_tmp->redir);
 		free(redir_tmp->file_name);
+		free(redir_tmp->limiter);
 		free(redir_tmp);
 	}
 }
@@ -62,7 +63,6 @@ void	free_list(t_data *pipe_parsing)
 	t_data	*cmd_iter;
 	t_data	*cmd_next;
 	t_redir	*redir_iter;
-	t_redir *redir_next;
 
 	cmd_iter = pipe_parsing;
 	while (cmd_iter)
@@ -78,15 +78,7 @@ void	free_list(t_data *pipe_parsing)
 			free(cmd_iter->cmd_line);
 		}
 		redir_iter = cmd_iter->redir;
-		while (redir_iter)
-		{
-			free(redir_iter->file_name);
-			free(redir_iter->limiter);
-			free(redir_iter->redir);
-			redir_next = redir_iter->next;
-			free(redir_iter);
-			redir_iter = redir_next;
-		}
+		free_redirs(redir_iter);
 		cmd_next = cmd_iter->next;
 		free(cmd_iter);
 		cmd_iter = cmd_next;

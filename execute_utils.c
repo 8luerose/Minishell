@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:15:15 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 17:13:32 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/17 12:20:24 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,26 @@ void	exec_backup(t_pipe *fd, int i)
 	}
 }
 
-int	have_space(char *file_name)
+int	check_ambiguous(char *file_name, t_redir *iter)
 {
-	int	i;
+	int		size;
+	char	**tmp;
 
-	i = 0;
-	while (file_name[i])
+	if (ft_strcmp(iter->redir, "<<") != 0)
 	{
-		if (file_name[i] == ' ')
+		tmp = ft_split(file_name, ' ');
+		size = 0;
+		while (tmp[size])
+		{
+			size++;
+		}
+		free_all(tmp);
+		if (size > 1 || ft_strlen(file_name) == 0)
+		{
+			g_stat = 1;
+			ft_putendl_fd("ambiguous redirect", 2);
 			return (1);
-		i++;
+		}
 	}
 	return (0);
 }

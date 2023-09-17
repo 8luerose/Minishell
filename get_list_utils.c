@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_list_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 06:11:20 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 06:12:44 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/17 11:55:48 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ void	append_redir(t_data *new_data, t_node *p)
 	t_redir	*new_redir;
 	t_redir	*tmp;
 
-	if (!p->next)
-	{
-		printf("None 'file_name' after redir\n");
-		exit(1);
-	}
 	new_redir = init_new_redir(p);
 	if (!new_data->redir)
 		new_data->redir = new_redir;

@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 06:01:03 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/11 17:26:43 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/12 11:59:31 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	end_space(char cont, t_node **iter, char **new_con, char *expand)
 	if (expand[j - 1] == ' ' && cont)
 	{
 		add_mid("", iter);
+		free(*new_con);
 		(*new_con) = ft_strdup("");
 	}
 	free_expand(expand);

@@ -66,7 +66,6 @@ void	go_to_home_dir(t_list *my_envp)
 
 void	ft_cd(t_list *my_envp, char **cmd_line)
 {
-	int		ret;
 	char	*path;
 
 	path = NULL;
@@ -87,8 +86,7 @@ void	ft_cd(t_list *my_envp, char **cmd_line)
 			go_to_home_dir(my_envp);
 		else
 		{
-			ret = chdir(cmd_line[1]);
-			if (ret < 0)
+			if (chdir(cmd_line[1]) < 0)
 				cd_error(cmd_line);
 		}
 	}

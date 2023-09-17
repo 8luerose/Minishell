@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:26:37 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/11 16:05:12 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:05:41 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,30 +107,32 @@ int			execute(t_data *cmd, t_envp *my_envp);
 //execute_utils
 int			exec_error_check(t_data *cmd);
 void		exec_backup(t_pipe *fd, int i);
-int			have_space(char *file_name);
+int			check_ambiguous(char *file_name, t_redir *iter);
 //execute_run
-// char		**get_ev(t_list *my_envp);
 char		**get_envp_path(char **ev);
 void		get_ev(t_envp	*my_envp);
 int			set_io_fd_open(t_redir *iter);
 int			set_io_fd(t_data *cmd);
 void		exec_cmd(int i, t_data *iter, t_pipe *exec, t_envp *my_envp);
-//expand
+//expand1
 int			check_envp_size(char *content);
 char		*make_key(char *content, int start, int size);
 int			key_is_error_stat(char	*key);
 char		*get_env(char *key, t_list *envp);
-char		*split_expand(char *expand, char **front, t_node **node);
+//expand2
 void		free_expand(char *expand);
 void		end_space(char cont, t_node **iter, char **new_con, char *expand);
 int			start_quo(char	*quo, char tmp_content);
 int			end_quo(char *quo, char tmp_content);
 int			can_expand(int *size, t_node *iter, char quo, char *tmp_content);
+//expand3
 void		append_and_increment(char **new_content, char *content, int *i);
 void		join_content(char **new_content, char *content, int *i, char quo);
 char		*get_expand(int i, int size, char *tmp_content, t_list *envp);
 int			unsplitable(char quo, t_node **iter);
 int			splitable(char quo, char *expand, int *i, int size);
+//expand4
+char		*split_expand(char *expand, char **front, t_node **node);
 void		join_expand(char **new_content, char *expand, int *i, int size);
 void		ch_iter(char **new, char *tmp_content, t_node **iter, t_list *envp);
 void		expand_and_delete_quo(t_list *envp, t_list *list);
@@ -140,6 +142,8 @@ void		free_cmd_line(char **cmd_line);
 void		free_redirs(t_redir *redir);
 void		free_list(t_data	*pipe_parsing);
 void		free_token(t_list	*list);
+void		free_all(char	**str);
+void		free_ev(t_envp	*my_envp);
 //ft_cd_utils
 void		cd_home_error(void);
 void		parent_dir_error(void);
@@ -189,10 +193,11 @@ void		append_cmd(t_data *new_data, char *word);
 void		append_redir(t_data *new_data, t_node *p);
 //heredoc_utils
 int			is_limiter(char *str, char *limiter);
-//heredoc
+int			is_heredoc_process(t_data	*cmd);
 char		*set_file_name(void);
-void		read_heredoc(char	*limiter, char	*tmp_file);
 void		set_heredoc_tmp_file(t_data *cmd);
+//heredoc
+void		read_heredoc(char	*limiter, char	*tmp_file);
 void		fork_and_read_heredoc(t_data *cmd, int *status);
 int			here_doc(t_data *cmd);
 //init
@@ -232,7 +237,6 @@ void		do_cmd_exec(t_data *cmd, t_envp *my_envp, char *access_path);
 void		do_cmd(t_data *cmd, t_envp *my_envp, char **path);
 //pipe
 void		first_pipe(t_data *cmd, t_pipe *exec, t_envp *my_envp, char **path);
-void		execute_and_cleanup(t_data *cmd, t_envp *my_envp, char **path);
 void		mid_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
 void		last_pipe(t_data *cmd, t_pipe *fd, t_envp *my_envp, char **path);
 //signal
@@ -247,17 +251,17 @@ int			check_syntax_error(t_list *list);
 //token_utils
 int			is_escape(char *input, int i, char quo);
 int			is_meta(char c);
-//token
+int			last_check_quo(char quo);
 void		check_quo(char input, char *quo);
+void		check_meta_and_quo(char *input, int *i, char *quo, int *size);
+//token
 void		make_token(t_list *list, char *input, int start, int size);
 int			get_token(char *input, t_list *list);
+void		not_meta_case(char *input, int *i, char *quo, int *size);
+void		meta_quo_case(char *input, int *i, char *quo, int *size);
+void		handle_meta_token(t_list *list, char *input, int *i, int *size);
 //type
 enum e_type	token_type(char	*content);
 void		get_type(t_list	*list);
-
-
-void	free_all(char	**str);
-void	free_ev(t_envp	*my_envp);
-void lk();
 
 #endif

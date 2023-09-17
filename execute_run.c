@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:15:15 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/10 14:09:13 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/17 12:20:30 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,8 @@ int	set_io_fd_open(t_redir *iter)
 
 	fd = -1;
 	file_name = iter->file_name;
-	if ((ft_strcmp(iter->redir, "<<") != 0)
-		&& (ft_strlen(file_name) == 0 || have_space(file_name)))
-	{
-		g_stat = 1;
-		printf("bash : ambiguous redirect\n");
+	if (check_ambiguous(file_name, iter))
 		return (fd);
-	}
 	if (ft_strcmp(iter->redir, "<") == 0 || ft_strcmp(iter->redir, "<<") == 0)
 		fd = open(file_name, O_RDONLY);
 	else if (ft_strcmp(iter->redir, ">") == 0)

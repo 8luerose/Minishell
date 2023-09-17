@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 03:27:40 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/11 16:45:41 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/16 11:59:30 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	do_cmd_builtin(t_data *cmd, t_envp *my_envp)
 
 void	do_cmd_exec(t_data *cmd, t_envp *my_envp, char *access_path)
 {
-	// set_ev(my_envp);
 	if (execve(access_path, cmd->cmd_line, my_envp->ev) < 0)
 		command_error(cmd->cmd_line[0], access_path);
 }
@@ -57,5 +56,6 @@ void	do_cmd(t_data *cmd, t_envp *my_envp, char **path)
 		do_cmd_error(cmd, path);
 	else
 		do_cmd_exec(cmd, my_envp, access_path);
+	free(access_path);
 	exit(0);
 }

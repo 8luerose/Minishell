@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:01:21 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/11 15:35:15 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:45:08 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	run(t_data *cmd, int size, t_envp *my_envp)
 {
 	int		i;
 	pid_t	pid;
-	t_data	*iter; 
+	t_data	*iter;
 	t_pipe	exec;
 
 	set_env_pipe(my_envp, &exec, size);

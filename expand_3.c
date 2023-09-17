@@ -47,7 +47,6 @@ char	*get_expand(int i, int size, char *tmp_content, t_list *envp)
 
 	key = make_key(tmp_content, i + 1, size - 1);
 	expand = get_env(key, envp);
-	// free(key);
 	return (expand);
 }
 

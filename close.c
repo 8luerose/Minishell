@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:05:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/09 05:14:33 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:55:11 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	close_n_wait(t_pipe *fd, int size)
 			else if (WTERMSIG(status) == 3)
 			{
 				g_stat = 131;
-				printf("QUIT: 3\n");
+				ft_putendl_fd("QUIT: 3", 1);
 			}
 		}
 		i++;

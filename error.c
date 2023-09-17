@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:20:34 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/07 19:10:23 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:05:13 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,13 @@ int	file_error(char *file_name)
 
 void	command_error(char	*cmd, char *access_path)
 {
-	char		*tmp;
-	char		*error;
 	struct stat	statbuf;
 
 	stat(cmd, &statbuf);
 	if (S_ISDIR(statbuf.st_mode))
 	{
-		error = ": is a directory";
-		tmp = error;
-		error = ft_strjoin(cmd, tmp);
-		ft_putendl_fd(error, 2);
-		free(error);
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": is a directory", 2);
 		g_stat = 126;
 		exit(126);
 	}

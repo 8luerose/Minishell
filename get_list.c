@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkwon <taehkwon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 12:21:20 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/09 06:12:47 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/09/17 12:02:58 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ t_node	*process_redir(t_node *p, t_data *new_data)
 {
 	append_redir(new_data, p);
 	p = p->next;
-	if (!p || (p->type != WORD))
-	{
-		printf("ERROR: NO WORD after redirection\n");
-		free_pipeline(new_data);
-		exit(1);
-	}
 	p = p->next;
 	return (p);
 }

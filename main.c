@@ -6,7 +6,7 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:51:22 by seojchoi          #+#    #+#             */
-/*   Updated: 2023/09/11 17:34:03 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:07:58 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	minishell(char *input, t_envp *my_envp)
 	get_list(list, &pipe_parsing);
 	execute(pipe_parsing, my_envp);
 	free_token(list);
+	unlink_tmp_file_all(pipe_parsing);
 	free_list(pipe_parsing);
 }
 
@@ -70,7 +71,7 @@ int	main(int ac, char **av, char **ev)
 	{
 		signal(SIGINT, handler_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		input = readline("minishell : ");
+		input = readline("minishell: ");
 		if (input)
 		{
 			add_history(input);

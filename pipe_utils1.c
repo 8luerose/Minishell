@@ -6,33 +6,11 @@
 /*   By: seojchoi <seojchoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 05:01:43 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/09/10 14:17:01 by seojchoi         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:48:40 by seojchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	set_ev(t_envp	*my_envp)
-// {
-// 	int		size;
-// 	t_node	*iter;
-
-// 	size = 0;
-// 	iter = my_envp->envp->head;
-// 	while (iter)
-// 	{
-// 		size++;
-// 		iter = iter->next;
-// 	}
-// 	my_envp->ev = (char **)malloc(sizeof(char *) * (size + 1));
-// 	size = 0;
-// 	iter = my_envp->envp->head;
-// 	while (iter)
-// 	{
-// 		my_envp->ev[size++] = ft_strdup(iter->content);
-// 		iter = iter->next;
-// 	}
-// }
 
 int	make_path(char **access_path, char **path, char *cmd)
 {
